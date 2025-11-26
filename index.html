@@ -7,7 +7,6 @@
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9593270296843431"
      crossorigin="anonymous"></script>
-     
 <style>
 /* Reset e base */
 * {margin:0; padding:0; box-sizing:border-box;}
@@ -16,7 +15,7 @@ body {
   color:#333;
   overflow-x:hidden;
   background: linear-gradient(135deg,#fdf6e3,#ffd54f);
-  padding-top:160px; /* espaço total para header + barra de pesquisa */
+  padding-top:130px; /* reduzido porque os botões agora são menores */
 }
 
 /* Header */
@@ -25,37 +24,44 @@ header {
   top:0; left:0; right:0;
   background:#FF5722;
   color:white;
-  padding:0.6rem 1rem;
+  padding:0.4rem 1rem; /* menor */
   display:flex;
   justify-content:space-between;
   align-items:center;
   z-index:1000;
   box-shadow:0 4px 8px rgba(0,0,0,0.1);
 }
-header h1 {font-size:1.4rem;}
+header h1 {
+  font-size:1.2rem; /* ligeiramente menor para dar mais espaço */
+  font-weight:600;
+}
+
+/* ================================
+   AJUSTE DO MENU (BOTÕES REDUZIDOS)
+   ================================ */
 nav a {
   display:inline-block;
-  padding:6px 12px;
-  margin:0 4px;
+  padding:5px 10px;          /* antes era 6px 12px */
+  margin:0 3px;
   background:linear-gradient(45deg,#FF5722,#FF9800);
   color:white;
-  border-radius:20px;
+  border-radius:16px;        /* antes era 20px */
   font-weight:600;
-  font-size:0.9rem;
+  font-size:0.78rem;         /* era 0.9rem */
   text-decoration:none;
-  box-shadow:0 3px 8px rgba(0,0,0,0.2);
+  box-shadow:0 2px 6px rgba(0,0,0,0.18);
   transition:all 0.3s;
 }
 nav a:hover {
   transform:translateY(-1px);
-  box-shadow:0 5px 12px rgba(0,0,0,0.3);
+  box-shadow:0 4px 10px rgba(0,0,0,0.28);
   background:linear-gradient(45deg,#FF7043,#FF8A65);
 }
 
 /* Barra de pesquisa */
 #barra-pesquisa {
   position:fixed;
-  top:60px;
+  top:55px; /* ajustado porque o menu ficou menor */
   left:50%;
   transform:translateX(-50%);
   width:90%;
@@ -88,7 +94,12 @@ section {
   text-align:center;
   transition:all 0.3s;
 }
-section h2 {margin-bottom:15px; font-size:1.6rem;}
+section h2 {
+  margin-bottom:15px;
+  font-size:1.6rem;
+  line-height:2;
+  word-wrap: break-word;
+}
 section p {
   max-width:700px;
   margin:15px auto;
@@ -253,6 +264,169 @@ section, #filtros, #livros-container, #comoBaixar {
   position:relative;
   z-index:1;
 }
+
+/* Container geral do blog */
+#blog {
+  padding: 100px 20px 20px 20px;
+  max-width: 800px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 1;
+}
+
+/* Títulos */
+#blog h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding:30px 20px 20px 20px;
+}
+
+#blog h3 {
+  margin-top: 20px;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Área da senha */
+#senhaArea {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 350px;
+  margin: 25px auto;
+  text-align: center;
+}
+
+#senhaBlog {
+  width: 85%;
+  padding: 10px;
+  margin-top: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  outline: none;
+}
+#senhaBlog:focus {border-color:#007bff;}
+
+#senhaArea button {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+#senhaArea button:hover {background:#0056b3;}
+
+/* Editor */
+#editorBlog {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+#textoPublicacao {
+  width:100%;
+  padding:12px;
+  font-size:16px;
+  border-radius:10px;
+  border:1px solid #bbb;
+  outline:none;
+  resize:vertical;
+}
+#textoPublicacao:focus {border-color:#007bff;}
+
+#editorBlog button {
+  margin-top:15px;
+  padding:10px 20px;
+  background:#28a745;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+}
+#editorBlog button:hover {background:#1e7e34;}
+
+/* Cards das publicações */
+#listaPosts div.post {
+  background:#ffffff;
+  padding:20px;
+  border-radius:12px;
+  margin:15px auto;
+  box-shadow:0 4px 10px rgba(0,0,0,0.12);
+  max-width:650px;
+  position:relative;
+  font-family:Arial, sans-serif;
+}
+
+#listaPosts div.post h3 {
+  font-size:24px;
+  font-weight:700;
+  line-height:1.4;
+  margin-bottom:12px;
+  color:#222;
+  text-align:left;
+}
+
+#listaPosts div.post p {
+  font-size:17px;
+  line-height:1.6;
+  margin-bottom:12px;
+  text-align:justify;
+  white-space:pre-wrap;
+  color:#444;
+}
+
+#listaPosts div.post small {
+  display:block;
+  margin-top:8px;
+  color:#666;
+  font-size:13px;
+}
+
+/* Botão excluir */
+#listaPosts div.post button.excluir {
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#dc3545;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  display:none;
+}
+
+/* Responsividade */
+@media (max-width:600px) {
+
+  header h1 {
+    font-size:1.05rem;
+  }
+
+  nav a {
+    padding:4px 8px;
+    font-size:0.72rem;
+    border-radius:14px;
+  }
+
+  #blog {padding:10px;}
+
+  #senhaArea,
+  #editorBlog,
+  #listaPosts div {padding:15px;}
+
+  #textoPublicacao {font-size:15px;}
+}
 </style>
 </head>
 <body>
@@ -266,6 +440,9 @@ section, #filtros, #livros-container, #comoBaixar {
     <a href="#" onclick="mostrarSecao('sobreLivraria')">Sobre a Livraria</a>
     <a href="#" onclick="mostrarSecao('sobreAutor')">Sobre o Autor</a>
     <a href="#" onclick="mostrarSecao('comoBaixar')">Como Baixar</a>
+    <a href="#" onclick="mostrarSecao('blog')">Blog</a>
+    <a href="#" onclick="mostrarSecao('politica')">Política de Privacidade</a>
+    <a href="#" onclick="mostrarSecao('termos')">Termos de Uso</a>
   </nav>
 </header>
 
@@ -278,6 +455,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <button id="btnLivros" onclick="mostrarSecao('livros')">📖 Ver Livros</button>
   <br><br>
   <button id="btnHomeEspecial" style="margin-top:20px;padding:12px 24px;" onclick="abrirWhatsApp('Tens disponível o Livro:')">Livros Especiais</button>
+  <p>Esse espaço foi feito especialmente para garantir o seu aprendizado. No etanto aproveite no máximo esta oportunidade de obter conhecimento de forma facil e dinámica.</br> Vocé pode clicar em ver livros e achar os melhores livros que mais combinam com você. </br> Lembrando que quem lê um livro nunca será a mesma pessoa. Equanto você não começar, nunca iras de entender que livros mudam vidas, abrem portas, transformam mentes mostrando uma perspectiva mais âmpla da vida, transformam ideias em práticas reais.</br>Fique ligado com os nossos serviços e desfrute dos melhores livros do mercado de forma fácil, prática e dinámica.</p>
 </section>
 
 <section id="livros" style="display:none;">
@@ -307,21 +485,332 @@ section, #filtros, #livros-container, #comoBaixar {
     <a href="https://wa.me/959622160?text=Olá! Quero saber mais sobre os livros" target="_blank">💬 WhatsApp</a> |
     <a href="mailto:jsacassole@gmail.com?subject=Contato Livraria Construtiva&body=Olá, gostaria de mais informações.">✉ E-mail</a>
   </p>
+  <p>Nossa equipe está disponível para prestar qualquer assistência apartir do nosso WhatsApp, retirar dúvidas e ajudar você a amprender de forma mais facilitada.</br>Deixe sua crítica, opinião ou contributo apartir do nosso E-mail.</br>Não exite!</br> Sua interação é um grande contributo para nós e pode nos ajudar a melhorar os serviços.</br>E você pode se manter ligado de todos os serviços e novidades de forma fácil na nossa página do Facebook. Siga a página, e não perca nenhuma novidade do site.</br></br>Todas informações e atualizações, são disponibilizadas na página oficial da Livraria Construtiva (no topo da página clica em Facebook e serás direcionado à nossa página oficial). Siga e fica atualizado dos nossos serviços e novidades sem perder nada. Compartilhe e ajude os seus amigos e parentes a crescer a nível de intelectualidade. Reaja e comente, para ajudar-nos a crescer e estar mais motivados em disponibilizar novidades.</p>
 </section>
 
 <section id="sobreLivraria" style="display:none;">
   <h2>🏛 Sobre a Livraria</h2>
-  <p>A Livraria Construtiva nasceu com a missão de disponibilizar livros gratuitos e de domínio público para todos. Nossa biblioteca digital permite que você explore e baixe livros em diversos formatos, garantindo aprendizado e diversão!</p>
+  <p>A Livraria Construtiva constitui-se como um espaço digital orientado pela convicção de que o conhecimento deve ser organizado, preservado e disponibilizado de forma clara, acessível e intelectualmente responsável. Criada com o propósito de reunir obras, reflexões e conteúdos que contribuam para o desenvolvimento humano, ela se destaca por sua abordagem singular, que integra curadoria literária, análise conceitual e compromisso educativo dentro de uma estrutura moderna e intuitiva.</br></br>A plataforma foi concebida com base em princípios de clareza, ordem e intencionalidade. Cada seção, cada livro e cada texto presente no ambiente é selecionado ou elaborado sob a perspectiva de ampliar a compreensão do leitor acerca de temas que atravessam literatura, cultura, espiritualidade, comportamento e formação pessoal. A Livraria Construtiva não se limita à função tradicional de armazenar obras: ela busca produzir sentido, contextualizar ideias e aproximar o leitor de materiais que dialogam com sua necessidade de crescimento intelectual.</br></br>Seu projeto editorial fundamenta-se na valorização da leitura como mecanismo de transformação. A organização dos conteúdos não ocorre de forma aleatória; é resultado de um processo cuidadoso de categorização que visa oferecer ao visitante uma experiência fluida, coerente e enriquecedora. A presença de textos autorais, resumos interpretativos, análises aprofundadas e conteúdos complementares reforça sua missão de construir um ambiente que transcende o simples ato de disponibilizar livros.</br></br>A Livraria Construtiva opera como um espaço vivo, em constante aperfeiçoamento. Cada atualização reflete a busca contínua por qualidade textual, diversidade temática e rigor conceptual. Seu compromisso está vinculado à promoção de um ecossistema literário que inspira reflexão, incentiva a pesquisa pessoal e fortalece o hábito da leitura como ferramenta de mudança individual e coletiva.</br>Assim, a Livraria Construtiva se consolida como um projeto que integra literatura, educação e visão crítica, oferecendo ao leitor um ambiente que não apenas disponibiliza conteúdos, mas também provoca questionamentos, estimula novas interpretações e contribui de forma direta para a construção intelectual de todos que a visitam.</p>
 </section>
 
 <section id="sobreAutor" style="display:none;">
   <h2>✍ Sobre o Autor</h2>
-  <p>O autor, João Enoc Sacassole, é apaixonado por educação e tecnologia, dedicando-se a disponibilizar conhecimento gratuito através da Livraria Construtiva.</p>
+  <p><h3>João Enoc Sacassole</h3></br>Autor que idealiza a Livraria Construtiva atua como pesquisador independente, concentrando-se em temas que conectam tecnologia, literatura e desenvolvimento humano.Suas buscas cientificas inclui experiência em desenvolvimento web e programação em C#, áreas nas quais exerce um trabalho sistemático voltado à criação de soluções digitais funcionais, organizadas e orientadas ao usuário. Essa combinação entre investigação intelectual e prática tecnológica permite-lhe conceber projetos digitais com profundidade conceitual e precisão estrutural, integrando análise crítica, organização de informação e implementação de sistemas modernos com fluidez e rigor metodológico.
+</p>
+<p>A trajetória do autor por trás da Livraria Construtiva nasceu de uma combinação pouco comum entre curiosidade intelectual, paixão pela educação e uma busca permanente por conhecimento acessível. Desde muito jovem, desenvolveu um olhar atento para a relação entre literatura, transformação social e desenvolvimento humano. Ao perceber que muitos leitores não tinham acesso a livros, bibliotecas ou materiais de estudo, passou a dedicar-se à criação de ambientes digitais que pudessem oferecer conhecimento de forma simples, organizada e, sobretudo, útil.</br></br>Sua formação autodidata permitiu navegar por diversas áreas — das ciências humanas à tecnologia — incorporando referências que vão da filosofia clássica às tendências contemporâneas de inovação digital. Essa heterogeneidade de interesses reflete-se diretamente no projeto da Livraria Construtiva: um espaço onde livros, ideias, resumos, reflexões e conteúdos educativos coexistem com o propósito de estimular pensamento crítico e promover leitura de qualidade.</br></br>O autor acredita que a literatura não é apenas uma coleção de páginas, mas um instrumento de construção pessoal e coletiva. Por isso, seu trabalho vai além da simples elaboração de um site: ele organiza conteúdos, cria textos analíticos, examina obras literárias e apresenta conhecimento contextualizado, de forma que cada leitor possa reinterpretar o mundo ao seu redor com mais clareza e autonomia.</br>A Livraria Construtiva representa, portanto, a expressão prática de um princípio fundamental em sua filosofia de vida: conhecimento só tem valor quando pode ser compartilhado. A plataforma foi criada para ser um espaço contínuo de aprendizagem, onde leitores encontram não apenas livros para explorar, mas também reflexões profundas, textos autorais e análises que ampliam a compreensão sobre diferentes temas.</br></br>Ao reunir literatura, educação e tecnologia em um só lugar, o autor reafirma seu compromisso com o acesso democrático ao saber. Sua missão é construir — página após página — um ambiente que inspire, eduque e motive aqueles que acreditam que o conhecimento é a ferramenta mais poderosa para transformar vidas.</p>
 </section>
 
 <section id="comoBaixar" style="display:none;">
   <h2>⬇ Como Baixar Livros</h2>
-  <p>Para baixar um livro, basta clicar no botão 📥 “Baixar” abaixo do título desejado. Escolha o formato desejado (PDF, EPUB, TXT, RTF, DOC etc.) e seu download começará automaticamente.</p>
+  <p>Para baixar um livro, basta clicar no botão 📥 “Baixar” abaixo do título desejado. E seu download começará automaticamente.</br></br>Caso o download não começar, você pode tentar outra vez, procurar outro livro, ou entrar em contato conosco apartir do WhatsApp da Livraria Construtiva, com a devida dificuldade (WhatsApp da Livraria Construtiva: Na seção de contato, clica em WhatsApp e você será direcionado ao WhatsApp da Livraria Construtiva).</p>
+</section>
+
+<section id="blog" style="display:none;">
+  <h2>📝 Blog</h2>
+
+  <!-- Área de senha -->
+  <div id="senhaArea">
+    <p>Digite a senha para publicar no blog:</p>
+    <input type="password" id="senhaBlog" placeholder="Senha de administrador">
+    <button onclick="validarSenhaBlog()">Acessar</button>
+  </div>
+
+<div class="post">
+  <h3>💡 A Importância de Organizar o Tempo</h3>
+  <p>
+    Saber organizar o tempo é fundamental para aproveitar melhor o dia e alcançar objetivos pessoais e profissionais.  
+    <br><br>
+    Comece definindo prioridades e estabelecendo tarefas diárias. Faça listas de atividades e separe momentos para estudo, lazer e descanso.  
+    <br>
+    Evite distrações e dedique atenção completa a cada tarefa. Pequenas mudanças na rotina podem gerar grandes resultados ao longo do tempo.  
+    <br><br>
+    Lembre-se: o tempo é um recurso limitado e valioso. Quem aprende a gerenciá-lo com disciplina consegue produzir mais e manter equilíbrio na vida.
+  </p>
+  <small>Publicado em: 26/11/2025</small>
+</div>
+<div class="post">
+  <h3>🌱 Desenvolvimento Pessoal e Consciência Crítica</h3>
+  <p>
+    O desenvolvimento pessoal não é apenas sobre aprender habilidades novas, mas também sobre compreender a si mesmo e o mundo ao redor.  
+    <br><br>
+    A consciência crítica permite analisar informações de forma objetiva, questionar pressupostos e evitar aceitar tudo como verdade absoluta.  
+    <br><br>
+    Um exercício útil é refletir diariamente sobre decisões e comportamentos: quais escolhas trouxeram resultados positivos? Quais poderiam ser melhoradas?  
+    <br><br>
+    Outro ponto essencial é o hábito da leitura diversificada. Livros, artigos, debates e estudos oferecem perspectivas diferentes, ampliando a visão e fortalecendo o pensamento independente.  
+    <br><br>
+    Desenvolver-se pessoalmente exige paciência, disciplina e autocrítica, mas os resultados são transformadores: maior clareza mental, melhores relações e capacidade de tomar decisões conscientes em qualquer situação.
+  </p>
+  <small>Publicado em: 26/11/2025</small>
+</div>
+<div class="post">
+  <h3>📘 Como a Alfabetização Digital Molda o Futuro da Comunicação Global</h3>
+  <p>
+    A alfabetização digital tornou-se um dos pilares centrais para a participação social moderna. 
+    Em um cenário onde a informação circula com velocidade exponencial, compreender não apenas como 
+    consumir conteúdo, mas também como analisá-lo criticamente, é parte essencial da formação do cidadão contemporâneo.
+    <br><br>
+    Nas últimas duas décadas, a transição do modelo tradicional de comunicação — baseado em fontes centralizadas 
+    e validação hierárquica — para um ecossistema descentralizado exigiu novas competências cognitivas. 
+    Hoje, usuários não são mais apenas leitores, mas também produtores, curadores e distribuidores de conteúdo. 
+    Essa mudança de identidade redefine completamente a dinâmica da comunicação global.
+    <br><br>
+    Contudo, a democratização do acesso não eliminou os desafios: ao contrário, ampliou a necessidade de 
+    interpretar contextos, reconhecer vieses, compreender algoritmos e distinguir fatos de narrativas. 
+    A capacidade de identificar manipulação informacional, detectar padrões comportamentais e reconstruir 
+    significados tornou-se mais relevante do que simplesmente possuir domínio técnico de ferramentas digitais.
+    <br><br>
+    Além disso, a alfabetização digital está diretamente ligada à inclusão socioeconômica. Países com índices 
+    elevados de competências digitais tendem a apresentar maior inovação, maior participação no mercado global 
+    e melhores indicadores de produtividade. Isso ocorre porque indivíduos capazes de atuar em ambientes 
+    digitais complexos também conseguem integrar-se mais rapidamente em setores tecnológicos e informacionais.
+    <br><br>
+    A questão central, portanto, não é apenas ensinar tecnologia, mas promover consciência digital. 
+    Isso envolve práticas como: verificar fontes, compreender políticas de privacidade, interpretar 
+    dados estatísticos, desenvolver pensamento sistêmico e adotar postura ética no uso da informação.
+    <br><br>
+    Em última análise, alfabetizar digitalmente é preparar indivíduos para navegar em um ambiente em constante 
+    evolução — onde a inteligência artificial, a automação e os sistemas de recomendação moldam, 
+    silenciosamente, percepções, preferências e comportamentos. 
+    <br><br>
+    O futuro da comunicação global dependerá diretamente da habilidade coletiva de interpretar, criar 
+    e gerir conhecimento dentro de ecossistemas digitais cada vez mais sofisticados. Quanto mais sólida 
+    for essa base, mais resilientes e preparadas estarão as sociedades para enfrentar os desafios da nova era informacional.
+  </p>
+  <small>Publicado em: 26/11/2025</small>
+</div>
+<div class="post">
+  <h3>📚 A Importância do Pensamento Crítico e da Curadoria do Conhecimento</h3>
+  <p>
+    O acúmulo de informação disponível atualmente é incomparável com qualquer outro período da história humana. 
+    No entanto, a abundância de dados não equivale automaticamente à sabedoria. É nesse contexto que a prática 
+    do pensamento crítico e a curadoria consciente do conhecimento tornam-se essenciais para a formação intelectual. 
+    <br><br>
+    A Livraria Construtiva se estabelece como um espaço dedicado a fornecer materiais cuidadosamente selecionados, 
+    permitindo ao leitor desenvolver habilidades analíticas, interpretar conceitos complexos e contextualizar ideias. 
+    Ao contrário de ambientes digitais superficiais, que priorizam quantidade em detrimento da qualidade, a Livraria Construtiva 
+    oferece obras que estimulam a reflexão profunda e promovem o crescimento intelectual contínuo.
+    <br><br>
+    O pensamento crítico exige que o indivíduo questione premissas, avalie evidências, compreenda múltiplas perspectivas 
+    e reconheça vieses próprios e externos. Ele não se limita à análise acadêmica: é um instrumento de vida que permite 
+    decisões mais conscientes, avaliações mais precisas e aprendizagem autônoma. A Livraria Construtiva fortalece esse processo 
+    ao fornecer textos, resumos e reflexões que desafiam o leitor a expandir sua compreensão sobre literatura, ciência, filosofia e sociedade.
+    <br><br>
+    Além disso, a curadoria de conhecimento realizada pela Livraria Construtiva garante que cada obra, cada análise e cada 
+    recomendação sejam contextualizadas e fundamentadas. Essa abordagem estruturada facilita que o leitor construa conexões 
+    significativas entre diferentes áreas do saber, potencializando o aprendizado multidisciplinar.
+    <br><br>
+    Em um mundo saturado de informação rápida e superficial, aprender a selecionar, organizar e interpretar dados de maneira crítica 
+    torna-se uma habilidade diferenciadora. A Livraria Construtiva atua como catalisador desse processo, oferecendo não apenas acesso 
+    a livros, mas também ferramentas cognitivas para transformar conhecimento em ação, reflexão e inovação.
+    <br><br>
+    Dessa forma, explorar os recursos da Livraria Construtiva é mais do que consumir conteúdo: é engajar-se em um processo contínuo 
+    de crescimento intelectual, fortalecendo competências de análise, compreensão e síntese, essenciais para o sucesso acadêmico, 
+    profissional e pessoal no século XXI.
+  </p>
+  <small>Publicado em: 26/11/2025</small>
+</div>
+<div class="post">
+  <h3>🧠 Neurociência e Aprendizagem: Como o Cérebro Absorve Conhecimento</h3>
+  <p>
+    Entender como o cérebro processa e retém informações é fundamental para aprimorar qualquer prática de aprendizagem. 
+    A neurociência revela que a retenção de conhecimento depende de fatores como atenção, repetição espaçada, emoção e 
+    associação de conceitos. Ler passivamente sem contexto ou reflexão reduz significativamente a eficácia do aprendizado.
+    <br><br>
+    A Livraria Construtiva se posiciona como um recurso estratégico para estimular processos cognitivos complexos. 
+    Seus conteúdos são estruturados de maneira a facilitar a ativação de múltiplas regiões cerebrais: a compreensão de conceitos, 
+    a memória de longo prazo e a capacidade de análise crítica. Ao explorar obras cuidadosamente selecionadas, o leitor 
+    fortalece conexões neurais que suportam habilidades de pensamento crítico e resolução de problemas.
+    <br><br>
+    Além disso, o cérebro humano aprende melhor quando encontra informações organizadas em camadas de complexidade crescente. 
+    Por isso, a Livraria Construtiva apresenta seus conteúdos de forma progressiva: conceitos básicos, análises aprofundadas 
+    e aplicações práticas. Essa metodologia não apenas aumenta a retenção, mas também promove insights e síntese de conhecimento.
+    <br><br>
+    Estudos em neuroeducação indicam que a leitura ativa — aquela que envolve questionamento, resumo e reflexão — amplifica 
+    a capacidade de internalizar informações e aplicar conceitos em contextos diversos. A Livraria Construtiva incentiva esse 
+    engajamento, criando uma experiência de leitura que transforma livros em ferramentas cognitivas, em vez de meros textos.
+    <br><br>
+    Assim, ao utilizar a Livraria Construtiva como guia no processo de aprendizagem, o leitor não só acumula informações, 
+    mas também desenvolve habilidades cognitivas de alto nível, preparando-se para desafios acadêmicos, profissionais e pessoais 
+    com uma base sólida de conhecimento e compreensão crítica.
+  </p>
+  <small>Publicado em: 26/11/2025</small>
+</div>
+<div class="post">
+  <h3>📚 A Importância da Leitura Digital no Século XXI</h3>
+  <p>
+    Em um mundo cada vez mais conectado, a leitura digital se tornou uma ferramenta essencial para 
+    o desenvolvimento intelectual e pessoal. A Livraria Construtiva surge como um espaço estratégico 
+    que disponibiliza livros gratuitos, proporcionando acesso democrático ao conhecimento. 
+    A plataforma evidencia que o hábito da leitura não é apenas uma prática cultural, mas um 
+    instrumento de transformação social, capaz de ampliar perspectivas, estimular o pensamento crítico 
+    e fortalecer competências cognitivas essenciais.
+  </p>
+  <p>
+    O acesso a obras digitais permite que leitores de diferentes regiões, contextos e faixas etárias 
+    tenham contato com materiais diversificados sem barreiras físicas. Além disso, o ambiente digital 
+    facilita a organização, pesquisa e interação com o conteúdo, tornando a experiência de leitura mais 
+    dinâmica e adaptável às necessidades individuais. A Livraria Construtiva, ao reunir obras selecionadas 
+    e resumos interpretativos, promove não apenas a leitura, mas a reflexão e o aprendizado ativo.
+  </p>
+  <p>
+    Investir na leitura digital é investir na formação de cidadãos críticos, informados e preparados 
+    para os desafios do século XXI. A Livraria Construtiva reafirma sua missão de democratizar o conhecimento, 
+    tornando-o acessível, organizado e útil para todos que buscam crescer intelectual e pessoalmente.
+  </p>
+</div>
+<div class="post">
+  <h3>🌐 Transformando Educação com Livros Digitais: A Missão da Livraria Construtiva</h3>
+  <p>
+    A educação do século XXI exige novas estratégias para democratizar o acesso ao conhecimento. 
+    A Livraria Construtiva atua como uma ponte entre leitores e obras literárias, disponibilizando livros digitais 
+    que fomentam aprendizado contínuo e reflexões profundas. Em um ambiente onde informação é abundante, a curadoria 
+    criteriosa oferecida pela plataforma garante que cada livro selecionado contribua para a formação crítica e intelectual do leitor.
+  </p>
+  <p>
+    Além de facilitar a leitura, o formato digital promove interatividade, pesquisa rápida e armazenamento eficiente, 
+    permitindo que estudantes, profissionais e pesquisadores explorem conteúdos sem limitações físicas. 
+    A integração de recursos como resumos interpretativos e análises conceituais transforma a experiência de leitura em um processo ativo de aprendizado.
+  </p>
+  <p>
+    A Livraria Construtiva reforça a ideia de que a democratização do conhecimento não é apenas um ideal, 
+    mas uma prática possível por meio da tecnologia. Ao unir acessibilidade, organização de conteúdos e aprofundamento intelectual, 
+    a plataforma se consolida como referência para aqueles que buscam expandir horizontes e transformar informação em sabedoria aplicada.
+  </p>
+</div>
+<div class="post">
+  <h3>📖 A Importância da Curadoria Literária na Era Digital</h3>
+  <p>
+    Na vasta quantidade de obras disponíveis online, selecionar livros que realmente agregam valor ao leitor é um desafio. 
+    A Livraria Construtiva se diferencia ao aplicar uma curadoria literária criteriosa, priorizando obras que estimulam pensamento crítico, análise profunda e compreensão contextualizada de temas essenciais para o desenvolvimento intelectual.
+  </p>
+  <p>
+    Cada livro presente na plataforma é avaliado com base em relevância, qualidade textual e potencial educativo. 
+    Além disso, a Livraria Construtiva oferece recursos complementares, como resumos, comentários analíticos e categorização detalhada, tornando a experiência de leitura mais estruturada e enriquecedora.
+  </p>
+  <p>
+    Essa abordagem fortalece a aprendizagem autônoma, permitindo que leitores de diferentes níveis encontrem materiais alinhados aos seus objetivos, interesses e necessidades. 
+    Ao integrar curadoria literária com tecnologias digitais, a Livraria Construtiva contribui para um ecossistema de conhecimento mais organizado, acessível e estimulante.
+  </p>
+</div>
+<div class="post">
+  <h3>🌐 Democratização do Conhecimento e a Missão da Livraria Construtiva</h3>
+  <p>
+    Em um mundo cada vez mais digital, o acesso à informação e ao conhecimento tornou-se um fator determinante para o desenvolvimento pessoal e social. 
+    A Livraria Construtiva atua como um catalisador desse processo, oferecendo livros e conteúdos cuidadosamente selecionados, permitindo que qualquer pessoa, independentemente de sua localização ou contexto, possa aprender e crescer intelectualmente.
+  </p>
+  <p>
+    O compromisso da Livraria Construtiva vai além da simples disponibilização de livros gratuitos. 
+    Cada obra é escolhida considerando seu impacto educativo, relevância cultural e potencial de transformação individual. Além disso, a plataforma integra recursos adicionais, como resumos, análises e categorização temática, que ajudam o leitor a navegar de forma eficiente pelo universo literário.
+  </p>
+  <p>
+    Essa democratização do conhecimento fortalece o hábito da leitura e incentiva a reflexão crítica, promovendo leitores mais informados, conscientes e capazes de tomar decisões fundamentadas. 
+    Ao combinar tecnologia, curadoria e educação, a Livraria Construtiva reafirma sua missão de construir um espaço digital que conecta pessoas ao saber de maneira acessível, organizada e profundamente significativa.
+  </p>
+</div>
+<div class="post">
+  <h3>📚 Leitura Crítica e Transformação Intelectual na Livraria Construtiva</h3>
+  <p>
+    Em tempos de informação massiva e imediata, a capacidade de interpretar, analisar e questionar conteúdos tornou-se essencial. A Livraria Construtiva não se limita a fornecer livros gratuitos; seu diferencial está na promoção de uma leitura crítica, que estimula a reflexão e desenvolve habilidades de pensamento independente.
+  </p>
+  <p>
+    Cada obra disponível na plataforma é selecionada com critérios que vão além do entretenimento: busca-se potencial educativo, relevância histórica ou filosófica, e a capacidade de provocar questionamentos. Essa curadoria orientada permite que o leitor desenvolva uma visão mais profunda sobre temas diversos, desde literatura clássica até avanços científicos contemporâneos.
+  </p>
+  <p>
+    Ao engajar com a Livraria Construtiva, o usuário é convidado a não apenas consumir informações, mas a compreender contextos, identificar padrões e formar opiniões fundamentadas. Esse processo fortalece o raciocínio crítico, amplia horizontes intelectuais e contribui para a formação de cidadãos mais conscientes e participativos.
+  </p>
+  <p>
+    A plataforma, portanto, atua como um verdadeiro laboratório do conhecimento, onde a leitura deixa de ser um ato passivo e torna-se uma ferramenta ativa de transformação pessoal e social. A Livraria Construtiva reafirma assim sua missão de conectar cada leitor ao potencial transformador da literatura e da educação digital.
+  </p>
+</div>
+<div class="post">
+  <h3>📖 Curadoria Literária e Desenvolvimento Cognitivo na Livraria Construtiva</h3>
+  <p>
+    A Livraria Construtiva se distingue por sua abordagem estratégica na curadoria de obras. Cada livro é analisado considerando não apenas seu conteúdo, mas também seu impacto potencial sobre a construção do conhecimento, pensamento crítico e habilidades cognitivas do leitor.
+  </p>
+  <p>
+    O processo de curadoria envolve critérios como relevância histórica, coerência temática, profundidade conceitual e aplicabilidade prática. Isso garante que cada publicação oferecida seja capaz de fomentar aprendizado significativo e estimular reflexões complexas. Ao acessar a plataforma, o leitor encontra materiais que conectam teoria e prática, proporcionando experiências intelectuais transformadoras.
+  </p>
+  <p>
+    Além disso, a Livraria Construtiva busca integrar diferentes áreas do conhecimento, como ciência, filosofia, história e literatura, permitindo que o leitor desenvolva uma visão multidimensional. Essa integração favorece a construção de raciocínio analítico, capacidade de síntese e habilidade de aplicar conceitos em contextos diversos.
+  </p>
+  <p>
+    A plataforma funciona como um ambiente de desenvolvimento intelectual contínuo. Não se trata apenas de disponibilizar livros, mas de criar uma jornada educativa que fortalece competências cognitivas e prepara o leitor para desafios acadêmicos, profissionais e pessoais. A Livraria Construtiva reafirma, assim, seu compromisso com a promoção de aprendizado profundo, crítico e significativo.
+  </p>
+</div>
+<div class="post">
+  <h3>🌐 Leitura Digital e Acessibilidade na Livraria Construtiva</h3>
+  <p>
+    A Livraria Construtiva adota tecnologias de leitura digital que ampliam o acesso ao conhecimento, garantindo que obras literárias e científicas estejam disponíveis para um público diversificado, independentemente de limitações físicas, geográficas ou econômicas.
+  </p>
+  <p>
+    A plataforma prioriza formatos compatíveis com leitores de tela, dispositivos móveis e recursos de acessibilidade, permitindo que pessoas com deficiência visual ou dificuldades de leitura possam explorar conteúdos de maneira eficiente. Essa abordagem fortalece a inclusão digital e democratiza o aprendizado.
+  </p>
+  <p>
+    Além disso, a Livraria Construtiva oferece conteúdos organizados de forma lógica e intuitiva, combinando metadados detalhados, categorias precisas e mecanismos de busca eficientes. Essa estrutura facilita a navegação e contribui para que cada leitor encontre rapidamente materiais alinhados às suas necessidades e interesses.
+  </p>
+  <p>
+    A integração entre tecnologia, curadoria de conteúdo e acessibilidade posiciona a Livraria Construtiva como referência em inovação educacional digital. Ao proporcionar leitura acessível e de qualidade, a plataforma cumpre seu papel de ampliar horizontes, estimular aprendizado autônomo e incentivar o desenvolvimento intelectual contínuo.
+  </p>
+</div>
+  <!-- Área do editor -->
+  <div id="editorBlog" style="display:none; margin-top:20px;">
+    <h3>Escrever nova publicação</h3>
+    <textarea id="textoPublicacao" rows="6" style="width:90%; max-width:600px; padding:10px;"></textarea>
+    <br><br>
+    <button onclick="publicarTexto()">Publicar</button>
+  </div>
+
+  <hr style="margin:25px 0;">
+
+  <!-- Área de posts publicados -->
+  <div id="postsPublicados">
+    <h3>📢 Publicações</h3>
+    <div id="listaPosts"></div>
+  </div>
+</section>
+
+<section id="politica" style="display:none;">
+  <h2>🛡 Política de Privacidade</h2>
+  <p>
+    A Livraria Construtiva respeita a sua privacidade. As informações que coletamos, como comentários e dados de contato, são usadas apenas para melhorar sua experiência no site e não são compartilhadas com terceiros sem o seu consentimento.  
+    <br><br>
+    Este site pode usar cookies e ferramentas de análise para otimizar a navegação e mostrar anúncios relevantes. Você pode gerenciar suas preferências de cookies no navegador a qualquer momento.  
+    <br><br>
+    Ao utilizar nosso site, você concorda com esta política de privacidade. Em caso de dúvidas ou solicitações relacionadas à privacidade, entre em contato através do e-mail: <a href="mailto:livrariaconstrutiva223@gmail.com">livrariaconstrutiva223@gmail.com</a>.
+  </p>
+</section>
+
+<section id="termos" style="display:none;">
+  <h2>📘 Termos de Uso</h2>
+  <p>
+    Ao utilizar o site Livraria Construtiva, você concorda com os seguintes termos:
+    <br><br>
+
+    <strong>1. Uso do Conteúdo</strong><br>
+    Todo o conteúdo presente neste site, incluindo textos, imagens, artigos, publicações e materiais digitais, é de uso exclusivo da Livraria Construtiva. Não é permitido copiar, redistribuir ou reutilizar qualquer conteúdo sem autorização prévia.
+    <br><br>
+
+    <strong>2. Publicações dos Usuários</strong><br>
+    Comentários e publicações feitos pelos usuários são de responsabilidade dos próprios autores. Conteúdos ofensivos, ilegais ou que violem direitos autorais podem ser removidos sem aviso.
+    <br><br>
+
+    <strong>3. Privacidade e Dados</strong><br>
+    Seus dados são tratados de acordo com nossa Política de Privacidade. Ao usar o site, você concorda com o uso de cookies para melhorar sua experiência.
+    <br><br>
+
+    <strong>4. Modificações no Site</strong><br>
+    Podemos alterar, remover ou atualizar funcionalidades, conteúdos ou seções do site a qualquer momento sem aviso.
+    <br><br>
+
+    <strong>5. Responsabilidades</strong><br>
+    Não garantimos que o site funcionará de forma ininterrupta em todos os dispositivos. O usuário é responsável pela forma como utiliza o conteúdo do site.
+    <br><br>
+
+    <strong>6. Contato</strong><br>
+    Para dúvidas sobre estes termos, envie um e-mail para:
+    <a href="mailto:livrariaconstrutiva223@gmail.com">livrariaconstrutiva223@gmail.com</a>.
+  </p>
 </section>
 
 <footer>
@@ -334,13 +823,101 @@ section, #filtros, #livros-container, #comoBaixar {
 </div>
 
 <script>
+  
+  const SENHA_CORRETA = "Sacassole123...?"; // você pode alterar
+
+function validarSenhaBlog() {
+  const senha = document.getElementById("senhaBlog").value;
+  if (senha === SENHA_CORRETA) {
+    document.getElementById("senhaArea").style.display = "none";
+    document.getElementById("editorBlog").style.display = "block";
+    carregarPosts(); // recarrega posts para mostrar botão "Excluir"
+  } else {
+    alert("Senha incorreta!");
+  }
+}
+
+function publicarTexto() {
+  const texto = document.getElementById("textoPublicacao").value.trim();
+  if (!texto) {
+    alert("Escreva algo antes de publicar.");
+    return;
+  }
+
+  // salva no localStorage
+  let posts = JSON.parse(localStorage.getItem("postsBlog") || "[]");
+  let titulo = prompt("Digite o título da publicação:");
+if(!titulo) titulo = "Sem título";
+posts.unshift({ titulo: titulo, conteudo: texto, data: new Date().toLocaleString() });
+  localStorage.setItem("postsBlog", JSON.stringify(posts));
+
+  document.getElementById("textoPublicacao").value = "";
+  carregarPosts();
+}
+
+function carregarPosts() {
+  let posts = JSON.parse(localStorage.getItem("postsBlog") || "[]");
+  const lista = document.getElementById("listaPosts");
+
+  // Verifica se o editor está visível (senha inserida)
+  const senhaInserida = document.getElementById("editorBlog").style.display === 'block';
+
+lista.innerHTML = posts
+  .map((p, index) => `
+    <div style="background:white; padding:12px; margin:12px auto; border-radius:10px; max-width:600px; box-shadow:0 3px 8px rgba(0,0,0,0.2); position: relative;">
+      <h3>${p.titulo}</h3>
+      <p style="text-align:left; white-space:pre-wrap;">${p.conteudo}</p>
+      <small style="color:#555;">Publicado em: ${p.data}</small>
+      ${senhaInserida ? `<button onclick="excluirPost(${index})" style="position:absolute; top:10px; right:10px; background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;">Excluir</button>` : ''}
+    </div>
+  `)
+  .join("");
+  
+}
+
+function excluirPost(index) {
+  if(!confirm("Tem certeza que deseja excluir este post?")) return;
+  let posts = JSON.parse(localStorage.getItem("postsBlog") || "[]");
+  posts.splice(index, 1); // remove o post pelo índice
+  localStorage.setItem("postsBlog", JSON.stringify(posts));
+  carregarPosts(); // atualiza a lista
+}
+
+// carregar posts ao entrar no blog
+if (window.location.hash === "#blog") carregarPosts();
 // Alternar seções
 function mostrarSecao(secao) {
-  const secoes = ['home','livros','contato','sobreLivraria','sobreAutor','comoBaixar'];
-  secoes.forEach(id => document.getElementById(id).style.display = (id===secao)?'block':'none');
-  if(secao==='livros') carregarLivros();
+  // ADICIONEI 'politica' e 'termos' à lista
+  const secoes = ['home','livros','contato','sobreLivraria','sobreAutor','comoBaixar','blog','politica','termos'];
+
+  secoes.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = (id === secao) ? 'block' : 'none';
+  });
+
+  // Atualizar hash da URL
+  window.location.hash = secao;
+
+  // Scroll suave para topo
   window.scrollTo({top:0, behavior:'smooth'});
+
+  // Carregar livros ou posts conforme a seção
+  if(secao === 'livros') {
+    pagina = 1;
+    container.innerHTML = '';
+    carregarLivros();
+  }
+  if(secao === 'blog') carregarPosts();
 }
+// Verifica hash da URL ao carregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#','');
+  if(hash && document.getElementById(hash)) {
+    mostrarSecao(hash);
+  } else {
+    mostrarSecao('home'); // seção padrão
+  }
+});
 
 // Scroll, progress bar e botão topo
 const btnTopo = document.getElementById('btnTopo');
@@ -383,19 +960,24 @@ function fecharModal(){ document.getElementById('modal-download').style.display=
 
 async function carregarLivros(){
   if(carregando) return;
-  carregando=true; loading.style.display='block'; progressBar.style.width='30%';
+  carregando=true; 
+  loading.style.display='block'; 
+  progressBar.style.width='30%';
+  
   try{
     let url=`https://gutendex.com/books?languages=pt&page=${pagina}`;
     if(categoria) url+=`&topic=${categoria}`;
     if(termoBusca) url+=`&search=${encodeURIComponent(termoBusca)}`;
-    const res=await fetch(url); const data=await res.json();
-    const livros=data.results;
-    if(pagina===1) container.innerHTML='';
+    
+    const res = await fetch(url);
+    const data = await res.json();
+    const livros = data.results;
+    
+    if(pagina === 1) container.innerHTML='';
 
     livros.forEach(livro => {
       const formatos = livro.formats;
       const idiomas = livro.languages;
-
       if(!idiomas.includes('pt')) return;
 
       const extensoesPermitidas = ['application/pdf','application/epub+zip','text/plain','text/plain; charset=utf-8','application/rtf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
@@ -410,20 +992,32 @@ async function carregarLivros(){
 
       const capa = formatos['image/jpeg'] || 'https://via.placeholder.com/150x200?text=Sem+Capa';
       const autor = livro.authors.length ? livro.authors[0].name : 'Desconhecido';
+
       const card = document.createElement('div');
       card.className = 'livro-card';
-      card.innerHTML = `<img src="${capa}" alt="${livro.title}"><div class="livro-info"><h3>${livro.title}</h3><p>${autor}</p><button onclick='abrirModal(${JSON.stringify(livro)})'>📥 Baixar</button></div>`;
+      const img = document.createElement('img'); img.src = capa; img.alt = livro.title;
+
+      const info = document.createElement('div'); info.className = 'livro-info';
+      const h3 = document.createElement('h3'); h3.textContent = livro.title;
+      const p = document.createElement('p'); p.textContent = autor;
+      const btn = document.createElement('button'); btn.type='button'; btn.textContent='📥 Baixar';
+      btn.addEventListener('click', ()=>abrirModal(livro));
+
+      info.appendChild(h3); info.appendChild(p); info.appendChild(btn);
+      card.appendChild(img); card.appendChild(info);
       container.appendChild(card);
     });
 
-    pagina++; carregando=false; progressBar.style.width='100%';
-    setTimeout(()=>progressBar.style.width='0',300);
-    if(!data.next) loading.innerText="Todos os livros carregados.";
-  }catch(err){ 
-    console.error(err); 
-    loading.innerText="Erro ao carregar livros."; 
+    pagina++; // incrementar **após processar todos os livros**
     carregando=false; 
-    progressBar.style.width='0'; 
+    progressBar.style.width='100%';
+    setTimeout(()=>progressBar.style.width='0',300);
+    if(!data.next) loading.innerText="Todos os livros carregados."; else loading.style.display='none';
+  } catch(err){
+    console.error(err);
+    loading.innerText="Erro ao carregar livros."; 
+    carregando=false;
+    progressBar.style.width='0';
   }
 }
 
@@ -457,8 +1051,65 @@ function mostrarBotaoFlutuante(){
 window.addEventListener('scroll', mostrarBotaoFlutuante);
 window.addEventListener('touchstart', mostrarBotaoFlutuante);
 
+// carregar posts existentes para exibição pública
+carregarPosts();
+
 // Inicializar livros ao carregar a página
 carregarLivros();
+// Infinite scroll: carregar mais livros quando o usuário chega perto do fim
+window.addEventListener('scroll', () => {
+  if(document.getElementById('livros').style.display !== 'block') return; // só carrega se estivermos na seção livros
+  const scrollTop = window.scrollY;
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+
+  // Se estivermos a 150px do final, carregar mais
+  if(scrollTop + windowHeight + 150 >= documentHeight) {
+    carregarLivros();
+  }
+});
+
+// --- Função extra para habilitar excluir todos os posts antigos ---
+function habilitarExcluirPosts() {
+  const posts = document.querySelectorAll('#listaPosts div'); // seleciona todos os posts
+  const editorVisivel = document.getElementById('editorBlog').style.display === 'block';
+
+  posts.forEach((post, index) => {
+    let btnExcluir = post.querySelector('button.excluir');
+
+    // Se não existir o botão, cria
+    if (!btnExcluir) {
+      btnExcluir = document.createElement('button');
+      btnExcluir.textContent = 'Excluir';
+      btnExcluir.className = 'excluir';
+      btnExcluir.style.position = 'absolute';
+      btnExcluir.style.top = '10px';
+      btnExcluir.style.right = '10px';
+      btnExcluir.style.background = '#dc3545';
+      btnExcluir.style.color = 'white';
+      btnExcluir.style.border = 'none';
+      btnExcluir.style.padding = '5px 10px';
+      btnExcluir.style.borderRadius = '6px';
+      btnExcluir.style.cursor = 'pointer';
+      btnExcluir.style.display = editorVisivel ? 'block' : 'none';
+      btnExcluir.onclick = function() {
+        if (!confirm("Tem certeza que deseja excluir este post?")) return;
+        let postsArmazenados = JSON.parse(localStorage.getItem("postsBlog") || "[]");
+        postsArmazenados.splice(index, 1);
+        localStorage.setItem("postsBlog", JSON.stringify(postsArmazenados));
+        carregarPosts(); // recarrega todos os posts
+        habilitarExcluirPosts(); // atualiza botões
+      };
+      post.appendChild(btnExcluir);
+    } else {
+      btnExcluir.style.display = editorVisivel ? 'block' : 'none';
+    }
+  });
+}
+
+// Habilitar ao carregar posts
+document.getElementById('editorBlog').addEventListener('DOMNodeInserted', habilitarExcluirPosts);
+habilitarExcluirPosts();
 </script>
 </body>
 </html>
