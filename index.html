@@ -509,6 +509,40 @@ section, #filtros, #livros-container, #comoBaixar {
 .h{
   line-height: 1.4;
 }
+
+
+/* ==========================================
+   Caixa de informação profissional
+   ========================================== */
+.inf {
+  background-color: #f9f9f9; /* Fundo claro e agradável */
+  border-left: 5px solid #4CAF50; /* Destaque elegante na lateral */
+  border-radius: 12px; /* Bordas arredondadas */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra leve */
+  padding: 25px 30px; /* Espaço interno confortável */
+  margin: 20px 0; /* Espaçamento externo */
+  font-family: 'Arial', sans-serif;
+  color: #333333;
+  line-height: 1.6; /* Espaçamento entre linhas agradável */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Efeito hover para destacar a caixa */
+.inf:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Títulos ou destaques dentro da caixa */
+.inf strong {
+  color: #2a7f62; /* Verde escuro para destaque */
+}
+
+/* Parágrafos dentro da caixa */
+.inf p {
+  font-size: 16px; /* Tamanho do texto confortável */
+  margin-bottom: 12px;
+}
 </style>
 </head>
 <body>
@@ -537,15 +571,25 @@ section, #filtros, #livros-container, #comoBaixar {
   <button id="btnLivros" onclick="mostrarSecao('livros')">📖 Ver Livros</button>
   <br><br>
   <button id="btnHomeEspecial" style="margin-top:20px;padding:12px 24px;" onclick="abrirWhatsApp('Tens disponível o Livro:')">Livros Especiais</button>
+  
+  <section class="inf">
+  <p>Esse espaço foi feito especialmente para garantir o seu aprendizado. No entanto, aproveite ao máximo esta oportunidade de obter conhecimento de forma fácil e dinâmica.</p>
+
+  <p>Você pode clicar em <strong>Ver Livros</strong> e achar os melhores livros que mais combinam com você.</p>
+
+  <p>Lembrando que quem lê um livro nunca será a mesma pessoa. Enquanto você não começar, nunca irás entender que livros mudam vidas, abrem portas e transformam mentes, mostrando uma perspectiva mais ampla da vida e convertendo ideias em práticas reais.</p>
+
+  <p>Fique ligado com os nossos serviços e desfrute dos melhores livros do mercado de forma fácil, prática e dinâmica.</p>
+</section>
   <h2 class="h">Acompanha o nosso curso para aproveitares o conteúdo de forma profissional e científica</h2>
   <section class="aula">
-  <h1>Aula Introdutória – Bem-vindo ao Curso Como Estudar de Forma Eficiente</h1>
+  <h3>Aula Introdutória – Bem-vindo ao Curso Como Estudar de Forma Eficiente</h3>
 
   <p>Seja muito bem-vindo à Livraria Construtiva! É um prazer receber você neste curso especial criado para ajudar estudantes, autodidatas e qualquer pessoa que deseja aprender melhor, mais rápido e com mais clareza.</p>
 
   <p>Este curso foi desenvolvido com o objetivo de ensinar métodos que realmente funcionam, trazendo técnicas modernas de aprendizagem, estratégias de estudo altamente eficazes e princípios que vão transformar sua forma de aprender.</p>
 
-  <h2>Objetivo do Curso</h2>
+  <h3>Objetivo do Curso</h3>
   <p>O objetivo principal deste curso é mostrar que qualquer pessoa pode aprender de maneira eficiente quando entende como o cérebro funciona, como organizar o processo de estudo e como aplicar técnicas corretas de memorização, foco e disciplina.</p>
 
   <p>Ao longo das aulas, você vai descobrir como:</p>
@@ -559,12 +603,12 @@ section, #filtros, #livros-container, #comoBaixar {
     <li>se preparar para provas, exames e projetos com alto desempenho.</li>
   </ul>
 
-  <h2>A Importância de Estudar Bem</h2>
+  <h3>A Importância de Estudar Bem</h3>
   <p>Estudar é mais do que uma obrigação: é uma ferramenta poderosa de transformação pessoal. Quando você aprende de forma estratégica, você evolui intelectualmente, conquista novas oportunidades e constrói um futuro mais sólido e promissor.</p>
 
   <p>O mundo está cheio de informação, mas poucos sabem aprender. E este curso existe para colocar você entre a minoria que domina o verdadeiro processo de estudo.</p>
 
-  <h2>Sobre o Mentor do Curso</h2>
+  <h3>Sobre o Mentor do Curso</h3>
   <p>Seu mentor ao longo das aulas será alguém totalmente focado em clareza, organização e eficiência. Cada conteúdo foi estruturado para facilitar sua compreensão e garantir que você aprenda de forma prática, direta e consistente.</p>
 
   <p>Prepare-se para uma jornada intensa, motivadora e cheia de evolução.</p>
@@ -577,7 +621,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p><strong>Vamos começar.</strong></p>
 </section>
 <section class="aula" id="aula-1">
-  <h1>Aula 1 – Introdução ao Curso</h1>
+  <h2>Aula 1 – Introdução ao Curso</h2>
 
   <p>Esta é a primeira aula oficial do curso <strong>Como Estudar de Forma Eficiente</strong>. Agora que você já conhece a proposta geral e recebeu as boas-vindas, vamos iniciar a nossa jornada com clareza, propósito e direção.</p>
 
@@ -595,7 +639,7 @@ section, #filtros, #livros-container, #comoBaixar {
     <li>um método de estudo adaptado ao seu estilo.</li>
   </ul>
 
-  <h2>O Que Você Precisa Para Aproveitar o Curso</h2>
+  <h3>O Que Você Precisa Para Aproveitar o Curso</h3>
   <p>Para que o curso seja realmente transformador, você vai precisar de três elementos fundamentais:</p>
 
   <h3>1. Compromisso</h3>
@@ -607,7 +651,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <h3>3. Consistência</h3>
   <p>O conhecimento funciona como um músculo: quanto mais você exercita, mais forte ele fica. A constância será uma das suas maiores aliadas.</p>
 
-  <h2>Por Que Este Curso É Diferente</h2>
+  <h3>Por Que Este Curso É Diferente</h3>
   <p>Este curso não traz apenas teoria. Ele reúne métodos que funcionam no mundo real, validados por pesquisas e aplicados por estudantes de alto desempenho.</p>
 
   <p>Você vai aprender as mesmas práticas utilizadas por leitores vorazes, estudantes produtivos, profissionais de excelência e pessoas que dominam o próprio processo de aprendizagem.</p>
@@ -633,13 +677,13 @@ section, #filtros, #livros-container, #comoBaixar {
   <p><strong>Nos vemos na próxima aula.</strong></p>
 </section>
 <section class="aula" id="aula-2">
-  <h1>Aula 2 – Entendendo Como o Cérebro Aprende</h1>
+  <h3>Aula 2 – Entendendo Como o Cérebro Aprende</h3>
 
   <p>Antes de dominar técnicas de estudo, você precisa entender como o seu cérebro realmente funciona no processo de aprendizagem. Quando você compreende o mecanismo interno da mente, estudar deixa de ser algo cansativo e passa a ser algo estratégico.</p>
 
   <p>Aprender não é apenas acumular informações. É criar conexões, fortalecer caminhos mentais e transformar conhecimento em compreensão profunda. E, nesta aula, vamos aprofundar esse processo.</p>
 
-  <h2>O Cérebro Como uma Máquina de Conexões</h2>
+  <h3>O Cérebro Como uma Máquina de Conexões</h3>
   <p>O cérebro aprende criando ligações entre neurônios, chamadas sinapses. Quanto mais você repete, aplica e revisa algo, mais forte essa conexão fica. É como construir uma estrada: quanto mais usada, mais clara e acessível ela se torna.</p>
 
   <p>Por isso, o estudo eficiente não depende apenas de horas, mas sim da forma como você constrói essas conexões.</p>
@@ -649,7 +693,7 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>Quando você entende a importância de focar no que está estudando, a qualidade da aprendizagem aumenta imenso. Não é apenas ler, mas ler com intenção. Não é apenas ouvir, mas ouvir com presença.</p>
 
-  <h2>Memória de Curto e Longo Prazo</h2>
+  <h3>Memória de Curto e Longo Prazo</h3>
   <p>O cérebro possui duas estruturas fundamentais no aprendizado:</p>
   <ul>
     <li><strong>Memória de curto prazo</strong> – guarda informações rapidamente, mas esquece também muito rápido.</li>
@@ -658,17 +702,17 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>O segredo do estudo eficiente é transformar o que está na memória de curto prazo em memória de longo prazo. E isso só acontece com técnicas certas, que você aprenderá ao longo do curso.</p>
 
-  <h2>Ambiente e Emoções Também Ensinam</h2>
+  <h3>Ambiente e Emoções Também Ensinam</h3>
   <p>Aprender não é só racional. Emoções, ambiente, humor e contexto influenciam diretamente na aprendizagem. Quando você estuda num ambiente organizado, silencioso e confortável, o cérebro trabalha melhor.</p>
 
   <p>Da mesma forma, quando você associa emoções positivas ao estudo — como motivação, propósito e interesse — seu cérebro se torna mais receptivo e ativo durante o aprendizado.</p>
 
-  <h2>O Papel da Curiosidade</h2>
+  <h3>O Papel da Curiosidade</h3>
   <p>A curiosidade é uma das forças mais poderosas da aprendizagem. Quando algo desperta seu interesse real, o cérebro ativa regiões que aumentam a retenção de conhecimento.</p>
 
   <p>É por isso que incentivar a leitura é tão importante. Quem lê mais, aprende mais. Quem aprende mais, pensa melhor. E quem pensa melhor, evolui em todas as áreas da vida.</p>
 
-  <h2>A Preparação para as Próximas Aulas</h2>
+  <h3>A Preparação para as Próximas Aulas</h3>
   <p>Agora que você sabe como o cérebro reage ao processo de aprendizagem, você está preparado para entender o que realmente torna um estudante eficiente. As próximas aulas vão aprofundar técnicas práticas para melhorar foco, memorização, organização e constância.</p>
 
   <p><strong>Obrigado por participar desta aula. Nos vemos na próxima.</strong></p>
@@ -713,7 +757,7 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>Essa autonomia torna o aprendizado mais sólido, mais profundo e mais duradouro.</p>
 
-  <h2>6. Consciência do Próprio Processo</h2>
+  <h3>6. Consciência do Próprio Processo</h3>
   <p>Aprender a aprender é uma das habilidades mais valiosas do século. Quando você observa como estuda, identifica suas dificuldades, conhece seus pontos fortes e adapta seu método, o crescimento acontece naturalmente.</p>
 
   <p>O estudante consciente é capaz de reconhecer quando um método funciona e quando precisa ser ajustado. Essa autoavaliação constante é o que cria um verdadeiro hábito de evolução.</p>
@@ -726,13 +770,13 @@ section, #filtros, #livros-container, #comoBaixar {
   <p><strong>Obrigado por acompanhar esta aula. Nos vemos na próxima.</strong></p>
 </section>
 <section class="aula" id="aula-4">
-  <h1>Aula 4 – Técnicas Modernas de Estudo Que Realmente Funcionam</h1>
+  <h3>Aula 4 – Técnicas Modernas de Estudo Que Realmente Funcionam</h3>
 
   <p>Chegamos a uma das aulas mais importantes deste curso. Aqui você vai aprender técnicas comprovadas, utilizadas por estudantes de alto desempenho no mundo inteiro. São métodos modernos, baseados em neurociência, psicologia cognitiva e boas práticas de aprendizagem.</p>
 
   <p>Estas técnicas não são apenas eficientes — elas são estratégicas. Combinadas com disciplina e constância, podem transformar completamente a forma como você estuda. E lembre-se: tudo o que aprender aqui pode ser potencializado com hábitos de leitura, prática constante e materiais de qualidade, como os disponíveis na Livraria Construtiva.</p>
 
-  <h2>1. Técnica de Repetição Espaçada</h2>
+  <h3>1. Técnica de Repetição Espaçada</h3>
   <p>A repetição espaçada é considerada uma das técnicas mais poderosas para memorização a longo prazo. Ao invés de revisar tudo de uma vez, você revisa várias vezes, em intervalos crescentes: depois de 1 dia, depois de 3 dias, depois de 7 dias, depois de 15 dias.</p>
 
   <p>Esse processo fortalece as conexões da memória e impede o esquecimento rápido. É ideal para matérias extensas, conteúdos importantes e preparação para provas. Muitos estudantes combinam essa técnica com resumos curtos feitos a partir de leituras — e é aí que livros e materiais de estudo confiáveis, como os que a Livraria Construtiva oferece, se tornam ainda mais importantes.</p>
@@ -742,7 +786,7 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>Essa técnica combate a distração, melhora o foco e aumenta a produtividade, especialmente em tempos de excesso de estímulos digitais. É um dos métodos mais usados pelos estudantes modernos.</p>
 
-  <h2>3. Estudo Ativo (Active Recall)</h2>
+  <h3>3. Estudo Ativo (Active Recall)</h3>
   <p>O estudo ativo é o oposto do estudo passivo. Não basta reler o conteúdo. É necessário puxar da memória. Tente explicar a matéria sem olhar, responder perguntas, criar flashcards e testar o próprio conhecimento.</p>
 
   <p>O Active Recall estimula o cérebro a recordar informações de forma ativa, fortalecendo muito a memória. Essa técnica é ainda mais poderosa quando você tem bons materiais para estudar, como livros bem escritos e organizados — algo que a Livraria Construtiva incentiva ao disponibilizar conteúdos de qualidade.</p>
@@ -752,7 +796,7 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>Essa técnica desenvolve clareza mental, raciocínio e capacidade de síntese — habilidades essenciais para qualquer estudante moderno.</p>
 
-  <h2>5. Mapas Mentais e Mapas Conceituais</h2>
+  <h3>5. Mapas Mentais e Mapas Conceituais</h3>
   <p>Os mapas mentais organizam ideias de forma visual, ajudando o cérebro a criar conexões mais fortes. São perfeitos para resumir matérias longas, organizar temas para provas e visualizar lógica e estrutura de conteúdos.</p>
 
   <p>Esse tipo de organização também melhora a criatividade e facilita revisões rápidas. Muitos estudantes utilizam livros como base para extrair as ideias principais antes de montar seus mapas — outra forma indireta de desenvolver o hábito de leitura, algo que a Livraria Construtiva promove constantemente.</p>
@@ -769,7 +813,7 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>Essa técnica melhora a compreensão, a retenção e a interpretação, sendo ideal para livros, apostilas e materiais extensos — como aqueles que muitos estudantes pesquisam através da Livraria Construtiva.</p>
 
-  <h2>7. Técnica das Perguntas-Chave</h2>
+  <h3>7. Técnica das Perguntas-Chave</h3>
   <p>Após estudar um conteúdo, responda sempre às perguntas:</p>
   <ul>
     <li>O que é isso?</li>
@@ -788,7 +832,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p><strong>Obrigado por acompanhar esta aula. Nos vemos na próxima.</strong></p>
 </section>
 <section class="aula" class="aula-5">
-  <h1>Aula 5 – Construindo Hábitos de Leitura Inteligente</h1>
+  <h3>Aula 5 – Construindo Hábitos de Leitura Inteligente</h3>
 
   <p>Se existe um hábito capaz de transformar completamente a vida de um estudante, esse hábito é a leitura. Ler desenvolve vocabulário, estimula a imaginação, melhora a concentração, amplia o conhecimento e fortalece o raciocínio lógico. A leitura é a base fundamental de todo estudo eficiente.</p>
 
@@ -816,12 +860,12 @@ section, #filtros, #livros-container, #comoBaixar {
 
   <p>Você pode usar a técnica Pomodoro, por exemplo, lendo por 25 minutos e descansando por 5. Isso mantém sua mente ativa e evita distrações prolongadas.</p>
 
-  <h2>5. Criação de Rotina de Leitura</h2>
+  <h3>5. Criação de Rotina de Leitura</h3>
   <p>Para transformar leitura em hábito, é essencial criar uma rotina. Escolha um horário fixo, um ambiente confortável e mantenha o compromisso consigo mesmo. Quanto mais você repete, mais seu cérebro entende que ler faz parte do seu dia.</p>
 
   <p>Mesmo que comece com poucos minutos, o importante é a constância. Com o tempo, você vai sentir prazer e perceber o quanto esse hábito contribui para seu crescimento pessoal e acadêmico.</p>
 
-  <h2>6. Como Escolher Livros de Qualidade</h2>
+  <h3>6. Como Escolher Livros de Qualidade</h3>
   <p>Nem todo livro tem o mesmo impacto. É importante escolher obras bem escritas, organizadas e que realmente agregam conhecimento. A Livraria Construtiva ajuda exatamente nesse ponto, oferecendo materiais selecionados que apoiam a aprendizagem e incentivam o leitor a continuar evoluindo.</p>
 
   <p>Livros ruins podem tirar sua motivação. Livros bons elevam sua capacidade de pensar e de entender o mundo. A diferença é enorme.</p>
@@ -837,7 +881,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p><strong>Obrigado por acompanhar esta aula. Te vejo na próxima.</strong></p>
 </section>
 <section class="aula">
-  <h2>Aula 6: Técnicas de Memorização Eficiente</h2>
+  <h3>Aula 6: Técnicas de Memorização Eficiente</h3>
   <p>Na Aula 6, vamos explorar métodos que ajudam você a memorizar informações de forma mais rápida e duradoura. A memorização é essencial para estudar de forma eficiente, especialmente quando você precisa lembrar de grandes quantidades de conteúdo.</p>
 
   <h3>1. Método da Repetição Espaçada</h3>
@@ -878,7 +922,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p>Seguindo essas técnicas, você aumentará sua capacidade de memorizar conteúdos de forma rápida e eficiente, economizando tempo e melhorando seu rendimento nos estudos.</p>
 </section>
 <section class="aula">
-  <h2>Aula 7: Técnicas de Leitura Eficiente</h2>
+  <h3>Aula 7: Técnicas de Leitura Eficiente</h3>
   <p>Nesta aula, vamos aprender a ler de forma mais rápida e compreender melhor o conteúdo estudado. Ler eficientemente não significa apenas passar os olhos pelo texto, mas extrair o máximo de informação em menos tempo.</p>
 
   <h3>1. Leitura Ativa</h3>
@@ -921,7 +965,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p>Com essas técnicas, você conseguirá ler mais rápido, entender melhor e economizar tempo nos estudos, tornando seu aprendizado mais eficiente.</p>
 </section>
 <section class="aula">
-  <h2>Aula 8: Técnicas de Concentração e Foco</h2>
+  <h3>Aula 8: Técnicas de Concentração e Foco</h3>
   <p>Nesta aula, vamos aprender como manter a concentração e o foco durante os estudos. Sem foco, mesmo estudando por muitas horas, o aprendizado será superficial.</p>
 
   <h3>1. Ambiente de Estudo Adequado</h3>
@@ -966,7 +1010,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p>Com essas técnicas de concentração e foco, você poderá estudar de maneira mais eficiente, aproveitando melhor seu tempo e absorvendo mais conteúdo.</p>
 </section>
 <section class="aula" id="aula9">
-  <h2>Aula 9: Revisão Estratégica e Preparação para Avaliações</h2>
+  <h3>Aula 9: Revisão Estratégica e Preparação para Avaliações</h3>
   
   <p>Nesta aula, vamos aprender como revisar de forma eficiente e como se preparar para provas e avaliações sem desperdiçar tempo.</p>
   
@@ -1015,7 +1059,7 @@ section, #filtros, #livros-container, #comoBaixar {
   <p><strong>Próximo passo:</strong> Comece a aplicar revisões diárias e teste essas técnicas na sua rotina de estudos.</p>
 </section>
 <section class="aula" id="aula10">
-  <h2>Aula 10: Consolidando Hábitos e Tornando o Estudo Eficiente Permanente</h2>
+  <h3>Aula 10: Consolidando Hábitos e Tornando o Estudo Eficiente Permanente</h3>
   
   <p>Nesta aula final, vamos aprender como transformar tudo o que estudamos em hábitos sólidos, garantindo que o estudo eficiente se torne parte da sua rotina diária.</p>
   
