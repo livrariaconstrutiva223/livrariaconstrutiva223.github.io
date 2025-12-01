@@ -1,0 +1,182 @@
+/* Reset e base */
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color:#333;
+  overflow-x:hidden;
+  background: linear-gradient(135deg,#fdf6e3,#ffd54f);
+  padding-top:130px;
+}
+
+/* Header */
+header {
+  position:fixed;
+  top:0; left:0; right:0;
+  background:#FF5722;
+  color:white;
+  padding:0.4rem 1rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:1000;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+header h1 {
+  font-size:1.2rem;
+  font-weight:600;
+}
+
+/* Menu */
+nav a {
+  display:inline-block;
+  padding:5px 10px;
+  margin:0 3px;
+  background:linear-gradient(45deg,#FF5722,#FF9800);
+  color:white;
+  border-radius:16px;
+  font-weight:600;
+  font-size:0.78rem;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.18);
+  transition:all 0.3s;
+}
+nav a:hover {
+  transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(0,0,0,0.28);
+  background:linear-gradient(45deg,#FF7043,#FF8A65);
+}
+
+/* Barra de pesquisa */
+#barra-pesquisa {
+  position:fixed;
+  top:55px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:400px;
+  z-index:999;
+}
+#barra-pesquisa input[type="text"] {
+  width:100%;
+  padding:10px 15px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+footer {
+  text-align:center;
+  padding:1.5rem;
+  color:#777;
+  font-size:0.85rem;
+  background:#FFCCBC;
+  margin-top:2rem;
+}
+
+/* Sections */
+section {
+  padding:40px 15px 60px 15px;
+  min-height:70vh;
+  text-align:center;
+  transition:all 0.3s;
+}
+/* Titles & paragraphs */
+section h2 { margin-bottom:15px; font-size:1.6rem; line-height:2; word-wrap: break-word; }
+section p { max-width:700px; margin:15px auto; padding:15px; background:white; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.2); line-height:1.5; }
+
+/* backgrounds for sections */
+#home {background: linear-gradient(135deg,#fdf6e3,#ffd54f);}
+#livros {background:#FFF8E1;}
+#contato {background:#FFE0B2;}
+#sobreLivraria {background:#FFCCBC;}
+#sobreAutor {background:#FFAB91;}
+#comoBaixar {background:#FF8A65; color:white;}
+
+/* Buttons */
+button { font-size:0.9rem; font-weight:600; padding:10px 20px; border-radius:25px; border:none; background:linear-gradient(45deg,#FF5722,#FF9800); color:white; box-shadow:0 3px 10px rgba(0,0,0,0.3); transition:all 0.3s; }
+button:hover { transform:translateY(-1px); box-shadow:0 5px 12px rgba(0,0,0,0.4); background:linear-gradient(45deg,#FF7043,#FF8A65); }
+
+/* Floating buttons */
+#btnFlutuanteEspecial, #btnTopo { display:none; position:fixed; font-weight:600; padding:10px 18px; border-radius:25px; box-shadow:0 3px 10px rgba(0,0,0,0.3); z-index:1002; background:#FF5722; color:white; border:none; cursor:pointer; transition:all 0.3s; }
+#btnFlutuanteEspecial {bottom:80px; right:30px; z-index:998;}
+#btnTopo {bottom:30px; right:30px;}
+#btnFlutuanteEspecial:hover, #btnTopo:hover { transform:translateY(-1px); box-shadow:0 5px 12px rgba(0,0,0,0.4); background:linear-gradient(45deg,#FF7043,#FF8A65); }
+
+/* Progress bar */
+#progress-bar { position:fixed; top:0; left:0; height:3px; background:#FFC107; width:0; z-index:1001; transition:width 0.2s; }
+
+/* Livros grid */
+#livros-container { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:10px; }
+.livro-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.2); transition:transform 0.2s; display:flex; flex-direction:column; justify-content:space-between; }
+.livro-card:hover { transform:translateY(-3px); }
+.livro-card img { width:100%; height:180px; object-fit:cover; }
+.livro-info { padding:0.6rem; flex:1; display:flex; flex-direction:column; justify-content:space-between; }
+.livro-info h3 { font-size:0.9rem; margin-bottom:0.2rem; height:35px; overflow:hidden; }
+.livro-info p { font-size:0.8rem; color:#555; margin-bottom:0.4rem; height:18px; overflow:hidden; }
+.livro-info button { width:100%; padding:0.4rem; border:none; border-radius:6px; background:#FF5722; color:white; font-weight:600; cursor:pointer; transition:background 0.2s; }
+.livro-info button:hover { background:#E64A19; }
+
+/* Filters */
+#filtros { margin-top:15px; display:flex; justify-content:center; flex-wrap:wrap; gap:8px; }
+#filtros input, #filtros select { padding:10px 12px; border-radius:10px; border:1px solid #ccc; font-size:0.9rem; width:250px; max-width:95%; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+
+/* Contato */
+#contato a { color:#FF5722; text-decoration:none; font-weight:600; margin:0 4px; transition:color 0.3s; }
+#contato a:hover { color:#E64A19; }
+
+/* Modal */
+#popup, #modal-download { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:15px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.3); z-index:2000; text-align:center; }
+#modal-download button { margin:5px; }
+
+/* Blog container */
+#blog { padding: 100px 20px 20px 20px; max-width: 800px; margin: auto; font-family: Arial, sans-serif; position: relative; z-index: 1; }
+#blog h2 { font-size: 26px; margin-bottom: 10px; text-align: center; position: relative; z-index: 2; padding:30px 20px 20px 20px; }
+#blog h3 { margin-top: 20px; font-size: 20px; margin-bottom: 10px; }
+
+/* Senha & editor */
+#senhaArea { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); max-width: 350px; margin: 25px auto; text-align: center; }
+#senhaBlog { width: 85%; padding: 10px; margin-top: 8px; font-size: 16px; border-radius: 8px; border: 1px solid #bbb; outline: none; }
+#senhaArea button { margin-top: 12px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
+#editorBlog { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+#textoPublicacao { width:100%; padding:12px; font-size:16px; border-radius:10px; border:1px solid #bbb; outline:none; resize:vertical; }
+#editorBlog button { margin-top:15px; padding:10px 20px; background:#28a745; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+
+/* Cards posts */
+#listaPosts div.post { background:#ffffff; padding:20px; border-radius:12px; margin:15px auto; box-shadow:0 4px 10px rgba(0,0,0,0.12); max-width:650px; position:relative; font-family:Arial, sans-serif; }
+#listaPosts div.post h3 { font-size:24px; font-weight:700; line-height:1.4; margin-bottom:12px; color:#222; text-align:left; }
+#listaPosts div.post p { font-size:17px; line-height:1.6; margin-bottom:12px; text-align:justify; white-space:pre-wrap; color:#444; }
+#listaPosts div.post small { display:block; margin-top:8px; color:#666; font-size:13px; }
+
+/* Excluir botão estilo */
+#listaPosts div.post button.excluir { position:absolute; top:10px; right:10px; background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; display:none; }
+
+/* Responsividade */
+@media (max-width:600px) {
+  header h1 { font-size:1.05rem; }
+  nav a { padding:4px 8px; font-size:0.72rem; border-radius:14px; }
+  #blog { padding:10px; }
+  #senhaArea, #editorBlog, #listaPosts div { padding:15px; }
+  #textoPublicacao { font-size:15px; }
+}
+
+/* extras (aula / inf boxes) preserved from original */
+.aula { background-color: #ffffff; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 25px 30px; margin: 20px 0; font-family: 'Arial', sans-serif; line-height: 1.7; color: #333333; transition: transform 0.3s, box-shadow 0.3s; }
+.aula:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
+.aula h2 { line-height: 1.7; font-size: 28px; font-weight: bold; color: #1a1a1a; margin-bottom: 15px; }
+.aula h3 { font-size: 22px; font-weight: 600; color: #2a2a2a; margin-top: 15px; margin-bottom: 10px; }
+.aula p { font-size: 16px; margin-bottom: 12px; }
+.aula ul { margin-left: 20px; margin-bottom: 12px; }
+.aula ul li { font-size: 16px; margin-bottom: 8px; }
+
+.inf { background-color: #f9f9f9; border-left: 5px solid #4CAF50; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); padding: 25px 30px; margin: 20px 0; font-family: 'Arial', sans-serif; color: #333333; line-height: 1.6; transition: transform 0.3s, box-shadow 0.3s; }
+.inf:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+.inf strong { color: #2a7f62; }
+.inf p { font-size: 16px; margin-bottom: 12px; }
+
+/* Fix específico: seção Como Baixar estava com texto branco sobre fundo branco */
+#comoBaixar p {
+  background: rgba(0,0,0,0.25) !important;
+  color: white !important;
+}
