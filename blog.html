@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - Livraria Construtiva</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+</head>
+<body>
+<style>
+  /* ============================
+   GLOBAL / RESET
+   ============================ */
+:root{
+  --accent:#ff5722;
+  --accent-2:#ff9800;
+  --card-bg: #fff;
+  --muted:#777;
+  --text:#222;
+  --glass: rgba(255,255,255,0.7);
+  --shadow: 0 10px 30px rgba(0,0,0,0.12);
+  --page-bg: linear-gradient(180deg, #fff 0%, #fff9f3 100%);
+  --max-width: 1100px;
+}
+
+* { 
+  box-sizing: border-box; 
+  margin:0; 
+  padding:0; 
+  font-family: "Poppins", sans-serif; 
+}
+
+html,body { 
+  height:100%; 
+  overflow-x:hidden;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text);
+  line-height:1.6;
+  padding-bottom:80px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ============================
+   HEADER
+   ============================ */
+header {
+  position: sticky;
+  top:0;
+  z-index:1200;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(90deg, rgba(255,87,34,0.95), rgba(255,152,0,0.9));
+  color:#fff;
+  padding:18px 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  width:100%;
+}
+
+header h1 {
+  font-size:1.25rem;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0;
+  word-break: break-word;
+}
+
+header nav {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+header nav a{
+  color:rgba(255,255,255,0.95);
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:600;
+  transition: all .18s ease;
+  background: rgba(255,255,255,0.06);
+}
+header nav a:hover {
+  transform:translateY(-2px);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ============================
+   MENU LATERAL
+   ============================ */
+#menu-container { position:relative; }
+
+#btnMenu {
+  background:transparent;
+  border:none;
+  color:#fff;
+  font-size:26px;
+  cursor:pointer;
+  padding:6px 10px;
+  border-radius:8px;
+  transition: background .15s ease, transform .12s ease;
+}
+#btnMenu:hover { 
+  background: rgba(255,255,255,0.08); 
+  transform: translateY(-2px); 
+}
+
+#menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255,87,34,0.96), rgba(255,152,0,0.92));
+  color: #fff;
+  padding: 28px 18px;
+  padding-top: 84px;
+  transition: right .28s cubic-bezier(.22,.9,.36,1);
+  z-index: 1300;
+  box-shadow: -6px 12px 40px rgba(0,0,0,0.32);
+  border-left: 1px solid rgba(255,255,255,0.06);
+}
+#menu-lateral a {
+  display:block;
+  color:#fff;
+  text-decoration:none;
+  padding:12px 8px;
+  font-weight:600;
+  border-radius:8px;
+  margin-bottom:8px;
+  transition: background .12s;
+}
+#menu-lateral a:hover{ 
+  background: rgba(255,255,255,0.06); 
+  transform: translateX(-4px); 
+}
+#menu-lateral.open { right:0; }
+
+#menu-overlay {
+  position: fixed;
+  inset:0;
+  background: rgba(0,0,0,0.45);
+  display:none;
+  z-index:1250;
+  transition: opacity .2s ease;
+}
+#menu-overlay.show { display:block; }
+
+/* ============================
+   BLOG CONTENT AREA
+   ============================ */
+section#blog {
+  width:92%;
+  max-width: var(--max-width);
+  margin:28px auto;
+  padding:18px;
+  border-radius:14px;
+}
+
+section#blog h2 {
+  font-size:1.6rem;
+  color: #333;
+  margin-bottom:12px;
+}
+
+/* LOGIN + EDITOR */
+#senhaArea, #editorBlog {
+  background: rgba(255,255,255,0.95);
+  border-radius:12px;
+  padding:14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  margin-bottom:14px;
+}
+
+#senhaArea input[type="password"] {
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,0.08);
+  width:260px;
+  max-width:100%;
+  outline:none;
+}
+
+#editorBlog textarea {
+  min-height:120px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  resize:vertical;
+  font-size:1rem;
+  padding:10px;
+  width:100%;
+}
+
+/* publish buttons */
+#editorBlog button,
+#senhaArea button {
+  padding:10px 16px;
+  border-radius:10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border:none;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow: 0 10px 20px rgba(255,87,34,0.16);
+}
+
+/* posts header */
+#postsPublicados h3 { 
+  margin:0 0 12px 0; 
+  color: #111; 
+}
+
+/* ============================
+   POSTS: AGORA 100% COLUNA ÚNICA
+   ============================ */
+#listaPosts {
+  column-count: 1 !important;
+  column-gap: 0 !important;
+  width:100%;
+}
+
+/* individual card */
+#listaPosts .post {
+  display:block;
+  width:100%;
+  background: var(--card-bg);
+  border-radius:12px;
+  margin-bottom:18px;
+  box-shadow: 0 8px 26px rgba(17,17,17,0.06);
+  transition: transform .22s, box-shadow .22s;
+  position: relative;
+  overflow: hidden;
+  padding: 14px 16px 18px 16px;
+  border-left: 4px solid rgba(0,0,0,0.04);
+}
+
+/* top stripe */
+#listaPosts .post::before{
+  content: "";
+  position:absolute;
+  left:0; right:0; top:0;
+  height:10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* left bar */
+#listaPosts .post::after{
+  content: "";
+  position:absolute;
+  left:0; top:0;
+  width:4px;
+  height:100%;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+}
+
+#listaPosts .post:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(17,17,17,0.12);
+}
+
+/* text */
+#listaPosts .post h3{
+  margin: 10px 0 8px 0;
+  font-size:1.15rem;
+  color: #111;
+}
+
+#listaPosts .post p{
+  font-size:1rem;
+  color:#333;
+  line-height:1.55;
+  white-space:pre-wrap;
+  margin-bottom:10px;
+}
+
+#listaPosts .post small{
+  color:var(--muted);
+  display:block;
+  margin-top:8px;
+  font-size:0.86rem;
+}
+
+#listaPosts .post button{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  font-size:0.9rem;
+  border-radius:8px;
+  cursor:pointer;
+  box-shadow: 0 6px 18px rgba(220,53,69,0.18);
+  transition: transform .12s, opacity .12s;
+}
+#listaPosts .post button:hover{ 
+  transform: scale(1.06); 
+  opacity:0.95; 
+}
+
+/* ============================
+   PROGRESS BAR + TOP BUTTON
+   ============================ */
+#progress-bar {
+  position: fixed;
+  top:0; left:0;
+  height:4px;
+  width:0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index:1400;
+  box-shadow: 0 4px 12px rgba(255,87,34,0.08);
+}
+
+#btnTopo{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:1400;
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#fff;
+  border:none;
+  box-shadow: 0 10px 30px rgba(255,87,34,0.12);
+  cursor:pointer;
+  transform:translateY(8px);
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .18s, transform .18s;
+}
+#btnTopo.show{ 
+  opacity:1; 
+  pointer-events:all; 
+  transform:translateY(0); 
+}
+
+/* ============================
+   FOOTER
+   ============================ */
+footer {
+  margin-top:28px;
+  padding:18px;
+  text-align:center;
+  background:linear-gradient(90deg, rgba(255,87,34,0.95), rgba(255,152,0,0.92));
+  color:#fff;
+  font-weight:600;
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+}
+
+/* ============================
+   UTILS
+   ============================ */
+.hidden { display:none !important; }
+.center { display:flex; align-items:center; justify-content:center; }
+
+a { color:inherit; }
+
+#listaPosts .post button, 
+#listaPosts .post small { 
+  break-inside: avoid; 
+  -webkit-column-break-inside: avoid; 
+}
+/* END */
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Livraria Construtiva</h1>
+
+  <!-- MENU PRINCIPAL VISÍVEL -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="livros.html">Livros</a>
+    <a href="blog.html">Blog</a>
+    
+  </nav>
+
+  <!-- TRÊS PONTOS -->
+  <div id="menu-container">
+    <button id="btnMenu">⋮</button>
+  </div>
+</header>
+  <a href="doacao.html" class="btn-doacao">
+  ❤️ Apoiar a Livraria Construtiva
+</a>
+
+<style>
+.btn-doacao {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 16px 28px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  transition: 0.3s ease-in-out;
+}
+
+.btn-doacao:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 26px rgba(255, 65, 108, 0.6);
+}
+
+/* Mobile ajuste */
+@media (max-width: 480px) {
+  .btn-doacao {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+</style>
+<!-- MENU LATERAL OCULTO -->
+<div id="menu-lateral">
+  <a href="contato.html">Contato</a>
+  <a href="sobre-livraria.html">Sobre a Livraria</a>
+  <a href="sobre-autor.html">Sobre o Autor</a>
+  <a href="como-baixar.html">Como Baixar</a>
+  <a href="politica.html">Política de Privacidade</a>
+  <a href="termos.html">Termos de Uso</a>
+  <!-- BOTÃO QUADRADO ELEGANTE MENU -->
+<a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+   target="_blank"
+   style="
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:58px;
+      height:58px;
+      background:linear-gradient(135deg, #ffe7c1, #f3d6a0);
+      border-radius:14px;
+      text-decoration:none;
+      border:1px solid rgba(150,120,70,0.35);
+      overflow:hidden;
+      box-shadow:0 3px 10px rgba(0,0,0,0.15);
+      transition:0.25s ease;
+   "
+   onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 5px 14px rgba(0,0,0,0.22)'"
+   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.15)'"
+>
+
+   <!-- ÍCONE DE LIVRO ABERTO -->
+   <span style="position:relative; z-index:2; font-size:1.45rem;">📖</span>
+
+   <!-- ANIMAÇÃO DE BRILHO -->
+   <span style="
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+         120deg,
+         transparent 0%,
+         rgba(255,255,255,0.45) 50%,
+         transparent 100%
+      );
+      animation:shine-mini 2.2s infinite ease-in-out;
+      z-index:1;
+   "></span>
+
+</a>
+
+<style>
+@keyframes shine-mini {
+   0% { left: -120%; }
+   55% { left: 120%; }
+   100% { left: 120%; }
+}
+</style>
+</div>
+
+<!-- Fundo escuro atrás do menu -->
+<div id="menu-overlay"></div>
+
+<script>
+// === CONTROLO DO MENU ===
+const btnMenu = document.getElementById("btnMenu");
+const menuLateral = document.getElementById("menu-lateral");
+const overlay = document.getElementById("menu-overlay");
+
+function abrirMenu() {
+  menuLateral.classList.add("open");
+  overlay.classList.add("show");
+  history.pushState({ menuAberto: true }, "");
+}
+
+function fecharMenu() {
+  menuLateral.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+btnMenu.onclick = () => {
+  if (menuLateral.classList.contains("open")) fecharMenu();
+  else abrirMenu();
+};
+
+overlay.onclick = fecharMenu;
+
+window.onpopstate = (event) => {
+  if (event.state && event.state.menuAberto) {
+    fecharMenu();
+  }
+};
+
+window.addEventListener("popstate", (event) => {
+  if (menuLateral.classList.contains("open")) {
+    fecharMenu();
+    history.pushState({}, "");
+  }
+});
+</script>
+
+
+<div id="progress-bar"></div>
+<button id="btnTopo" onclick="voltarTopo()" style="display:none">⬆</button>
+
+<section id="blog" style="display:block; padding:16px;">
+  <h2>📝 Blog</h2>
+
+  <div id="senhaArea">
+    <p>Digite a senha para publicar no blog:</p>
+    <input type="password" id="senhaBlog" placeholder="Senha de administrador">
+    <button onclick="validarSenhaBlog()">Acessar</button>
+  </div>
+
+  <div id="editorBlog" style="display:none; margin-top:12px;">
+    <h3>Escrever nova publicação</h3>
+    <textarea id="textoPublicacao" rows="6" style="width:90%; max-width:700px; padding:8px;"></textarea>
+    <br><br>
+    <button onclick="publicarTexto()">Publicar</button>
+  </div>
+
+  <hr style="margin:20px 0;">
+
+  <div id="postsPublicados">
+    <h3>📢 Publicações</h3>
+    <div id="listaPosts"></div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Livraria Construtiva</p>
+</footer>
+
+<div id="modal-download" style="display:none; position:fixed; left:50%; top:40%; transform:translate(-50%,-50%); background:#fff; padding:16px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.2); z-index:9999;">
+  <p>O download do livro começará em breve:</p>
+  <button id="btnDownload" onclick="fecharModal()">Fechar</button>
+</div>
+
+<script>
+/* ---------------- Supabase config ---------------- */
+const SUPABASE_URL = "https://xuxhiqxfjsfxssirrhjz.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eGhpcXhmanNmeHNzaXJyaGp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxODM2MDgsImV4cCI6MjA3OTc1OTYwOH0.8uIANy5mpPkTEGez1Db-9AFrOdOi_Vx_p7D1b5UgCmo";
+
+let supabaseClient = null;
+
+/* Admin password */
+const SENHA_CORRETA = "Sacassole123...?";
+
+/* Novo controle de administrador */
+let isAdmin = false;
+
+/* ---------------- Utils ---------------- */
+function getById(id) { return document.getElementById(id) || null; }
+function safeText(s) { return (s === null || s === undefined) ? "" : String(s); }
+function escapeHtml(unsafe) {
+  if (unsafe === null || unsafe === undefined) return "";
+  return String(unsafe)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* ---------------- REST (fallback) ---------------- */
+async function restSelectPosts() {
+  const url = `${SUPABASE_URL}/rest/v1/posts_blog?select=*`;
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!res.ok) return { data: null, error: true };
+    return { data: await res.json(), error: null };
+  } catch {
+    return { data: null, error: true };
+  }
+}
+
+async function restInsertPost(obj) {
+  const url = `${SUPABASE_URL}/rest/v1/posts_blog`;
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(obj)
+    });
+
+    if (!res.ok) return { data: null, error: true };
+    return { data: await res.json(), error: null };
+  } catch {
+    return { data: null, error: true };
+  }
+}
+
+async function restDeletePost(id) {
+  const url = `${SUPABASE_URL}/rest/v1/posts_blog?id=eq.${id}`;
+  try {
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      }
+    });
+
+    if (!res.ok) return { data: null, error: true };
+    return { data: await res.json(), error: null };
+  } catch {
+    return { data: null, error: true };
+  }
+}
+
+/* ---------------- BLOG PAGE ---------------- */
+async function validarSenhaBlog() {
+  const senhaEl = getById('senhaBlog');
+  const senhaArea = getById('senhaArea');
+  const editor = getById('editorBlog');
+
+  if (senhaEl.value === SENHA_CORRETA) {
+    isAdmin = true; // AGORA O ADMINISTRADOR ESTÁ AUTORIZADO
+    senhaArea.style.display = 'none';
+    editor.style.display = 'block';
+    await carregarPosts();
+  } else {
+    alert("Senha incorreta!");
+  }
+}
+
+async function publicarTexto() {
+  const textarea = getById('textoPublicacao');
+  if (!textarea) return;
+
+  const texto = textarea.value.trim();
+  if (!texto) return alert("Escreva algo antes de publicar.");
+
+  let titulo = prompt("Título da publicação:") || "Sem título";
+  const dataStr = new Date().toISOString();
+  const payload = { titulo, conteudo: texto, data: dataStr };
+
+  try {
+    if (supabaseClient) {
+      const { error } = await supabaseClient.from('posts_blog').insert([payload]);
+      if (error) await restInsertPost(payload);
+    } else {
+      await restInsertPost(payload);
+    }
+
+    textarea.value = "";
+    await carregarPosts();
+    alert("Publicação criada.");
+  } catch {
+    alert("Erro inesperado.");
+  }
+}
+
+async function carregarPosts() {
+  const lista = getById('listaPosts');
+  if (!lista) return;
+  lista.innerHTML = "<p>Carregando...</p>";
+
+  let posts, error;
+
+  if (supabaseClient) {
+    const res = await supabaseClient.from('posts_blog').select('*');
+    posts = res.data;
+    error = res.error;
+  } else {
+    const res = await restSelectPosts();
+    posts = res.data;
+    error = res.error;
+  }
+
+  if (error || !posts) {
+    lista.innerHTML = "<p>Erro ao carregar posts.</p>";
+    return;
+  }
+
+  posts.sort((a, b) => new Date(b.data) - new Date(a.data));
+  lista.innerHTML = "";
+
+  posts.forEach(p => {
+    const div = document.createElement('div');
+    div.className = "post";
+    div.style.position = "relative";
+
+    div.innerHTML = `
+      <h3>${escapeHtml(p.titulo)}</h3>
+      <p style="white-space:pre-wrap;">${escapeHtml(p.conteudo)}</p>
+      <small>${new Date(p.data).toLocaleString()}</small>
+    `;
+
+    /* 🔒 BOTÃO DE EXCLUSÃO SOMENTE SE FOR ADMIN */
+    if (isAdmin) {
+      const btn = document.createElement('button');
+      btn.textContent = "Excluir";
+      btn.style.position = "absolute";
+      btn.style.top = "10px";
+      btn.style.right = "10px";
+      btn.style.background = "#dc3545";
+      btn.style.color = "#fff";
+      btn.style.border = "none";
+      btn.style.padding = "5px 10px";
+      btn.style.borderRadius = "6px";
+      btn.onclick = () => excluirPost(p.id);
+      div.appendChild(btn);
+    }
+
+    lista.appendChild(div);
+  });
+}
+
+async function excluirPost(id) {
+  if (!confirm("Excluir esta publicação?")) return;
+
+  try {
+    if (supabaseClient) {
+      const { error } = await supabaseClient.from('posts_blog').delete().eq('id', id);
+      if (error) await restDeletePost(id);
+    } else {
+      await restDeletePost(id);
+    }
+
+    await carregarPosts();
+    alert("Publicação excluída.");
+  } catch {
+    alert("Erro ao excluir.");
+  }
+}
+
+/* ---------------- Inicialização ---------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    if (typeof supabase !== "undefined") {
+      supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+  } catch {
+    supabaseClient = null;
+  }
+
+  carregarPosts();
+
+  /* small UX: progress bar & top button behavior */
+  const progress = document.getElementById('progress-bar');
+  const btnTopo = document.getElementById('btnTopo');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrollRatio = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight);
+    if (progress) progress.style.width = Math.min(100, Math.max(0, scrollRatio*100)) + '%';
+
+    if ((h.scrollTop || document.body.scrollTop) > 300) {
+      btnTopo.classList.add('show');
+    } else {
+      btnTopo.classList.remove('show');
+    }
+  });
+});
+
+/* ---------------- Expor funções ---------------- */
+window.validarSenhaBlog = validarSenhaBlog;
+window.publicarTexto = publicarTexto;
+window.excluirPost = excluirPost;
+
+/* small helper used by button in HTML */
+function voltarTopo(){ window.scrollTo({ top:0, behavior:'smooth' }); }
+function fecharModal(){ document.getElementById('modal-download').style.display='none'; }
+</script>
+</body>
+</html>
