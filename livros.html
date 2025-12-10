@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livros - Livraria Construtiva</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header style="position:sticky; top:0; z-index:999;">
+  <h1>📚 Livraria Construtiva</h1>
+
+  <nav id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="livros.html" class="active">Livros</a>
+    <a href="blog.html">Blog</a>
+      <a href="doacao.html" class="btn-doacao">
+  ❤️ Apoiar a Livraria Construtiva
+</a>
+
+<style>
+.btn-doacao {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 16px 28px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  transition: 0.3s ease-in-out;
+}
+
+.btn-doacao:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 26px rgba(255, 65, 108, 0.6);
+}
+
+/* Mobile ajuste */
+@media (max-width: 480px) {
+  .btn-doacao {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+</style>
+  </nav>
+
+  <!-- MENU 3 PONTOS -->
+  <div class="menu-container" style="position:absolute; right:14px; top:14px; z-index:1500;">
+    <button id="btnMenu" style="background:transparent;border:none;font-size:22px;cursor:pointer;color:#fff;">⋮</button>
+
+    <div id="menuOculto"
+      style="display:none; position:absolute; right:0; top:36px; background:#fff; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.12); padding:8px; min-width:180px;">
+      <a href="contato.html" style="display:block; padding:8px 10px;">Contato</a>
+      <a href="sobre-livraria.html" style="display:block; padding:8px 10px;">Sobre a Livraria</a>
+      <a href="sobre-autor.html" style="display:block; padding:8px 10px;">Sobre o Autor</a>
+      <a href="como-baixar.html" style="display:block; padding:8px 10px;">Como Baixar</a>
+      <a href="politica.html" style="display:block; padding:8px 10px;">Política de Privacidade</a>
+      <a href="termos.html" style="display:block; padding:8px 10px;">Termos de Uso</a>
+      <!-- BOTÃO QUADRADO ELEGANTE MENU -->
+<a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+   target="_blank"
+   style="
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:58px;
+      height:58px;
+      background:linear-gradient(135deg, #ffe7c1, #f3d6a0);
+      border-radius:14px;
+      text-decoration:none;
+      border:1px solid rgba(150,120,70,0.35);
+      overflow:hidden;
+      box-shadow:0 3px 10px rgba(0,0,0,0.15);
+      transition:0.25s ease;
+   "
+   onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 5px 14px rgba(0,0,0,0.22)'"
+   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.15)'"
+>
+
+   <!-- ÍCONE DE LIVRO ABERTO -->
+   <span style="position:relative; z-index:2; font-size:1.45rem;">📖</span>
+
+   <!-- ANIMAÇÃO DE BRILHO -->
+   <span style="
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+         120deg,
+         transparent 0%,
+         rgba(255,255,255,0.45) 50%,
+         transparent 100%
+      );
+      animation:shine-mini 2.2s infinite ease-in-out;
+      z-index:1;
+   "></span>
+
+</a>
+
+<style>
+@keyframes shine-mini {
+   0% { left: -120%; }
+   55% { left: 120%; }
+   100% { left: 120%; }
+}
+</style>
+    </div>
+  </div>
+</header>
+<main>
+  <h2 style="text-align:center; margin-top:25px;">📖 Livros</h2>
+
+  <div id="filtros" style="width:90%; margin:20px auto; display:flex; gap:10px; flex-wrap:wrap;">
+    <input id="busca" placeholder="Buscar por título..."
+      style="flex:1; padding:12px; border-radius:8px; border:1px solid #ccc;">
+
+    <select id="categoria" style="padding:12px; border-radius:8px; border:1px solid #ccc;">
+      <option value="">Todas</option>
+      <option value="fiction">Ficção</option>
+      <option value="children">Infantil</option>
+      <option value="science">Ciência</option>
+      <option value="philosophy">Filosofia</option>
+      <option value="history">História</option>
+    </select>
+
+    <button id="btnReset" class="btn">Limpar</button>
+  </div>
+
+  <div id="livros-container"></div>
+
+  <div id="loading">Carregando...</div>
+</main>
+
+
+<footer>© 2025 Livraria Construtiva</footer>
+
+
+<!-- MODAL FORMATOS -->
+<div id="format-modal"
+ style="display:none; background:white; padding:20px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.2);
+       width:90%; max-width:350px; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2000;">
+  <h4 style="margin-bottom:15px; color:#ff5722;">Escolha o formato</h4>
+  <div id="format-list"></div>
+  <button id="format-cancel" class="btn" style="margin-top:12px;">Fechar</button>
+</div>
+
+<!-- MODAL DOWNLOAD -->
+<div id="modal-download"
+  style="display:none; background:white; padding:18px; border-radius:10px; position:fixed;
+         top:20px; right:20px; box-shadow:0 4px 14px rgba(0,0,0,0.25); z-index:2000;">
+  <p id="modal-text">O download vai iniciar...</p>
+</div>
+
+
+
+<script>
+/* ------------------- MENU 3 PONTOS ------------------- */
+const btnMenu = document.getElementById("btnMenu");
+const menuOculto = document.getElementById("menuOculto");
+
+btnMenu.onclick = e => {
+  e.stopPropagation();
+  menuOculto.style.display = menuOculto.style.display === 'block' ? 'none' : 'block';
+};
+document.addEventListener('click', e => {
+  if (!menuOculto.contains(e.target) && !btnMenu.contains(e.target)) {
+    menuOculto.style.display = 'none';
+  }
+});
+
+
+/* ------------------- ESTADO ------------------- */
+let page = 1;
+let termo = "";
+let categoria = "";
+let loading = false;
+let hasMore = true;
+
+const API_GUTEN = "https://gutendex.com/books";
+const API_OL = "https://openlibrary.org/search.json";
+const API_ARCHIVE = "https://archive.org/advancedsearch.php";
+
+const seenKeys = new Set();
+const livrosContainer = document.getElementById("livros-container");
+const loadingEl = document.getElementById("loading");
+
+
+/* ------------------- FILTRO PT ------------------- */
+function isPortugueseText(str) {
+  if (!str) return false;
+  str = str.toLowerCase();
+  return ["ção","que","uma","para","ele","ela","dos","das"].some(p=>str.includes(p));
+}
+
+
+/* ------------------- FORMATS ------------------- */
+function extractFormatsMapGutendex(formats) {
+  const out = {};
+  if (!formats) return out;
+  for (const k of Object.keys(formats)) {
+    const url = formats[k];
+    if (!url) continue;
+    if (k.includes("pdf")) out.pdf = url;
+    if (k.includes("epub")) out.epub = url;
+    if (k.includes("text") || url.endsWith(".txt")) out.txt = url;
+  }
+  return out;
+}
+
+function archiveUrls(id) {
+  return {
+    pdf: `https://archive.org/download/${id}/${id}.pdf`,
+    epub: `https://archive.org/download/${id}/${id}.epub`,
+    txt: `https://archive.org/download/${id}/${id}.txt`
+  };
+}
+
+
+/* ------------------- RENDER ------------------- */
+function createBookElement(b) {
+  const c = document.createElement("div");
+  c.className = "book-item";
+
+  const img = document.createElement("img");
+  img.src = b.cover || "https://via.placeholder.com/200x300?text=Sem+Capa";
+  c.appendChild(img);
+
+  c.innerHTML += `
+    <h3>${b.title}</h3>
+    <p>${b.author}</p>
+  `;
+
+  const btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = "📥 Baixar";
+  btn.onclick = () => {
+    const keys = Object.keys(b.formats);
+    if (keys.length === 1) {
+      const ext = keys[0];
+      startDownload(b.formats[ext], b.title, ext);
+    } else openFormatChooser(b.title, b.formats);
+  };
+
+  c.appendChild(btn);
+  return c;
+}
+
+
+/* ------------------- MODAL FORMATOS ------------------- */
+const formatModal = document.getElementById("format-modal");
+const formatList = document.getElementById("format-list");
+document.getElementById("format-cancel").onclick = () => formatModal.style.display = "none";
+
+function openFormatChooser(title, formats) {
+  formatList.innerHTML = "";
+  for (const ext of Object.keys(formats)) {
+    const b = document.createElement("button");
+    b.className = "btn";
+    b.textContent = ext.toUpperCase();
+    b.onclick = () => {
+      formatModal.style.display = "none";
+      startDownload(formats[ext], title, ext);
+    };
+    formatList.appendChild(b);
+  }
+  formatModal.style.display = "block";
+}
+
+
+/* ------------------- DOWNLOAD ------------------- */
+function startDownload(url, title, ext) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = title.replace(/[^a-z0-9]/gi,"_")+"."+ext;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+
+/* =========================================================
+      FETCHERS — SOMENTE DOMÍNIO PÚBLICO
+========================================================= */
+
+/* 1) Gutendex */
+async function fetchGutendex(page, term, cat) {
+  let url = `${API_GUTEN}?page=${page}&languages=pt`;
+
+  if (term) url += `&search=${term}`;
+  if (cat) url += `&topic=${cat}`;
+
+  try {
+    const r = await fetch(url);
+    const j = await r.json();
+
+    const items = j.results
+      .filter(b => !b.copyright)   // <----- SOMENTE domínio público
+      .map(b => ({
+        key: "g:"+b.id,
+        title: b.title,
+        author: b.authors?.[0]?.name || "",
+        cover: b.formats["image/jpeg"],
+        formats: extractFormatsMapGutendex(b.formats)
+      }))
+      .filter(b => isPortugueseText(b.title) || isPortugueseText(b.author));
+
+    return { items, hasMore: !!j.next };
+  } catch {
+    return { items:[], hasMore:false };
+  }
+}
+
+
+/* 2) OpenLibrary */
+function olIsPt(doc) {
+  const langs = doc.language?.map(l=>l.toLowerCase()) || [];
+  return langs.includes("por") || langs.includes("pt") || langs.includes("portuguese");
+}
+
+async function fetchOpenLibrary(page, term) {
+  const q = term || "portuguese";
+  const url = `${API_OL}?q=${q}&page=${page}`;
+
+  try {
+    const r = await fetch(url);
+    const j = await r.json();
+
+    const items = j.docs
+      .filter(olIsPt)
+      .filter(d => d.public_scan === true)   // <----- SOMENTE domínio público
+      .map(d => {
+        const formats = d.ia?.length ? archiveUrls(d.ia[0]) : {};
+        return {
+          key: "ol:"+d.key,
+          title: d.title,
+          author: d.author_name?.[0] || "",
+          cover: d.cover_i ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg` : null,
+          formats
+        };
+      })
+      .filter(b => isPortugueseText(b.title) || isPortugueseText(b.author));
+
+    return { items, hasMore: items.length>0 };
+  } catch {
+    return { items:[], hasMore:false };
+  }
+}
+
+
+/* 3) Internet Archive */
+async function fetchArchive(page, term) {
+  const rows = 20;
+  const start = (page - 1) * rows;
+
+  let q = `language:Portuguese AND mediatype:texts`;
+
+  if (term) q += ` AND (${term})`;
+
+  const url =
+    `${API_ARCHIVE}?q=${encodeURIComponent(q)}&fl=identifier,title,creator,licenseurl,rights&output=json&rows=${rows}&start=${start}`;
+
+  try {
+    const r = await fetch(url);
+    const j = await r.json();
+
+    const items = j.response.docs
+      .filter(d =>
+        (d.licenseurl && d.licenseurl.toLowerCase().includes("publicdomain")) ||
+        (d.rights && d.rights.toLowerCase().includes("public domain"))
+      )  // <----- SOMENTE domínio público
+      .map(d => ({
+        key: "ia:"+d.identifier,
+        title: d.title,
+        author: d.creator || "",
+        cover: `https://archive.org/services/get-item-image.php?identifier=${d.identifier}&mediatype=texts&size=small`,
+        formats: archiveUrls(d.identifier)
+      }))
+      .filter(b => isPortugueseText(b.title) || isPortugueseText(b.author));
+
+    return { items, hasMore: items.length>0 };
+  } catch {
+    return { items:[], hasMore:false };
+  }
+}
+
+
+/* =========================================================
+      LOADER PRINCIPAL
+========================================================= */
+async function loadMixed() {
+  if (loading || !hasMore) return;
+  loading = true;
+
+  const [g, o, a] = await Promise.all([
+    fetchGutendex(page, termo, categoria),
+    fetchOpenLibrary(page, termo),
+    fetchArchive(page, termo)
+  ]);
+
+  // Junta tudo
+  let merged = [...g.items, ...o.items, ...a.items];
+
+  // Remove duplicados
+  merged = merged.filter(b => {
+    if (seenKeys.has(b.key)) return false;
+    seenKeys.add(b.key);
+    return true;
+  });
+
+  // 🔥 AQUI ESTÁ A FUNÇÃO QUE VOCÊ QUER:
+  // embaralha os resultados para sempre vir em ordem diferente
+  merged.sort(() => Math.random() - 0.5);
+
+  // Renderiza
+  merged.forEach(b => livrosContainer.appendChild(createBookElement(b)));
+
+  hasMore = g.hasMore || o.hasMore || a.hasMore;
+  loading = false;
+  page++;
+}
+
+/* =========================================================
+      EVENTOS
+========================================================= */
+document.getElementById("busca").oninput = e => {
+  termo = e.target.value.toLowerCase();
+  resetLoad();
+};
+
+document.getElementById("categoria").onchange = e => {
+  categoria = e.target.value;
+  resetLoad();
+};
+
+document.getElementById("btnReset").onclick = () => {
+  document.getElementById("busca").value = "";
+  document.getElementById("categoria").value = "";
+  termo = "";
+  categoria = "";
+  resetLoad();
+};
+
+function resetLoad() {
+  livrosContainer.innerHTML = "";
+  page = 1;
+  hasMore = true;
+  seenKeys.clear();
+  loadMixed();
+}
+
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 400) {
+    loadMixed();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => loadMixed());
+</script>
+
+</body>
+</html>

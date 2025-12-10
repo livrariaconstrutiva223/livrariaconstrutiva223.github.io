@@ -1,29 +1,10 @@
-/* =========================================================================
-   script.js — Versão consolidada, corrigida e compatível
-   - Mantém todas as funcionalidades existentes
-   - Corrige: posts recentes no topo, download de livros, infinite scroll
-   - Fallback REST Supabase caso CDN não carregue
-   - Não remove nem refaz funcionalidades do teu projeto
-   - CORREÇÃO: garante que o botão 'Excluir' aparece (inline display:block)
-   ========================================================================= */
-
 /* ---------------- Supabase config ---------------- */
 const SUPABASE_URL = "https://xuxhiqxfjsfxssirrhjz.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eGhpcXhmanNmeHNzaXJyaGp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxODM2MDgsImV4cCI6MjA3OTc1OTYwOH0.8uIANy5mpPkTEGez1Db-9AFrOdOi_Vx_p7D1b5UgCmo";
+
 let supabaseClient = null;
 
-/* Admin password (change if needed) */
-const SENHA_CORRETA = "Sacassole123...?";
-
-/* Estado global */
-let pagina = 1;
-let carregando = false;
-let termoBusca = "";
-let categoria = "";
-let livroAtual = null;
-let hasMoreLivros = true; // controla infinite scroll conforme Gutendex 'next'
-
-/* util */
+/* ---------------- Utils ---------------- */
 function getById(id) { return document.getElementById(id) || null; }
 function safeText(s) { return (s === null || s === undefined) ? "" : String(s); }
 function escapeHtml(unsafe) {
@@ -36,530 +17,96 @@ function escapeHtml(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
-/* ---------------- REST fallback for Supabase ----------------
-   Used if supabase client is not available (CDN didn't load)
-   Uses PostgREST endpoints (/rest/v1/<table>)
-----------------------------------------------------------------*/
-async function restSelectPosts() {
-  const url = `${SUPABASE_URL}/rest/v1/posts_blog?select=*`;
-  try {
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("REST select error:", res.status, text);
-      throw new Error(`REST select error ${res.status}`);
-    }
-    const data = await res.json();
-    return { data, error: null };
-  } catch (err) {
-    return { data: null, error: err };
-  }
+/* ---------------- Helper: esperar Supabase ---------------- */
+async function waitForSupabase(maxAttempts = 20, intervalMs = 100) {
+  let attempts = 0;
+  return new Promise(resolve => {
+    const check = () => {
+      attempts++;
+      if (typeof window.supabase !== "undefined") return resolve(true);
+      if (attempts >= maxAttempts) return resolve(false);
+      setTimeout(check, intervalMs);
+    };
+    check();
+  });
 }
 
-async function restInsertPost(obj) {
-  const url = `${SUPABASE_URL}/rest/v1/posts_blog`;
+/* ---------------- Carregar TEXTO ESPECIAL na Home ---------------- */
+async function carregarTextoHome() {
   try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
-      },
-      body: JSON.stringify(obj)
-    });
-    const text = await res.text();
-    let parsed = null;
-    try { parsed = JSON.parse(text); } catch (e) { parsed = text; }
-    if (!res.ok) {
-      console.error("REST insert error:", res.status, parsed);
-      return { data: null, error: { message: `REST insert error ${res.status}`, details: parsed } };
+    const box = getById("homeMessage");
+    if (!box) return;
+
+    if (!supabaseClient) {
+      box.innerHTML = "";
+      return;
     }
-    return { data: parsed, error: null };
-  } catch (err) {
-    return { data: null, error: err };
-  }
-}
 
-async function restDeletePost(id) {
-  const url = `${SUPABASE_URL}/rest/v1/posts_blog?id=eq.${encodeURIComponent(id)}`;
-  try {
-    const res = await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
-      }
-    });
-    const text = await res.text();
-    let parsed = null;
-    try { parsed = JSON.parse(text); } catch (e) { parsed = text; }
-    if (!res.ok) {
-      console.error("REST delete error:", res.status, parsed);
-      return { data: null, error: { message: `REST delete error ${res.status}`, details: parsed } };
-    }
-    return { data: parsed, error: null };
-  } catch (err) {
-    return { data: null, error: err };
-  }
-}
-
-/* ---------------- BLOG (Supabase) ---------------- */
-async function validarSenhaBlog() {
-  const senhaEl = getById('senhaBlog');
-  const senhaArea = getById('senhaArea');
-  const editor = getById('editorBlog');
-  if (!senhaEl || !senhaArea || !editor) { alert("Elementos do blog não encontrados."); return; }
-
-  if (senhaEl.value === SENHA_CORRETA) {
-    senhaArea.style.display = 'none';
-    editor.style.display = 'block';
-    await carregarPosts();
-  } else {
-    alert("Senha incorreta!");
-  }
-}
-
-async function publicarTexto() {
-  const textarea = getById('textoPublicacao');
-  if (!textarea) { alert("Editor não encontrado."); return; }
-  const texto = textarea.value.trim();
-  if (!texto) { alert("Escreva algo antes de publicar."); return; }
-
-  let titulo = prompt("Digite o título da publicação:");
-  if (!titulo) titulo = "Sem título";
-  // guardamos data em ISO para ordenar corretamente
-  const dataStr = new Date().toISOString();
-
-  const payload = { titulo, conteudo: texto, data: dataStr };
-
-  try {
-    // tenta via supabase client
-    if (supabaseClient) {
-      const { data, error } = await supabaseClient
-        .from('posts_blog')
-        .insert([payload])
-        .select(); // tentar obter retorno
-      if (error) {
-        console.error("Supabase insert error:", error);
-        // tenta fallback REST
-        const rest = await restInsertPost(payload);
-        if (rest.error) {
-          console.error("Fallback REST insert error:", rest.error);
-          alert("Erro ao publicar. Veja console.");
-          return;
-        } else {
-          textarea.value = "";
-          await carregarPosts();
-          alert("Publicação criada com sucesso (via fallback).");
-          return;
-        }
-      } else {
-        textarea.value = "";
-        await carregarPosts();
-        alert("Publicação criada com sucesso.");
-        return;
-      }
-    } else {
-      // fallback via REST
-      const rest = await restInsertPost(payload);
-      if (rest.error) {
-        console.error("Fallback REST insert error:", rest.error);
-        alert("Erro ao publicar (REST). Veja console.");
-        return;
-      } else {
-        textarea.value = "";
-        await carregarPosts();
-        alert("Publicação criada com sucesso (via REST).");
-        return;
-      }
-    }
-  } catch (err) {
-    console.error("Erro inesperado ao publicar:", err);
-    alert("Erro inesperado ao publicar. Veja console.");
-  }
-}
-
-async function carregarPosts() {
-  const lista = getById('listaPosts');
-  if (!lista) return;
-  lista.innerHTML = "<p>Carregando...</p>";
-
-  try {
-    let posts = null;
-    let error = null;
-
-    if (supabaseClient) {
-      // pedimos sem ordenação forçada aqui e fazemos ordenação robusta no JS — evita diferenças de formato
-      const res = await supabaseClient
-        .from('posts_blog')
-        .select('*');
-      posts = res.data || null;
-      error = res.error || null;
-    } else {
-      const rest = await restSelectPosts();
-      posts = rest.data || null;
-      error = rest.error || null;
-    }
+    const { data, error } = await supabaseClient
+      .from("posts_blog")
+      .select("*")
+      .eq("titulo", "LIVRARIA_CONSTRUTIVA")
+      .limit(1);
 
     if (error) {
-      console.error("Erro ao buscar posts:", error);
-      lista.innerHTML = "<p>Erro ao carregar publicações. Veja console.</p>";
+      box.innerHTML = "<p style='color:#c0392b'>Erro ao carregar conteúdo.</p>";
       return;
     }
 
-    if (!posts || posts.length === 0) {
-      lista.innerHTML = "<p>Ainda não há publicações.</p>";
-      return;
-    }
-
-    // Ordena do MAIS RECENTE para o mais antigo:
-    posts.sort((a, b) => {
-      // tenta ordenar por campo 'data' (ISO preferível)
-      const ta = a && a.data ? new Date(a.data).getTime() : NaN;
-      const tb = b && b.data ? new Date(b.data).getTime() : NaN;
-      if (!isNaN(tb) && !isNaN(ta)) return tb - ta; // tb - ta => mais recente primeiro
-      // fallback para id decrescente
-      return (b.id || 0) - (a.id || 0);
-    });
-
-    // render posts
-    lista.innerHTML = "";
-    posts.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'post';
-      div.style.position = 'relative';
-      div.innerHTML = `
-        <h3>${escapeHtml(p.titulo)}</h3>
-        <p style="white-space:pre-wrap; text-align:left;">${escapeHtml(p.conteudo)}</p>
-        <small style="color:#555">${p.data ? new Date(p.data).toLocaleString() : ""}</small>
-      `;
-
-      // if editor visible, show delete button
-      const editor = getById('editorBlog');
-      if (editor && editor.style.display === 'block') {
-        const btn = document.createElement('button');
-        btn.textContent = 'Excluir';
-        btn.className = 'excluir'; // aproveita estilo se existir
-        // estilo inline seguro (não quebra visual)
-        btn.style.position = 'absolute';
-        btn.style.top = '10px';
-        btn.style.right = '10px';
-        btn.style.background = '#dc3545';
-        btn.style.color = 'white';
-        btn.style.border = 'none';
-        btn.style.padding = '4px 8px';
-        btn.style.borderRadius = '6px';
-        btn.style.display = 'block'; // <- CORREÇÃO ESSENCIAL: garante que aparece mesmo com CSS .excluir{display:none}
-        btn.addEventListener('click', () => excluirPost(p.id));
-        div.appendChild(btn);
-      }
-
-      lista.appendChild(div);
-    });
+    box.innerHTML = (data && data.length > 0) ? (data[0].conteudo || "") : "";
 
   } catch (err) {
-    console.error("Erro carregarPosts:", err);
-    lista.innerHTML = "<p>Erro ao carregar publicações.</p>";
+    console.error("Erro inesperado em carregarTextoHome():", err);
   }
 }
 
-async function excluirPost(id) {
-  if (!confirm("Tem certeza que deseja excluir este post?")) return;
-  try {
-    if (supabaseClient) {
-      const { error } = await supabaseClient
-        .from('posts_blog')
-        .delete()
-        .eq('id', id);
-      if (error) {
-        console.error("Erro ao apagar (supabase):", error);
-        // tentar fallback REST
-        const rest = await restDeletePost(id);
-        if (rest.error) {
-          console.error("Fallback REST delete error:", rest.error);
-          alert("Erro ao apagar. Veja console.");
-          return;
-        } else {
-          await carregarPosts();
-          alert("Publicação apagada (via fallback).");
-          return;
-        }
-      } else {
-        await carregarPosts();
-        alert("Publicação apagada.");
-        return;
-      }
-    } else {
-      const rest = await restDeletePost(id);
-      if (rest.error) {
-        console.error("Fallback REST delete error:", rest.error);
-        alert("Erro ao apagar. Veja console.");
-        return;
-      } else {
-        await carregarPosts();
-        alert("Publicação apagada (via REST).");
-        return;
-      }
-    }
-  } catch (err) {
-    console.error("Erro inesperado ao apagar:", err);
-    alert("Erro inesperado. Veja console.");
-  }
-}
-
-/* ---------------- Livros (Gutendex) ---------------- */
-/* cria um card por livro com botão de baixar que usa o link correto */
-function criarCardLivro(livro) {
-  const formatos = livro.formats || {};
-  const permitidos = [
-    "application/pdf",
-    "application/epub+zip",
-    "text/plain",
-    "text/plain; charset=utf-8",
-    "application/rtf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-  ];
-
-  let link = null;
-  for (const key in formatos) {
-    if (permitidos.includes(key)) {
-      link = formatos[key];
-      break;
-    }
-  }
-  if (!link) return null;
-
-  const capa = formatos['image/jpeg'] || 'https://via.placeholder.com/150x200?text=Sem+Capa';
-  const autor = (livro.authors && livro.authors.length) ? livro.authors[0].name : 'Desconhecido';
-
-  const card = document.createElement('div');
-  card.className = 'livro-card';
-
-  const img = document.createElement('img');
-  img.src = capa;
-  img.alt = safeText(livro.title);
-
-  const info = document.createElement('div');
-  info.className = 'livro-info';
-
-  const h3 = document.createElement('h3');
-  h3.textContent = safeText(livro.title);
-
-  const p = document.createElement('p');
-  p.textContent = autor;
-
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.textContent = '📥 Baixar';
-
-  // usa closure sobre link — garante que cada botão abre o link certo
-  btn.addEventListener('click', () => {
-    try {
-      const a = document.createElement('a');
-      a.href = link;
-      a.target = '_blank';
-      // tenta extrair extensão para sugerir nome de download
-      let ext = '';
-      try { ext = link.split('.').pop().split('?')[0]; } catch (e) { ext = ''; }
-      const filename = (safeText(livro.title).replace(/[^a-z0-9]/gi, '_') || 'download') + (ext ? '.' + ext : '');
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (e) {
-      window.open(link, '_blank');
-    }
-
-    // mostra modal se existir
-    const modal = getById('modal-download');
-    if (modal) modal.style.display = 'block';
-  });
-
-  info.appendChild(h3);
-  info.appendChild(p);
-  info.appendChild(btn);
-
-  card.appendChild(img);
-  card.appendChild(info);
-
-  return card;
-}
-
-async function carregarLivros() {
-  const container = getById('livros-container');
-  const loading = getById('loading');
-  const progressBar = getById('progress-bar');
-
-  if (!container) return;
-  if (carregando) return;
-  if (!hasMoreLivros) return; // não tenta mais se não há next
-
-  carregando = true;
-  if (loading) { loading.style.display = 'block'; loading.innerText = 'Carregando livros...'; }
-  if (progressBar) progressBar.style.width = '25%';
-
-  try {
-    let url = `https://gutendex.com/books?languages=pt&page=${pagina}`;
-    if (termoBusca) url += `&search=${encodeURIComponent(termoBusca)}`;
-    if (categoria) url += `&topic=${encodeURIComponent(categoria)}`;
-
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Resposta Gutendex não OK: ' + res.status);
-    const data = await res.json();
-    const livros = data.results || [];
-
-    if (pagina === 1) container.innerHTML = '';
-
-    livros.forEach(livro => {
-      const card = criarCardLivro(livro);
-      if (card) container.appendChild(card);
-    });
-
-    // Gutendex fornece `next` quando há mais páginas
-    hasMoreLivros = !!data.next;
-    pagina++;
-
-    if (progressBar) progressBar.style.width = '100%';
-    setTimeout(() => { if (progressBar) progressBar.style.width = '0'; }, 300);
-
-    if (!hasMoreLivros && loading) { loading.innerText = "Todos os livros carregados."; loading.style.display = 'block'; }
-    else if (loading) loading.style.display = 'none';
-
-  } catch (err) {
-    console.error("Erro carregarLivros:", err);
-    if (loading) loading.innerText = "Erro ao carregar livros.";
-  } finally {
-    carregando = false;
-  }
-}
-
-/* ---------------- UI e navegação ---------------- */
+/* ---------------- Navegação ---------------- */
 function mostrarSecao(secao) {
-  const ids = document.querySelectorAll('section');
-  ids.forEach(s => {
-    if (!s.id) return;
+  // só mexe nas sections que fazem parte da navegação
+  const navegaSections = document.querySelectorAll('section[data-nav]');
+  
+  navegaSections.forEach(s => {
     s.style.display = (s.id === secao) ? 'block' : 'none';
   });
 
-  // garantir que home mostra todo conteúdo: remove scroll lock e rola ao topo
   window.location.hash = secao;
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  if (secao === 'livros') {
-    pagina = 1;
-    hasMoreLivros = true;
-    const cont = getById('livros-container');
-    if (cont) cont.innerHTML = '';
-    carregarLivros();
-  }
-  if (secao === 'blog') carregarPosts();
 }
 
-function voltarTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-function fecharModal() { const m = getById('modal-download'); if (m) m.style.display = 'none'; }
-function abrirWhatsApp(mensagem) {
-  const numero = '959622160';
-  window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`, '_blank');
+function voltarTopo() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ---------------- Infinite scroll (seguro) ---------------- */
-let scrollThrottle = false;
-window.addEventListener('scroll', () => {
-  const btnTopo = getById('btnTopo');
-  if (btnTopo) btnTopo.style.display = (window.scrollY > 300) ? 'block' : 'none';
+function abrirWhatsApp(msg) {
+  window.open(`https://wa.me/959622160?text=${encodeURIComponent(msg)}`, "_blank");
+}
 
-  const progressBar = getById('progress-bar');
-  if (progressBar) {
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    if (total > 0) progressBar.style.width = `${(window.scrollY / total) * 100}%`;
-  }
-
-  // só carrega mais livros quando estamos na secção livros
-  const livrosSec = getById('livros');
-  if (!livrosSec) return;
-  const livrosVisivel = livrosSec.style.display === 'block' || window.location.hash.replace('#', '') === 'livros';
-  if (!livrosVisivel) return;
-  if (!hasMoreLivros) return; // não prossegue se já acabou
-
-  if (scrollThrottle) return;
-  const scrollTop = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const documentHeight = document.documentElement.scrollHeight;
-  if (scrollTop + windowHeight + 180 >= documentHeight) {
-    scrollThrottle = true;
-    carregarLivros().finally(() => {
-      setTimeout(() => scrollThrottle = false, 300);
-    });
-  }
-});
-
-/* ------------- Inicialização ------------- */
-document.addEventListener('DOMContentLoaded', () => {
-  // inicia supabase (precisa do CDN supabase no HTML antes deste script); se não existir, usamos REST fallback
-  try {
-    if (typeof supabase === 'undefined') {
-      console.warn("Supabase library não encontrada — usando fallback REST para operações DB.");
-      supabaseClient = null;
-    } else {
+/* ---------------- Inicialização ---------------- */
+document.addEventListener('DOMContentLoaded', async () => {
+  const ok = await waitForSupabase();
+  if (ok) {
+    try {
       supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      console.log("Supabase client inicializado.");
+    } catch (err) {
+      console.error("Erro ao criar client:", err);
+      supabaseClient = null;
     }
-  } catch (e) {
-    console.error("Erro ao inicializar supabase:", e);
-    supabaseClient = null;
   }
 
-  // listeners busca / categoria
-  const buscaEl = getById('busca');
-  if (buscaEl) {
-    buscaEl.addEventListener('input', (e) => {
-      termoBusca = e.target.value || '';
-      pagina = 1;
-      hasMoreLivros = true;
-      const cont = getById('livros-container'); if (cont) cont.innerHTML = '';
-      carregarLivros();
-    });
+  // mostrar seção inicial (somente das que têm data-nav)
+  const hash = window.location.hash.replace("#", "");
+  const alvo = document.getElementById(hash);
+
+  if (alvo && alvo.hasAttribute("data-nav")) {
+    mostrarSecao(hash);
   }
 
-  const catEl = getById('categoria');
-  if (catEl) {
-    catEl.addEventListener('change', (e) => {
-      categoria = e.target.value || '';
-      pagina = 1;
-      hasMoreLivros = true;
-      const cont = getById('livros-container'); if (cont) cont.innerHTML = '';
-      carregarLivros();
-    });
-  }
-
-  // mostrar secao inicial (hash ou home)
-  const hash = window.location.hash.replace('#', '');
-  if (hash && getById(hash)) mostrarSecao(hash);
-  else mostrarSecao('home');
-
-  // inicializações
-  if (getById('listaPosts')) carregarPosts();
-  if (getById('livros-container')) carregarLivros();
+  // carregar conteúdo da home
+  await carregarTextoHome();
 });
 
-/* Expor funções usadas inline no HTML */
+/* ---------------- Expor funções ---------------- */
 window.mostrarSecao = mostrarSecao;
-window.abrirWhatsApp = abrirWhatsApp;
-window.validarSenhaBlog = validarSenhaBlog;
-window.publicarTexto = publicarTexto;
-window.excluirPost = excluirPost;
 window.voltarTopo = voltarTopo;
-window.fecharModal = fecharModal;
-window.abrirModal = function (l) { console.log("abrirModal placeholder", l); };
+window.abrirWhatsApp = abrirWhatsApp;
+window.carregarTextoHome = carregarTextoHome;

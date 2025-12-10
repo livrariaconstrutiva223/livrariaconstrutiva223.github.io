@@ -1,937 +1,391 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Livraria Construtiva</title>
-<meta name="google-site-verification" content="YdjnLUNdnZsXLDYuui8xnLyozl3kPPFQ9RutYomnCYI" />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9593270296843431"
-     crossorigin="anonymous"></script>
-<!-- Google tag (gtag.js) -->
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="google-site-verification" content="YdjnLUNdnZsXLDYuui8xnLyozl3kPPFQ9RutYomnCYI">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9593270296843431" crossorigin="anonymous"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WRNN5TY0XL"></script>
 
 <link rel="stylesheet" href="style.css">
-
-<!-- Adicionamos o CDN do Supabase (necessário para o script.js) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Livraria Construtiva">
+<meta property="og:description" content="Livros gratuitos, conteúdos educativos e materiais de leitura para todos.">
+<meta property="og:image" content="https://livrariaconstrutiva223.github.io/logo.png">
+<meta property="og:url" content="https://livrariaconstrutiva223.github.io">
+<meta property="og:type" content="website">
+
+<!-- WhatsApp / Facebook preview fix -->
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="600">
+<style>
+/* ==== MENU LATERAL (TRÊS PONTOS) ==== */
+#menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#btnMenu {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+#menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 240px;
+  height: 100%;
+  background: #ff5722;
+  color: #fff;
+  padding: 20px;
+  padding-top: 70px;
+  transition: 0.3s;
+  z-index: 9999;
+  box-shadow: -3px 0 12px rgba(0,0,0,0.25);
+}
+
+#menu-lateral a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  font-size: 1.1rem;
+}
+
+#menu-lateral.open {
+  right: 0;
+}
+
+/* Fundo escuro atrás do menu */
+#menu-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 9998;
+}
+#menu-overlay.show {
+  display: block;
+}
+</style>
 </head>
 <body>
 
 <header>
+  <div style="text-align:center;">
+  <img src="logo.png"
+       style="width:20px; height:20px; object-fit:contain; margin-bottom:4px;">
+</div>
   <h1>📚 Livraria Construtiva</h1>
+
+  <!-- MENU PRINCIPAL VISÍVEL -->
   <nav>
-    <a href="#" onclick="mostrarSecao('home')">Home</a>
-    <a href="#" onclick="mostrarSecao('livros')">Livros</a>
-    <a href="#" onclick="mostrarSecao('contato')">Contato</a>
-    <a href="#" onclick="mostrarSecao('sobreLivraria')">Sobre a Livraria</a>
-    <a href="#" onclick="mostrarSecao('sobreAutor')">Sobre o Autor</a>
-    <a href="#" onclick="mostrarSecao('comoBaixar')">Como Baixar</a>
-    <a href="#" onclick="mostrarSecao('blog')">Blog</a>
-    <a href="#" onclick="mostrarSecao('politica')">Política de Privacidade</a>
-    <a href="#" onclick="mostrarSecao('termos')">Termos de Uso</a>
+    <a href="index.html">Home</a>
+    <a href="livros.html">Livros</a>
+    <a href="blog.html">Blog</a>
   </nav>
+
+  <!-- TRÊS PONTOS -->
+  <div id="menu-container">
+    <button id="btnMenu">⋮</button>
+  </div>
+  <a href="doacao.html" class="btn-doacao">
+  ❤️ Apoiar a Livraria Construtiva
+</a>
+
+<style>
+.btn-doacao {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 16px 28px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  transition: 0.3s ease-in-out;
+}
+
+.btn-doacao:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 26px rgba(255, 65, 108, 0.6);
+}
+
+/* Mobile ajuste */
+@media (max-width: 480px) {
+  .btn-doacao {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+</style>
 </header>
 
+<!-- MENU LATERAL OCULTO -->
+<div id="menu-lateral">
+  <a href="contato.html">Contato</a>
+  <a href="sobre-livraria.html">Sobre a Livraria</a>
+  <a href="sobre-autor.html">Sobre o Autor</a>
+  <a href="como-baixar.html">Como Baixar</a>
+  <a href="politica.html">Política de Privacidade</a>
+  <a href="termos.html">Termos de Uso</a>
+  <!-- BOTÃO QUADRADO ELEGANTE MENU -->
+<a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+   target="_blank"
+   style="
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:58px;
+      height:58px;
+      background:linear-gradient(135deg, #ffe7c1, #f3d6a0);
+      border-radius:14px;
+      text-decoration:none;
+      border:1px solid rgba(150,120,70,0.35);
+      overflow:hidden;
+      box-shadow:0 3px 10px rgba(0,0,0,0.15);
+      transition:0.25s ease;
+   "
+   onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 5px 14px rgba(0,0,0,0.22)'"
+   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.15)'"
+>
+
+   <!-- ÍCONE DE LIVRO ABERTO -->
+   <span style="position:relative; z-index:2; font-size:1.45rem;">📖</span>
+
+   <!-- ANIMAÇÃO DE BRILHO -->
+   <span style="
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+         120deg,
+         transparent 0%,
+         rgba(255,255,255,0.45) 50%,
+         transparent 100%
+      );
+      animation:shine-mini 2.2s infinite ease-in-out;
+      z-index:1;
+   "></span>
+
+</a>
+
+<style>
+@keyframes shine-mini {
+   0% { left: -120%; }
+   55% { left: 120%; }
+   100% { left: 120%; }
+}
+</style>
+</div>
+
+<!-- Fundo escuro atrás do menu -->
+<div id="menu-overlay"></div>
+
+<script>
+// === CONTROLO DO MENU ===
+const btnMenu = document.getElementById("btnMenu");
+const menuLateral = document.getElementById("menu-lateral");
+const overlay = document.getElementById("menu-overlay");
+
+function abrirMenu() {
+  menuLateral.classList.add("open");
+  overlay.classList.add("show");
+  history.pushState({ menuAberto: true }, "");
+}
+
+function fecharMenu() {
+  menuLateral.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+btnMenu.onclick = () => {
+  if (menuLateral.classList.contains("open")) fecharMenu();
+  else abrirMenu();
+};
+
+overlay.onclick = fecharMenu;
+
+window.onpopstate = (event) => {
+  if (event.state && event.state.menuAberto) {
+    fecharMenu();
+  }
+};
+
+window.addEventListener("popstate", (event) => {
+  if (menuLateral.classList.contains("open")) {
+    fecharMenu();
+    history.pushState({}, "");
+  }
+});
+</script>
+
 <div id="progress-bar"></div>
-<button id="btnTopo" onclick="voltarTopo()">⬆ Topo</button>
+<button id="btnTopo" onclick="voltarTopo()" style="display:none">⬆ Topo</button>
 
-<!-- ===========================
-     Todas as secções (mantive o conteúdo original)
-     =========================== -->
+<!-- WIDGET DE NATAL -->
+<div id="lc-widget" style="position: relative; width: 100%; height: 320px; overflow: hidden; border-radius: 14px; margin-bottom:16px;">
+  <style>
+    #lc-widget { font-family: "Poppins", sans-serif !important; color:#fff; text-align:center;
+      background: linear-gradient(45deg,#ff0000,#ff8800,#ffee00,#00ff88,#00aaff,#aa00ff,#ff00aa);
+      background-size:600% 600%; animation:lc-bgShift 10s ease-in-out infinite; }
+    @keyframes lc-bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    #lc-widget h1{font-size:2.3rem;margin:0 0 12px 0;text-shadow:0 0 15px rgba(255,255,255,0.9); animation:lcPulse 2s ease-in-out infinite;}
+    @keyframes lcPulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+    #lc-frase{font-size:1.3rem;font-weight:500;max-width:650px;margin:auto;opacity:0;transform:scale(0.95);transition:opacity 1s, transform 1s}
+    .lc-snow{position:absolute;top:-10px;color:white;pointer-events:none;animation:lc-fall linear infinite}
+    @keyframes lc-fall{to{transform:translateY(350px);opacity:0}}
+    .lc-icon{position:absolute;font-size:40px;opacity:0.9;animation:lcFloat 4s ease-in-out infinite}
+    @keyframes lcFloat{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+  </style>
 
-<section id="home" style="display:block;">
+  <div class="lc-box">
+    <h1>🎄 Boas Festas! 🎅</h1>
+    <p id="lc-frase"></p>
+  </div>
+
+  <div class="lc-icon" style="left:20px; top:20px;">🎄</div>
+  <div class="lc-icon" style="right:20px; top:25px; animation-delay:1s;">✨</div>
+  <div class="lc-icon" style="left:40px; bottom:20px; animation-delay:2s;">🎁</div>
+  <div class="lc-icon" style="right:40px; bottom:25px; animation-delay:1.5s;">❄️</div>
+
+  <script>
+  (function(){
+    const frases = [
+      "🎄 A Livraria Construtiva deseja a você um Natal cheio de luz, paz e alegria!",
+      "✨ Que o Ano Novo traga novas oportunidades, prosperidade e grandes conquistas!",
+      "📚 Gratidão por caminhar connosco durante este ano!",
+      "🌟 Que 2026 seja repleto de realizações, sabedoria e bons livros!",
+      "🎁 Boas Festas para você e toda a sua família!"
+    ];
+    let i = 0;
+    const el = document.getElementById("lc-frase");
+    function trocar(){
+      if(!el) return;
+      el.style.opacity = 0; el.style.transform = "scale(0.95)";
+      setTimeout(()=>{ el.textContent = frases[i]; el.style.opacity = 1; el.style.transform = "scale(1)"; i = (i+1)%frases.length; },800);
+    }
+    trocar(); setInterval(trocar,5200);
+    function neve(){
+      const w = document.getElementById("lc-widget");
+      const f = document.createElement("div");
+      f.classList.add("lc-snow");
+      f.textContent = Math.random()>0.5 ? "❄" : "•";
+      f.style.left = Math.random()*100 + "%";
+      f.style.fontSize = (8+Math.random()*22) + "px";
+      f.style.animationDuration = (3+Math.random()*5) + "s";
+      w.appendChild(f);
+      setTimeout(()=>f.remove(),8000);
+    }
+    setInterval(neve,120);
+  })();
+  </script>
+</div>
+
+<!-- ========================== -->
+<!-- AQUI APARECE O TEXTO DA HOME -->
+<!-- ========================== -->
+
+<section>
   <h2>📚 Bem-vindo à Livraria Construtiva</h2>
   <p>Encontre livros gratuitos e comece a explorar!</p>
-  <button id="btnLivros" onclick="mostrarSecao('livros')">📖 Ver Livros</button>
-  <br><br>
-  <button id="btnHomeEspecial" style="margin-top:20px;padding:12px 24px;" onclick="abrirWhatsApp('Tens disponível o Livro:')">Livros Especiais</button>
+  <button class="btn-primary" onclick="location.href='livros.html'">📖 Ver Livros</button>
+  <!-- CONTAINER PARA CENTRALIZAR -->
+<div style="width:100%; display:flex; justify-content:center; margin:30px 0;">
   
-  <section class="inf">
-    <!-- conteúdo mantido -->
-    <p>Esse espaço foi feito especialmente para garantir o seu aprendizado. No entanto, aproveite ao máximo esta oportunidade de obter conhecimento de forma fácil e dinâmica.</p>
-    <p>Você pode clicar em <strong>Ver Livros</strong> e achar os melhores livros que mais combinam com você.</p>
-    <p>Lembrando que quem lê um livro nunca será a mesma pessoa. Enquanto você não começar, nunca irás entender que livros mudam vidas, abrem portas e transformam mentes, mostrando uma perspectiva mais ampla da vida e convertendo ideias em práticas reais.</p>
-    <p>Fique ligado com os nossos serviços e desfrute dos melhores livros do mercado de forma fácil, prática e dinâmica.</p>
-  </section>
-
-  <!-- Aulas e restante do conteúdo do Home mantidos -->
-  <h2 class="h">Acompanha o nosso curso para aproveitares o conteúdo de forma profissional e científica</h2>
-  <section class="aula">
-  <h3>Aula Introdutória – Bem-vindo ao Curso Como Estudar de Forma Eficiente</h3>
-
-  <p>Seja muito bem-vindo à Livraria Construtiva! É um prazer receber você neste curso especial criado para ajudar estudantes, autodidatas e qualquer pessoa que deseja aprender melhor, mais rápido e com mais clareza.</p>
-
-  <p>Este curso foi desenvolvido com o objetivo de ensinar métodos que realmente funcionam, trazendo técnicas modernas de aprendizagem, estratégias de estudo altamente eficazes e princípios que vão transformar sua forma de aprender.</p>
-
-  <h3>Objetivo do Curso</h3>
-  <p>O objetivo principal deste curso é mostrar que qualquer pessoa pode aprender de maneira eficiente quando entende como o cérebro funciona, como organizar o processo de estudo e como aplicar técnicas corretas de memorização, foco e disciplina.</p>
-
-  <p>Ao longo das aulas, você vai descobrir como:</p>
-  <ul>
-    <li>aprender de forma profunda e inteligente;</li>
-    <li>melhorar o foco e a concentração;</li>
-    <li>organizar os estudos com clareza e método;</li>
-    <li>memorizar melhor com técnicas validadas;</li>
-    <li>controlar a procrastinação e aumentar a disciplina;</li>
-    <li>fortalecer a motivação e a constância diária;</li>
-    <li>se preparar para provas, exames e projetos com alto desempenho.</li>
-  </ul>
-
-  <h3>A Importância de Estudar Bem</h3>
-  <p>Estudar é mais do que uma obrigação: é uma ferramenta poderosa de transformação pessoal. Quando você aprende de forma estratégica, você evolui intelectualmente, conquista novas oportunidades e constrói um futuro mais sólido e promissor.</p>
-
-  <p>O mundo está cheio de informação, mas poucos sabem aprender. E este curso existe para colocar você entre a minoria que domina o verdadeiro processo de estudo.</p>
-
-  <h3>Sobre o Mentor do Curso</h3>
-  <p>Seu mentor ao longo das aulas será alguém totalmente focado em clareza, organização e eficiência. Cada conteúdo foi estruturado para facilitar sua compreensão e garantir que você aprenda de forma prática, direta e consistente.</p>
-
-  <p>Prepare-se para uma jornada intensa, motivadora e cheia de evolução.</p>
-
-  <h2>Boas-vindas</h2>
-  <p>A Livraria Construtiva deseja a você uma excelente caminhada neste curso. Aproveite cada aula, cada explicação, cada método e cada insight.</p>
-
-  <p>Este é o primeiro passo para transformar seus estudos — e sua vida.</p>
-  
-  <p><strong>Vamos começar.</strong></p>
-</section>
-<section class="aula" id="aula-1">
-  <h2>Aula 1 – Introdução ao Curso</h2>
-
-  <p>Esta é a primeira aula oficial do curso <strong>Como Estudar de Forma Eficiente</strong>. Agora que você já conhece a proposta geral e recebeu as boas-vindas, vamos iniciar a nossa jornada com clareza, propósito e direção.</p>
-
-  <p>Antes de aprender técnicas avançadas, é essencial compreender como este curso funciona, o que você pode esperar dele e como aproveitar ao máximo cada conteúdo apresentado.</p>
-
-  <h2>O Propósito da Jornada</h2>
-  <p>O propósito deste curso é transformar o seu modo de aprender. Não queremos simplesmente que você estude mais. Queremos que você estude <strong>melhor</strong>, com mais entendimento, mais estratégia e mais inteligência.</p>
-
-  <p>Ao longo das aulas, você será guiado passo a passo para desenvolver:</p>
-  <ul>
-    <li>autonomia nos estudos;</li>
-    <li>capacidade de aprender assuntos complexos;</li>
-    <li>confiança no próprio processo de aprendizagem;</li>
-    <li>organização mental e prática;</li>
-    <li>um método de estudo adaptado ao seu estilo.</li>
-  </ul>
-
-  <h3>O Que Você Precisa Para Aproveitar o Curso</h3>
-  <p>Para que o curso seja realmente transformador, você vai precisar de três elementos fundamentais:</p>
-
-  <h3>1. Compromisso</h3>
-  <p>O comprometimento com cada aula e cada técnica é o que vai determinar o seu resultado final. Estudar bem é um hábito que se constrói com repetição e intenção.</p>
-
-  <h3>2. Abertura para Aprender</h3>
-  <p>Alguns métodos podem ser diferentes do que você está acostumado. Mantenha a mente aberta para testar novas estratégias. A aprendizagem eficiente exige flexibilidade.</p>
-
-  <h3>3. Consistência</h3>
-  <p>O conhecimento funciona como um músculo: quanto mais você exercita, mais forte ele fica. A constância será uma das suas maiores aliadas.</p>
-
-  <h3>Por Que Este Curso É Diferente</h3>
-  <p>Este curso não traz apenas teoria. Ele reúne métodos que funcionam no mundo real, validados por pesquisas e aplicados por estudantes de alto desempenho.</p>
-
-  <p>Você vai aprender as mesmas práticas utilizadas por leitores vorazes, estudantes produtivos, profissionais de excelência e pessoas que dominam o próprio processo de aprendizagem.</p>
-
-  <p>Isso cria um diferencial enorme, porque você deixa de estudar de qualquer jeito e passa a estudar com estratégia.</p>
-
-  <h2>Como Cada Aula Vai Funcionar</h2>
-  <p>Cada aula foi estruturada para ser clara, objetiva e ao mesmo tempo profunda. Você encontrará nestas aulas:</p>
-  <ul>
-    <li>explicações detalhadas;</li>
-    <li>exemplos práticos;</li>
-    <li>orientações diretas sobre o que aplicar;</li>
-    <li>reflexões para desenvolver sua mentalidade de estudante eficiente.</li>
-  </ul>
-
-  <p>No final do curso, você terá um método completo que poderá aplicar em qualquer área: escola, universidade, concursos, trabalho, projetos pessoais ou desenvolvimento intelectual.</p>
-
-  <h2>Mensagem Final da Aula</h2>
-  <p>Esta é apenas a introdução da nossa jornada. A partir das próximas aulas, começaremos a explorar profundamente o funcionamento do cérebro humano, as técnicas modernas de aprendizagem e tudo aquilo que vai elevar o seu estudo para um novo nível.</p>
-
-  <p>Prepare-se para descobrir como aprender de verdade, com clareza, segurança e consistência.</p>
-
-  <p><strong>Nos vemos na próxima aula.</strong></p>
-</section>
-<section class="aula" id="aula-2">
-  <h3>Aula 2 – Entendendo Como o Cérebro Aprende</h3>
-
-  <p>Antes de dominar técnicas de estudo, você precisa entender como o seu cérebro realmente funciona no processo de aprendizagem. Quando você compreende o mecanismo interno da mente, estudar deixa de ser algo cansativo e passa a ser algo estratégico.</p>
-
-  <p>Aprender não é apenas acumular informações. É criar conexões, fortalecer caminhos mentais e transformar conhecimento em compreensão profunda. E, nesta aula, vamos aprofundar esse processo.</p>
-
-  <h3>O Cérebro Como uma Máquina de Conexões</h3>
-  <p>O cérebro aprende criando ligações entre neurônios, chamadas sinapses. Quanto mais você repete, aplica e revisa algo, mais forte essa conexão fica. É como construir uma estrada: quanto mais usada, mais clara e acessível ela se torna.</p>
-
-  <p>Por isso, o estudo eficiente não depende apenas de horas, mas sim da forma como você constrói essas conexões.</p>
-
-  <h2>A Importância da Atenção</h2>
-  <p>A atenção é a porta de entrada da aprendizagem. Se a atenção não está presente, o cérebro não registra a informação com profundidade. E, na era atual, disputar a atenção com tantas distrações é um desafio real.</p>
-
-  <p>Quando você entende a importância de focar no que está estudando, a qualidade da aprendizagem aumenta imenso. Não é apenas ler, mas ler com intenção. Não é apenas ouvir, mas ouvir com presença.</p>
-
-  <h3>Memória de Curto e Longo Prazo</h3>
-  <p>O cérebro possui duas estruturas fundamentais no aprendizado:</p>
-  <ul>
-    <li><strong>Memória de curto prazo</strong> – guarda informações rapidamente, mas esquece também muito rápido.</li>
-    <li><strong>Memória de longo prazo</strong> – armazena conhecimento duradouro, mas só funciona quando há repetição, revisão e compreensão.</li>
-  </ul>
-
-  <p>O segredo do estudo eficiente é transformar o que está na memória de curto prazo em memória de longo prazo. E isso só acontece com técnicas certas, que você aprenderá ao longo do curso.</p>
-
-  <h3>Ambiente e Emoções Também Ensinam</h3>
-  <p>Aprender não é só racional. Emoções, ambiente, humor e contexto influenciam diretamente na aprendizagem. Quando você estuda num ambiente organizado, silencioso e confortável, o cérebro trabalha melhor.</p>
-
-  <p>Da mesma forma, quando você associa emoções positivas ao estudo — como motivação, propósito e interesse — seu cérebro se torna mais receptivo e ativo durante o aprendizado.</p>
-
-  <h3>O Papel da Curiosidade</h3>
-  <p>A curiosidade é uma das forças mais poderosas da aprendizagem. Quando algo desperta seu interesse real, o cérebro ativa regiões que aumentam a retenção de conhecimento.</p>
-
-  <p>É por isso que incentivar a leitura é tão importante. Quem lê mais, aprende mais. Quem aprende mais, pensa melhor. E quem pensa melhor, evolui em todas as áreas da vida.</p>
-
-  <h3>A Preparação para as Próximas Aulas</h3>
-  <p>Agora que você sabe como o cérebro reage ao processo de aprendizagem, você está preparado para entender o que realmente torna um estudante eficiente. As próximas aulas vão aprofundar técnicas práticas para melhorar foco, memorização, organização e constância.</p>
-
-  <p><strong>Obrigado por participar desta aula. Nos vemos na próxima.</strong></p>
-</section>
-<section class="aula" id="aula-3">
-  <h1>Aula 3 – Habilidades Fundamentais do Estudante Moderno</h1>
-
-  <p>Para estudar de forma eficiente, não basta dominar técnicas isoladas. É preciso desenvolver um conjunto de habilidades que formam a base de todo estudante moderno. Estas habilidades não apenas facilitam o aprendizado, como também moldam a sua forma de pensar, organizar ideias e evoluir intelectualmente.</p>
-
-  <p>Nesta aula, vamos explorar profundamente as competências essenciais que sustentam qualquer método de estudo — seja para escola, universidade, concursos, projetos pessoais ou desenvolvimento profissional.</p>
-
-  <h2>1. Leitura Inteligente</h2>
-  <p>A leitura continua sendo uma das competências mais poderosas do mundo moderno. Quem lê mais, entende mais rápido, interpreta melhor e aprende com mais facilidade.</p>
-
-  <p>O estudante eficiente não lê de maneira passiva. Ele lê com intencionalidade. Isso significa observar, questionar, marcar, revisitar e refletir sobre o conteúdo.</p>
-
-  <p>Aprender a ler de forma inteligente não só melhora os estudos, como cria curiosidade, disciplina mental e amplia o vocabulário — elementos que fortalecem o pensamento crítico e aumentam o desejo de frequentar espaços como bibliotecas e livrarias.</p>
-
-  <h2>2. Interpretação e Análise</h2>
-  <p>Aprender não é repetir. É entender. Interpretar bem significa conseguir extrair ideias, compreender o sentido do texto, perceber intenções, identificar padrões e fazer conexões com outros conhecimentos.</p>
-
-  <p>A análise transforma informação em conhecimento. Quanto mais você treina a capacidade de interpretar o que estuda, mais rápido você consegue aprender conteúdos complexos.</p>
-
-  <h2>3. Organização Mental</h2>
-  <p>Uma mente organizada aprende com mais facilidade. O estudante eficiente sabe:</p>
-  <ul>
-    <li>separar ideias importantes de detalhes;</li>
-    <li>estruturar pensamentos de forma lógica;</li>
-    <li>criar esquemas mentais e resumos claros;</li>
-    <li>visualizar o que precisa ser aprendido.</li>
-  </ul>
-
-  <p>A organização mental reduz o cansaço, melhora o foco e aumenta a clareza, tornando todo o processo de estudo mais leve.</p>
-
-  <h2>4. Capacidade de Síntese</h2>
-  <p>O estudante moderno precisa saber resumir conteúdos sem perder o sentido principal. A síntese treinada permite transformar textos longos em ideias essenciais e memoráveis.</p>
-
-  <p>Essa habilidade poupa tempo, facilita revisões e fortalece a compreensão. Quem sabe sintetizar, aprende a enxergar as partes mais importantes de qualquer assunto.</p>
-
-  <h2>5. Autonomia no Estudo</h2>
-  <p>Um estudante eficiente não depende exclusivamente de explicações externas. Ele sabe procurar fontes confiáveis, pesquisar, explorar livros, fazer perguntas e descobrir respostas.</p>
-
-  <p>Essa autonomia torna o aprendizado mais sólido, mais profundo e mais duradouro.</p>
-
-  <h3>6. Consciência do Próprio Processo</h3>
-  <p>Aprender a aprender é uma das habilidades mais valiosas do século. Quando você observa como estuda, identifica suas dificuldades, conhece seus pontos fortes e adapta seu método, o crescimento acontece naturalmente.</p>
-
-  <p>O estudante consciente é capaz de reconhecer quando um método funciona e quando precisa ser ajustado. Essa autoavaliação constante é o que cria um verdadeiro hábito de evolução.</p>
-
-  <h2>Mensagem Final da Aula</h2>
-  <p>As habilidades que você conheceu hoje formam os pilares do estudante eficiente. Sem elas, qualquer técnica pode funcionar apenas parcialmente. Mas com elas, cada método se torna mais poderoso, mais eficaz e mais duradouro.</p>
-
-  <p>Na próxima aula, vamos entrar nas técnicas modernas de estudo — estratégias práticas que realmente funcionam e que você poderá aplicar imediatamente.</p>
-
-  <p><strong>Obrigado por acompanhar esta aula. Nos vemos na próxima.</strong></p>
-</section>
-<section class="aula" id="aula-4">
-  <h3>Aula 4 – Técnicas Modernas de Estudo Que Realmente Funcionam</h3>
-
-  <p>Chegamos a uma das aulas mais importantes deste curso. Aqui você vai aprender técnicas comprovadas, utilizadas por estudantes de alto desempenho no mundo inteiro. São métodos modernos, baseados em neurociência, psicologia cognitiva e boas práticas de aprendizagem.</p>
-
-  <p>Estas técnicas não são apenas eficientes — elas são estratégicas. Combinadas com disciplina e constância, podem transformar completamente a forma como você estuda. E lembre-se: tudo o que aprender aqui pode ser potencializado com hábitos de leitura, prática constante e materiais de qualidade, como os disponíveis na Livraria Construtiva.</p>
-
-  <h3>1. Técnica de Repetição Espaçada</h3>
-  <p>A repetição espaçada é considerada uma das técnicas mais poderosas para memorização a longo prazo. Ao invés de revisar tudo de uma vez, você revisa várias vezes, em intervalos crescentes: depois de 1 dia, depois de 3 dias, depois de 7 dias, depois de 15 dias.</p>
-
-  <p>Esse processo fortalece as conexões da memória e impede o esquecimento rápido. É ideal para matérias extensas, conteúdos importantes e preparação para provas. Muitos estudantes combinam essa técnica com resumos curtos feitos a partir de leituras — e é aí que livros e materiais de estudo confiáveis, como os que a Livraria Construtiva oferece, se tornam ainda mais importantes.</p>
-
-  <h2>2. Técnica Pomodoro</h2>
-  <p>O método Pomodoro é simples e extremamente eficiente. Você divide o estudo em blocos de 25 minutos totalmente focados, seguidos de uma pausa de 5 minutos. Após quatro ciclos, faz uma pausa maior, de cerca de 15 a 30 minutos.</p>
-
-  <p>Essa técnica combate a distração, melhora o foco e aumenta a produtividade, especialmente em tempos de excesso de estímulos digitais. É um dos métodos mais usados pelos estudantes modernos.</p>
-
-  <h3>3. Estudo Ativo (Active Recall)</h3>
-  <p>O estudo ativo é o oposto do estudo passivo. Não basta reler o conteúdo. É necessário puxar da memória. Tente explicar a matéria sem olhar, responder perguntas, criar flashcards e testar o próprio conhecimento.</p>
-
-  <p>O Active Recall estimula o cérebro a recordar informações de forma ativa, fortalecendo muito a memória. Essa técnica é ainda mais poderosa quando você tem bons materiais para estudar, como livros bem escritos e organizados — algo que a Livraria Construtiva incentiva ao disponibilizar conteúdos de qualidade.</p>
-
-  <h2>4. Técnica Feynman</h2>
-  <p>A técnica Feynman consiste em explicar o conteúdo como se estivesse ensinando a alguém que não sabe nada sobre o assunto. Ao tentar simplificar o complexo, você descobre onde realmente entende e onde ainda precisa melhorar.</p>
-
-  <p>Essa técnica desenvolve clareza mental, raciocínio e capacidade de síntese — habilidades essenciais para qualquer estudante moderno.</p>
-
-  <h3>5. Mapas Mentais e Mapas Conceituais</h3>
-  <p>Os mapas mentais organizam ideias de forma visual, ajudando o cérebro a criar conexões mais fortes. São perfeitos para resumir matérias longas, organizar temas para provas e visualizar lógica e estrutura de conteúdos.</p>
-
-  <p>Esse tipo de organização também melhora a criatividade e facilita revisões rápidas. Muitos estudantes utilizam livros como base para extrair as ideias principais antes de montar seus mapas — outra forma indireta de desenvolver o hábito de leitura, algo que a Livraria Construtiva promove constantemente.</p>
-
-  <h2>6. Técnica SQ3R</h2>
-  <p>A técnica SQ3R é uma das mais completas para leitura ativa. O nome vem de cinco passos:</p>
-  <ul>
-    <li><strong>Survey</strong> – visão geral do conteúdo;</li>
-    <li><strong>Question</strong> – criar perguntas sobre o tema;</li>
-    <li><strong>Read</strong> – leitura cuidadosa;</li>
-    <li><strong>Recite</strong> – explicar o que entendeu;</li>
-    <li><strong>Review</strong> – revisar para fixar.</li>
-  </ul>
-
-  <p>Essa técnica melhora a compreensão, a retenção e a interpretação, sendo ideal para livros, apostilas e materiais extensos — como aqueles que muitos estudantes pesquisam através da Livraria Construtiva.</p>
-
-  <h3>7. Técnica das Perguntas-Chave</h3>
-  <p>Após estudar um conteúdo, responda sempre às perguntas:</p>
-  <ul>
-    <li>O que é isso?</li>
-    <li>Como funciona?</li>
-    <li>Por que isso é importante?</li>
-    <li>Onde eu posso aplicar?</li>
-  </ul>
-
-  <p>Essas perguntas obrigam o cérebro a processar a informação com profundidade, transformando conhecimento solto em compreensão sólida.</p>
-
-  <h2>Conclusão da Aula</h2>
-  <p>As técnicas que você aprendeu hoje representam o que existe de mais moderno e eficiente no mundo do aprendizado. Não importa se você estuda para crescer na vida, para passar em exames, ou simplesmente para se tornar alguém mais bem preparado — aplicar estas estratégias fará toda a diferença.</p>
-
-  <p>E lembre-se sempre: o hábito da leitura é a base do estudo eficiente. A Livraria Construtiva existe exatamente para fortalecer esse hábito e apoiar estudantes que desejam evoluir.</p>
-
-  <p><strong>Obrigado por acompanhar esta aula. Nos vemos na próxima.</strong></p>
-</section>
-<section class="aula" class="aula-5">
-  <h3>Aula 5 – Construindo Hábitos de Leitura Inteligente</h3>
-
-  <p>Se existe um hábito capaz de transformar completamente a vida de um estudante, esse hábito é a leitura. Ler desenvolve vocabulário, estimula a imaginação, melhora a concentração, amplia o conhecimento e fortalece o raciocínio lógico. A leitura é a base fundamental de todo estudo eficiente.</p>
-
-  <p>No entanto, muitos estudantes têm dificuldades para manter o hábito. Às vezes falta tempo, outras vezes falta motivação, e em muitos casos falta orientação sobre como ler de forma mais eficiente. Nesta aula, vamos aprofundar práticas modernas para transformar a leitura em um hábito prazeroso, constante e realmente útil.</p>
-
-  <p>É importante destacar que a Livraria Construtiva tem como missão ajudar estudantes e leitores a encontrar bons materiais, ampliando o interesse pela leitura e fornecendo conteúdos que fortalecem o aprendizado. Criar o hábito de ler não só melhora os seus estudos, mas também amplia sua visão de mundo, abre portas e desenvolve a sua mente para novas oportunidades.</p>
-
-  <h2>1. Leitura Ativa</h2>
-  <p>A leitura ativa é quando você interage mentalmente com o texto. Em vez de apenas passar os olhos pelas palavras, você questiona, interpreta e busca significados. Isso envolve sublinhar ideias importantes, fazer perguntas, pensar em exemplos e relacionar o conteúdo com o que você já sabe.</p>
-
-  <p>Essa forma de ler é extremamente eficiente para conteúdos acadêmicos, livros técnicos e materiais de estudo. Quanto mais ativo você for, mais o seu cérebro trabalha e mais você retém.</p>
-
-  <h2>2. A Técnica da Pré-Leitura</h2>
-  <p>A pré-leitura consiste em analisar o texto antes de ler profundamente. Você observa títulos, subtítulos, imagens, palavras-chave e estrutura geral. Isso ajuda o cérebro a criar uma expectativa e entender melhor o que está por vir.</p>
-
-  <p>Muitos estudantes perdem tempo porque mergulham no texto sem ter ideia do assunto. A pré-leitura prepara o terreno e melhora a absorção das ideias.</p>
-
-  <h2>3. Ler com Propósito</h2>
-  <p>Antes de abrir um livro, pergunte-se: qual é o meu objetivo com esta leitura? Informar? Aprofundar? Relembrar? Resolver um problema? Cada propósito exige uma abordagem diferente. Quando você sabe o que quer, sua mente trabalha de forma mais focada.</p>
-
-  <p>Livros da Livraria Construtiva, por exemplo, oferecem temas organizados para que o estudante consiga escolher exatamente aquilo que lhe será mais útil. Isso facilita o processo de leitura e torna o estudo mais estratégico.</p>
-
-  <h2>4. A Leitura Intervalada</h2>
-  <p>Ler por longos períodos sem pausa diminui a concentração. O ideal é intercalar leitura com pequenas pausas. Isso evita cansaço, melhora o foco e ajuda na retenção do conteúdo.</p>
-
-  <p>Você pode usar a técnica Pomodoro, por exemplo, lendo por 25 minutos e descansando por 5. Isso mantém sua mente ativa e evita distrações prolongadas.</p>
-
-  <h3>5. Criação de Rotina de Leitura</h3>
-  <p>Para transformar leitura em hábito, é essencial criar uma rotina. Escolha um horário fixo, um ambiente confortável e mantenha o compromisso consigo mesmo. Quanto mais você repete, mais seu cérebro entende que ler faz parte do seu dia.</p>
-
-  <p>Mesmo que comece com poucos minutos, o importante é a constância. Com o tempo, você vai sentir prazer e perceber o quanto esse hábito contribui para seu crescimento pessoal e acadêmico.</p>
-
-  <h3>6. Como Escolher Livros de Qualidade</h3>
-  <p>Nem todo livro tem o mesmo impacto. É importante escolher obras bem escritas, organizadas e que realmente agregam conhecimento. A Livraria Construtiva ajuda exatamente nesse ponto, oferecendo materiais selecionados que apoiam a aprendizagem e incentivam o leitor a continuar evoluindo.</p>
-
-  <p>Livros ruins podem tirar sua motivação. Livros bons elevam sua capacidade de pensar e de entender o mundo. A diferença é enorme.</p>
-
-  <h2>7. Registro de Leitura</h2>
-  <p>Mantenha um caderno, bloco de notas ou aplicativo onde você possa registrar ideias importantes, frases marcantes, aprendizagens e reflexões. Isso reforça a memória e torna a leitura mais consciente.</p>
-
-  <p>Registrar o que você lê não só ajuda no entendimento, como também cria um histórico do seu progresso, aumentando a motivação.</p>
-
-  <h2>Conclusão da Aula</h2>
-  <p>Ler não é apenas uma atividade — é um dos maiores investimentos que você pode fazer para o seu futuro. Quem lê mais aprende melhor, pensa melhor e cresce mais. E a Livraria Construtiva está aqui para apoiar essa jornada, oferecendo livros que estimulam a mente, fortalecem o raciocínio e transformam estudantes em verdadeiros amantes do conhecimento.</p>
-
-  <p><strong>Obrigado por acompanhar esta aula. Te vejo na próxima.</strong></p>
-</section>
-<section class="aula">
-  <h3>Aula 6: Técnicas de Memorização Eficiente</h3>
-  <p>Na Aula 6, vamos explorar métodos que ajudam você a memorizar informações de forma mais rápida e duradoura. A memorização é essencial para estudar de forma eficiente, especialmente quando você precisa lembrar de grandes quantidades de conteúdo.</p>
-
-  <h3>1. Método da Repetição Espaçada</h3>
-  <p>O Método da Repetição Espaçada consiste em revisar o conteúdo em intervalos de tempo estratégicos. Isso reforça a memória de longo prazo e evita a sobrecarga de informações.</p>
-  <ul>
-    <li>Estude um conteúdo hoje, revise em 1 dia, depois em 3 dias, em 7 dias, e assim por diante.</li>
-    <li>Use aplicativos ou agendas para organizar essas revisões.</li>
-  </ul>
-
-  <h3>2. Técnica de Associação</h3>
-  <p>A Técnica de Associação envolve conectar novas informações com algo que você já conhece. Isso cria “ganchos” na memória, facilitando a lembrança.</p>
-  <ul>
-    <li>Associe nomes a imagens ou objetos familiares.</li>
-    <li>Crie histórias curtas usando os conceitos que precisa memorizar.</li>
-  </ul>
-
-  <h3>3. Uso de Mapas Mentais</h3>
-  <p>Mapas Mentais ajudam a organizar e visualizar informações. Eles mostram relações entre conceitos, tornando o estudo mais ativo e memorável.</p>
-  <ul>
-    <li>Coloque o tema central no centro e os tópicos relacionados ao redor.</li>
-    <li>Use cores, desenhos e símbolos para facilitar a memorização.</li>
-  </ul>
-
-  <h3>4. Técnica de Feynman</h3>
-  <p>A Técnica de Feynman consiste em explicar o conteúdo que você está estudando como se estivesse ensinando outra pessoa. Isso revela lacunas na sua compreensão e reforça a memória.</p>
-  <ul>
-    <li>Explique em voz alta ou escreva em um papel simples.</li>
-    <li>Se não conseguir explicar algo claramente, volte ao material e revise.</li>
-  </ul>
-
-  <h3>Dicas Extras:</h3>
-  <ul>
-    <li>Durma bem: a memória funciona melhor após um bom sono.</li>
-    <li>Faça pausas: estudar sem pausas prejudica a retenção.</li>
-    <li>Varie o ambiente de estudo: pequenos estímulos diferentes ajudam a fixar informações.</li>
-  </ul>
-
-  <p>Seguindo essas técnicas, você aumentará sua capacidade de memorizar conteúdos de forma rápida e eficiente, economizando tempo e melhorando seu rendimento nos estudos.</p>
-</section>
-<section class="aula">
-  <h3>Aula 7: Técnicas de Leitura Eficiente</h3>
-  <p>Nesta aula, vamos aprender a ler de forma mais rápida e compreender melhor o conteúdo estudado. Ler eficientemente não significa apenas passar os olhos pelo texto, mas extrair o máximo de informação em menos tempo.</p>
-
-  <h3>1. Leitura Ativa</h3>
-  <p>Leitura Ativa significa se envolver com o conteúdo, questionando e refletindo enquanto lê.</p>
-  <ul>
-    <li>Faça perguntas antes, durante e após a leitura.</li>
-    <li>Substitua a leitura passiva por anotações e resumos.</li>
-    <li>Procure relacionar o que lê com conhecimento que você já possui.</li>
-  </ul>
-
-  <h3>2. Técnica de Skimming</h3>
-  <p>O Skimming é a leitura rápida para identificar a ideia principal do texto.</p>
-  <ul>
-    <li>Leia títulos, subtítulos e palavras-chave.</li>
-    <li>Observe imagens, gráficos e listas.</li>
-    <li>Use essa técnica para ter uma visão geral antes de estudar detalhadamente.</li>
-  </ul>
-
-  <h3>3. Técnica de Scanning</h3>
-  <p>Scanning consiste em buscar informações específicas no texto, como datas, nomes ou conceitos-chave.</p>
-  <ul>
-    <li>Perfeito para revisão ou resolução de exercícios.</li>
-    <li>Evite ler palavra por palavra; procure padrões ou palavras-chave.</li>
-  </ul>
-
-  <h3>4. Leituras em Blocos</h3>
-  <p>Em vez de ler linha por linha, tente ler blocos de palavras ou frases completas.</p>
-  <ul>
-    <li>Isso acelera a leitura e melhora a compreensão global.</li>
-    <li>Exercite aumentando gradualmente a quantidade de palavras por bloco.</li>
-  </ul>
-
-  <h3>Dicas Extras:</h3>
-  <ul>
-    <li>Evite distrações: ambiente calmo melhora a concentração.</li>
-    <li>Faça pequenas pausas a cada 25–30 minutos de leitura intensa.</li>
-    <li>Combine leitura com anotações visuais, como esquemas e mapas mentais.</li>
-  </ul>
-
-  <p>Com essas técnicas, você conseguirá ler mais rápido, entender melhor e economizar tempo nos estudos, tornando seu aprendizado mais eficiente.</p>
-</section>
-<section class="aula">
-  <h3>Aula 8: Técnicas de Concentração e Foco</h3>
-  <p>Nesta aula, vamos aprender como manter a concentração e o foco durante os estudos. Sem foco, mesmo estudando por muitas horas, o aprendizado será superficial.</p>
-
-  <h3>1. Ambiente de Estudo Adequado</h3>
-  <p>O local de estudo influencia diretamente sua concentração.</p>
-  <ul>
-    <li>Escolha um lugar silencioso e bem iluminado.</li>
-    <li>Mantenha a mesa organizada e livre de distrações.</li>
-    <li>Evite estudar na cama, pois seu cérebro associa o local ao descanso.</li>
-  </ul>
-
-  <h3>2. Técnica Pomodoro</h3>
-  <p>A Técnica Pomodoro ajuda a manter foco intenso por períodos curtos, intercalados com pequenas pausas.</p>
-  <ul>
-    <li>Estude por 25 minutos sem interrupções.</li>
-    <li>Faça uma pausa de 5 minutos.</li>
-    <li>Após 4 ciclos, faça uma pausa mais longa de 15–30 minutos.</li>
-  </ul>
-
-  <h3>3. Eliminação de Distrações Digitais</h3>
-  <p>Celular, redes sociais e notificações quebram a concentração.</p>
-  <ul>
-    <li>Desative notificações durante o estudo.</li>
-    <li>Use aplicativos de bloqueio de redes sociais se necessário.</li>
-    <li>Deixe o celular fora do alcance ou em modo silencioso.</li>
-  </ul>
-
-  <h3>4. Técnica da Atenção Plena (Mindfulness)</h3>
-  <p>Mindfulness ajuda a treinar a mente para focar no presente.</p>
-  <ul>
-    <li>Respire profundamente e concentre-se no estudo sem se distrair.</li>
-    <li>Se perceber que a mente divagou, gentilmente volte ao conteúdo.</li>
-    <li>Exercícios curtos de meditação antes do estudo podem melhorar o foco.</li>
-  </ul>
-
-  <h3>Dicas Extras:</h3>
-  <ul>
-    <li>Estabeleça metas claras para cada sessão de estudo.</li>
-    <li>Estude nos horários em que você se sente mais alerta.</li>
-    <li>Faça pausas ativas: alongamentos ou caminhada breve aumentam a energia mental.</li>
-  </ul>
-
-  <p>Com essas técnicas de concentração e foco, você poderá estudar de maneira mais eficiente, aproveitando melhor seu tempo e absorvendo mais conteúdo.</p>
-</section>
-<section class="aula" id="aula9">
-  <h3>Aula 9: Revisão Estratégica e Preparação para Avaliações</h3>
-  
-  <p>Nesta aula, vamos aprender como revisar de forma eficiente e como se preparar para provas e avaliações sem desperdiçar tempo.</p>
-  
-  <h3>1. O Poder da Revisão Ativa</h3>
-  <p>A revisão ativa consiste em se testar sobre o conteúdo estudado, em vez de apenas reler os textos. Ela ajuda a consolidar a memória de longo prazo e identificar os pontos fracos.</p>
-  
-  <ul>
-    <li>Faça perguntas sobre o conteúdo e tente respondê-las sem consultar o material.</li>
-    <li>Explique a matéria para alguém ou para você mesmo em voz alta.</li>
-    <li>Use flashcards para revisar conceitos-chave de forma rápida.</li>
-  </ul>
-  
-  <h3>2. Planejamento de Revisão</h3>
-  <p>É importante planejar quando e como revisar os conteúdos:</p>
-  <ul>
-    <li>Revisão imediata: no mesmo dia em que aprendeu o conteúdo.</li>
-    <li>Revisão de curto prazo: 2-3 dias após a primeira leitura.</li>
-    <li>Revisão de médio prazo: 1-2 semanas depois.</li>
-    <li>Revisão de longo prazo: 1 mês ou mais, antes de provas importantes.</li>
-  </ul>
-  
-  <h3>3. Técnicas para Provas e Avaliações</h3>
-  <p>Preparar-se para provas vai além de estudar; é preciso estratégia:</p>
-  <ul>
-    <li>Simule provas cronometradas para treinar o tempo de resolução.</li>
-    <li>Identifique os tipos de questões mais comuns e pratique com exercícios.</li>
-    <li>Revise os erros das tentativas anteriores e foque nos pontos mais difíceis.</li>
-  </ul>
-  
-  <h3>4. Evitando a Procrastinação na Revisão</h3>
-  <ul>
-    <li>Defina horários fixos de revisão e siga-os rigorosamente.</li>
-    <li>Use técnicas como Pomodoro para manter foco e produtividade.</li>
-    <li>Evite estudar por longos períodos sem pausas estratégicas.</li>
-  </ul>
-  
-  <h3>5. Dicas Finais</h3>
-  <ul>
-    <li>Revise de forma inteligente, não apenas mais tempo de estudo.</li>
-    <li>Combine diferentes métodos: resumos, mapas mentais, exercícios e explicações em voz alta.</li>
-    <li>Mantenha um registro das revisões para acompanhar seu progresso.</li>
-  </ul>
-  
-  <p>Com estas estratégias, você aumentará muito sua retenção de conteúdo e estará mais preparado para qualquer avaliação.</p>
-
-  <p><strong>Próximo passo:</strong> Comece a aplicar revisões diárias e teste essas técnicas na sua rotina de estudos.</p>
-</section>
-<section class="aula" id="aula10">
-  <h3>Aula 10: Consolidando Hábitos e Tornando o Estudo Eficiente Permanente</h3>
-  
-  <p>Nesta aula final, vamos aprender como transformar tudo o que estudamos em hábitos sólidos, garantindo que o estudo eficiente se torne parte da sua rotina diária.</p>
-  
-  <h3>1. Revisão dos Principais Conceitos</h3>
-  <ul>
-    <li>Estudo ativo: ler, fazer resumos, explicações em voz alta e exercícios práticos.</li>
-    <li>Planejamento: organizar horários, dividir conteúdos e priorizar tarefas.</li>
-    <li>Revisão estratégica: revisar no curto, médio e longo prazo.</li>
-    <li>Evitar procrastinação: manter foco com técnicas como Pomodoro e intervalos programados.</li>
-  </ul>
-  
-  <h3>2. Transformando o Estudo em Hábito</h3>
-  <ul>
-    <li>Estabeleça horários fixos de estudo e siga-os todos os dias.</li>
-    <li>Comece com sessões curtas e aumente gradualmente.</li>
-    <li>Associe o estudo a gatilhos positivos, como música ou ambiente organizado.</li>
-    <li>Use recompensas pequenas para manter motivação constante.</li>
-  </ul>
-  
-  <h3>3. Mantendo a Eficiência a Longo Prazo</h3>
-  <ul>
-    <li>Revise periodicamente todo o conteúdo aprendido.</li>
-    <li>Faça autoavaliações regulares para identificar pontos fracos.</li>
-    <li>Adapte as técnicas de estudo ao seu estilo pessoal.</li>
-    <li>Evite a sobrecarga: o descanso é essencial para memorização e produtividade.</li>
-  </ul>
-  
-  <h3>4. Conclusão e Próximos Passos</h3>
-  <p>O estudo eficiente não é apenas sobre aprender rápido, mas sobre criar hábitos que garantam aprendizado consistente e duradouro. Agora que você concluiu este curso, aplique as técnicas diariamente e acompanhe seu progresso. Com disciplina e planejamento, estudar será mais fácil, produtivo e recompensador.</p>
-  
-  <p><strong>Dica final:</strong> Continue usando a Livraria Construtiva como recurso, revisando materiais gratuitos e aplicando as técnicas aprendidas para consolidar seu aprendizado.</p>
-  
-</section>
-  <!-- ... (todo o conteúdo das aulas e seções que estavam no teu ficheiro) ... -->
-  <!-- Mantive todas as seções e textos tal como no arquivo recebido. -->
-</section>
-
-<section id="livros" style="display:none;">
-  <h2>📖 Livros</h2>
-  <div id="filtros">
-    <input type="text" id="busca" placeholder="Buscar por título ou autor...">
-    <select id="categoria">
-      <option value="">Todas as categorias</option>
-      <option value="fiction">Ficção</option>
-      <option value="children">Infantil</option>
-      <option value="science">Ciência</option>
-      <option value="philosophy">Filosofia</option>
-      <option value="history">História</option>
-    </select>
-  </div>
-  <main>
-    <div id="livros-container"></div>
-    <div id="loading">Carregando livros...</div>
-  </main>
-</section>
-
-<section id="contato" style="display:none;">
-  <h2>✉ Contato</h2>
-  <p>Fale conosco via:</p>
-  <p>
-    <a href="https://www.facebook.com/profile.php?id=61583174369263" target="_blank">📘 Facebook</a> |
-    <a href="https://wa.me/959622160?text=Olá! Quero saber mais sobre os livros" target="_blank">💬 WhatsApp</a> |
-    <a href="mailto:jsacassole@gmail.com?subject=Contato Livraria Construtiva&body=Olá, gostaria de mais informações.">✉ E-mail</a>
-  </p>
-  <p><!-- texto de contato mantido -->Nossa equipe está disponível para prestar qualquer assistência apartir do nosso WhatsApp, retirar dúvidas e ajudar você a amprender de forma mais facilitada.</br>Deixe sua crítica, opinião ou contributo apartir do nosso E-mail.</br>Não exite!</br> Sua interação é um grande contributo para nós e pode nos ajudar a melhorar os serviços.</br>E você pode se manter ligado de todos os serviços e novidades de forma fácil na nossa página do Facebook. Siga a página, e não perca nenhuma novidade do site.</br></br>Todas informações e atualizações, são disponibilizadas na página oficial da Livraria Construtiva (no topo da página clica em Facebook e serás direcionado à nossa página oficial). Siga e fica atualizado dos nossos serviços e novidades sem perder nada. Compartilhe e ajude os seus amigos e parentes a crescer a nível de intelectualidade. Reaja e comente, para ajudar-nos a crescer e estar mais motivados em disponibilizar novidades.</p>
-</section>
-
-<section id="sobreLivraria" style="display:none;">
-  <h2>🏛 Sobre a Livraria</h2>
-  <p><!-- conteúdo mantido -->A Livraria Construtiva constitui-se como um espaço digital orientado pela convicção de que o conhecimento deve ser organizado, preservado e disponibilizado de forma clara, acessível e intelectualmente responsável. Criada com o propósito de reunir obras, reflexões e conteúdos que contribuam para o desenvolvimento humano, ela se destaca por sua abordagem singular, que integra curadoria literária, análise conceitual e compromisso educativo dentro de uma estrutura moderna e intuitiva.</br></br>A plataforma foi concebida com base em princípios de clareza, ordem e intencionalidade. Cada seção, cada livro e cada texto presente no ambiente é selecionado ou elaborado sob a perspectiva de ampliar a compreensão do leitor acerca de temas que atravessam literatura, cultura, espiritualidade, comportamento e formação pessoal. A Livraria Construtiva não se limita à função tradicional de armazenar obras: ela busca produzir sentido, contextualizar ideias e aproximar o leitor de materiais que dialogam com sua necessidade de crescimento intelectual.</br></br>Seu projeto editorial fundamenta-se na valorização da leitura como mecanismo de transformação. A organização dos conteúdos não ocorre de forma aleatória; é resultado de um processo cuidadoso de categorização que visa oferecer ao visitante uma experiência fluida, coerente e enriquecedora. A presença de textos autorais, resumos interpretativos, análises aprofundadas e conteúdos complementares reforça sua missão de construir um ambiente que transcende o simples ato de disponibilizar livros.</br></br>A Livraria Construtiva opera como um espaço vivo, em constante aperfeiçoamento. Cada atualização reflete a busca contínua por qualidade textual, diversidade temática e rigor conceptual. Seu compromisso está vinculado à promoção de um ecossistema literário que inspira reflexão, incentiva a pesquisa pessoal e fortalece o hábito da leitura como ferramenta de mudança individual e coletiva.</br>Assim, a Livraria Construtiva se consolida como um projeto que integra literatura, educação e visão crítica, oferecendo ao leitor um ambiente que não apenas disponibiliza conteúdos, mas também provoca questionamentos, estimula novas interpretações e contribui de forma direta para a construção intelectual de todos que a visitam.</p>
-</section>
-
-<section id="sobreAutor" style="display:none;">
-  <h2>✍ Sobre o Autor</h2>
- <h3>João Enoc Sacassole</h3>
- <p><!-- conteúdo mantido -->Autor que idealiza a Livraria Construtiva atua como pesquisador independente, concentrando-se em temas que conectam tecnologia, literatura e desenvolvimento humano.Suas buscas cientificas inclui experiência em desenvolvimento web e programação em C#, áreas nas quais exerce um trabalho sistemático voltado à criação de soluções digitais funcionais, organizadas e orientadas ao usuário. Essa combinação entre investigação intelectual e prática tecnológica permite-lhe conceber projetos digitais com profundidade conceitual e precisão estrutural, integrando análise crítica, organização de informação e implementação de sistemas modernos com fluidez e rigor metodológico.
-</p>
-<p>A trajetória do autor por trás da Livraria Construtiva nasceu de uma combinação pouco comum entre curiosidade intelectual, paixão pela educação e uma busca permanente por conhecimento acessível. Desde muito jovem, desenvolveu um olhar atento para a relação entre literatura, transformação social e desenvolvimento humano. Ao perceber que muitos leitores não tinham acesso a livros, bibliotecas ou materiais de estudo, passou a dedicar-se à criação de ambientes digitais que pudessem oferecer conhecimento de forma simples, organizada e, sobretudo, útil.</br></br>Sua formação autodidata permitiu navegar por diversas áreas — das ciências humanas à tecnologia — incorporando referências que vão da filosofia clássica às tendências contemporâneas de inovação digital. Essa heterogeneidade de interesses reflete-se diretamente no projeto da Livraria Construtiva: um espaço onde livros, ideias, resumos, reflexões e conteúdos educativos coexistem com o propósito de estimular pensamento crítico e promover leitura de qualidade.</br></br>O autor acredita que a literatura não é apenas uma coleção de páginas, mas um instrumento de construção pessoal e coletiva. Por isso, seu trabalho vai além da simples elaboração de um site: ele organiza conteúdos, cria textos analíticos, examina obras literárias e apresenta conhecimento contextualizado, de forma que cada leitor possa reinterpretar o mundo ao seu redor com mais clareza e autonomia.</br>A Livraria Construtiva representa, portanto, a expressão prática de um princípio fundamental em sua filosofia de vida: conhecimento só tem valor quando pode ser compartilhado. A plataforma foi criada para ser um espaço contínuo de aprendizagem, onde leitores encontram não apenas livros para explorar, mas também reflexões profundas, textos autorais e análises que ampliam a compreensão sobre diferentes temas.</br></br>Ao reunir literatura, educação e tecnologia em um só lugar, o autor reafirma seu compromisso com o acesso democrático ao saber. Sua missão é construir — página após página — um ambiente que inspire, eduque e motive aqueles que acreditam que o conhecimento é a ferramenta mais poderosa para transformar vidas.</p>
-</section>
-
-<section id="comoBaixar">
-  <h2>⬇ Como Baixar Livros</h2>
-  <p><!-- conteúdo mantido -->Para baixar um livro, basta clicar no botão 📥 “Baixar” abaixo do título desejado. E seu download começará automaticamente.</br></br>Caso o download não começar, você pode tentar outra vez, procurar outro livro, ou entrar em contato conosco apartir do WhatsApp da Livraria Construtiva, com a devida dificuldade (WhatsApp da Livraria Construtiva: Na seção de contato, clica em WhatsApp e você será direcionado ao WhatsApp da Livraria Construtiva).</p>
-</section>
-
-<section id="blog" style="display:none;">
-  <h2>📝 Blog</h2>
-
-  <!-- Área de senha -->
-  <div id="senhaArea">
-    <p>Digite a senha para publicar no blog:</p>
-    <input type="password" id="senhaBlog" placeholder="Senha de administrador">
-    <button onclick="validarSenhaBlog()">Acessar</button>
-  </div>
-    <!-- Editor (aparece após validação da senha) -->
-  <div id="editorBlog" style="display:none; margin-top:20px;">
-    <h3>Escrever nova publicação</h3>
-    <textarea id="textoPublicacao" rows="6" style="width:90%; max-width:600px; padding:10px;"></textarea>
-    <br><br>
-    <button onclick="publicarTexto()">Publicar</button>
-  </div>
-
-  <hr style="margin:25px 0;">
-
-  <!-- Área de posts publicados via Supabase -->
-  <div id="postsPublicados">
-    <h3>📢 Publicações</h3>
-    <div id="listaPosts"></div>
-  </div>
-
-  <!-- Posts estáticos mantidos -->
-  <div class="post">
-    <h3>💡 A Importância de Organizar o Tempo</h3>
-    <p><!-- texto mantido -->Saber organizar o tempo é fundamental para aproveitar melhor o dia e alcançar objetivos pessoais e profissionais.  
-    <br><br>
-    Comece definindo prioridades e estabelecendo tarefas diárias. Faça listas de atividades e separe momentos para estudo, lazer e descanso.  
-    <br>
-    Evite distrações e dedique atenção completa a cada tarefa. Pequenas mudanças na rotina podem gerar grandes resultados ao longo do tempo.  
-    <br><br>
-    Lembre-se: o tempo é um recurso limitado e valioso. Quem aprende a gerenciá-lo com disciplina consegue produzir mais e manter equilíbrio na vida.</p>
-    <small>Publicado em: 26/11/2025</small>
-  </div>
-  <div class="post">
-  <h3>🌱 Desenvolvimento Pessoal e Consciência Crítica</h3>
-  <p>
-    O desenvolvimento pessoal não é apenas sobre aprender habilidades novas, mas também sobre compreender a si mesmo e o mundo ao redor.  
-    <br><br>
-    A consciência crítica permite analisar informações de forma objetiva, questionar pressupostos e evitar aceitar tudo como verdade absoluta.  
-    <br><br>
-    Um exercício útil é refletir diariamente sobre decisões e comportamentos: quais escolhas trouxeram resultados positivos? Quais poderiam ser melhoradas?  
-    <br><br>
-    Outro ponto essencial é o hábito da leitura diversificada. Livros, artigos, debates e estudos oferecem perspectivas diferentes, ampliando a visão e fortalecendo o pensamento independente.  
-    <br><br>
-    Desenvolver-se pessoalmente exige paciência, disciplina e autocrítica, mas os resultados são transformadores: maior clareza mental, melhores relações e capacidade de tomar decisões conscientes em qualquer situação.
-  </p>
-  <small>Publicado em: 26/11/2025</small>
+  <!-- BOTÃO ELEGANTE PREMIUM MODERNO -->
+  <a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+     target="_blank"
+     style="
+        position:relative;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:12px 30px;
+        background:linear-gradient(135deg, #f5e3c8, #e8cfa4, #d9b684);
+        color:#3a2f22;
+        font-size:1.1rem;
+        font-weight:700;
+        border-radius:45px;
+        text-decoration:none;
+        overflow:hidden;
+        border:1px solid rgba(140,110,70,0.35);
+        box-shadow:0 4px 14px rgba(0,0,0,0.15);
+        transition:0.35s ease;
+     "
+     onmouseover="this.style.transform='scale(1.06)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.22)'"
+     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 14px rgba(0,0,0,0.15)'"
+  >
+
+     <span style="position:relative; z-index:2;">
+        ✨ Livros Especiais ✨
+     </span>
+
+     <!-- ANIMAÇÃO DE BRILHO SUAVE -->
+     <span style="
+        position:absolute;
+        top:0;
+        left:-150%;
+        width:120%;
+        height:100%;
+        background:linear-gradient(
+           120deg,
+           transparent 0%,
+           rgba(255,255,255,0.4) 40%,
+           transparent 100%
+        );
+        z-index:1;
+        animation:soft-glow 2.8s infinite ease-in-out;
+     "></span>
+
+  </a>
 </div>
-<div class="post">
-  <h3>📘 Como a Alfabetização Digital Molda o Futuro da Comunicação Global</h3>
-  <p>
-    A alfabetização digital tornou-se um dos pilares centrais para a participação social moderna. 
-    Em um cenário onde a informação circula com velocidade exponencial, compreender não apenas como 
-    consumir conteúdo, mas também como analisá-lo criticamente, é parte essencial da formação do cidadão contemporâneo.
-    <br><br>
-    Nas últimas duas décadas, a transição do modelo tradicional de comunicação — baseado em fontes centralizadas 
-    e validação hierárquica — para um ecossistema descentralizado exigiu novas competências cognitivas. 
-    Hoje, usuários não são mais apenas leitores, mas também produtores, curadores e distribuidores de conteúdo. 
-    Essa mudança de identidade redefine completamente a dinâmica da comunicação global.
-    <br><br>
-    Contudo, a democratização do acesso não eliminou os desafios: ao contrário, ampliou a necessidade de 
-    interpretar contextos, reconhecer vieses, compreender algoritmos e distinguir fatos de narrativas. 
-    A capacidade de identificar manipulação informacional, detectar padrões comportamentais e reconstruir 
-    significados tornou-se mais relevante do que simplesmente possuir domínio técnico de ferramentas digitais.
-    <br><br>
-    Além disso, a alfabetização digital está diretamente ligada à inclusão socioeconômica. Países com índices 
-    elevados de competências digitais tendem a apresentar maior inovação, maior participação no mercado global 
-    e melhores indicadores de produtividade. Isso ocorre porque indivíduos capazes de atuar em ambientes 
-    digitais complexos também conseguem integrar-se mais rapidamente em setores tecnológicos e informacionais.
-    <br><br>
-    A questão central, portanto, não é apenas ensinar tecnologia, mas promover consciência digital. 
-    Isso envolve práticas como: verificar fontes, compreender políticas de privacidade, interpretar 
-    dados estatísticos, desenvolver pensamento sistêmico e adotar postura ética no uso da informação.
-    <br><br>
-    Em última análise, alfabetizar digitalmente é preparar indivíduos para navegar em um ambiente em constante 
-    evolução — onde a inteligência artificial, a automação e os sistemas de recomendação moldam, 
-    silenciosamente, percepções, preferências e comportamentos. 
-    <br><br>
-    O futuro da comunicação global dependerá diretamente da habilidade coletiva de interpretar, criar 
-    e gerir conhecimento dentro de ecossistemas digitais cada vez mais sofisticados. Quanto mais sólida 
-    for essa base, mais resilientes e preparadas estarão as sociedades para enfrentar os desafios da nova era informacional.
-  </p>
-  <small>Publicado em: 26/11/2025</small>
-</div>
-<div class="post">
-  <h3>📚 A Importância do Pensamento Crítico e da Curadoria do Conhecimento</h3>
-  <p>
-    O acúmulo de informação disponível atualmente é incomparável com qualquer outro período da história humana. 
-    No entanto, a abundância de dados não equivale automaticamente à sabedoria. É nesse contexto que a prática 
-    do pensamento crítico e a curadoria consciente do conhecimento tornam-se essenciais para a formação intelectual. 
-    <br><br>
-    A Livraria Construtiva se estabelece como um espaço dedicado a fornecer materiais cuidadosamente selecionados, 
-    permitindo ao leitor desenvolver habilidades analíticas, interpretar conceitos complexos e contextualizar ideias. 
-    Ao contrário de ambientes digitais superficiais, que priorizam quantidade em detrimento da qualidade, a Livraria Construtiva 
-    oferece obras que estimulam a reflexão profunda e promovem o crescimento intelectual contínuo.
-    <br><br>
-    O pensamento crítico exige que o indivíduo questione premissas, avalie evidências, compreenda múltiplas perspectivas 
-    e reconheça vieses próprios e externos. Ele não se limita à análise acadêmica: é um instrumento de vida que permite 
-    decisões mais conscientes, avaliações mais precisas e aprendizagem autônoma. A Livraria Construtiva fortalece esse processo 
-    ao fornecer textos, resumos e reflexões que desafiam o leitor a expandir sua compreensão sobre literatura, ciência, filosofia e sociedade.
-    <br><br>
-    Além disso, a curadoria de conhecimento realizada pela Livraria Construtiva garante que cada obra, cada análise e cada 
-    recomendação sejam contextualizadas e fundamentadas. Essa abordagem estruturada facilita que o leitor construa conexões 
-    significativas entre diferentes áreas do saber, potencializando o aprendizado multidisciplinar.
-    <br><br>
-    Em um mundo saturado de informação rápida e superficial, aprender a selecionar, organizar e interpretar dados de maneira crítica 
-    torna-se uma habilidade diferenciadora. A Livraria Construtiva atua como catalisador desse processo, oferecendo não apenas acesso 
-    a livros, mas também ferramentas cognitivas para transformar conhecimento em ação, reflexão e inovação.
-    <br><br>
-    Dessa forma, explorar os recursos da Livraria Construtiva é mais do que consumir conteúdo: é engajar-se em um processo contínuo 
-    de crescimento intelectual, fortalecendo competências de análise, compreensão e síntese, essenciais para o sucesso acadêmico, 
-    profissional e pessoal no século XXI.
-  </p>
-  <small>Publicado em: 26/11/2025</small>
-</div>
-<div class="post">
-  <h3>🧠 Neurociência e Aprendizagem: Como o Cérebro Absorve Conhecimento</h3>
-  <p>
-    Entender como o cérebro processa e retém informações é fundamental para aprimorar qualquer prática de aprendizagem. 
-    A neurociência revela que a retenção de conhecimento depende de fatores como atenção, repetição espaçada, emoção e 
-    associação de conceitos. Ler passivamente sem contexto ou reflexão reduz significativamente a eficácia do aprendizado.
-    <br><br>
-    A Livraria Construtiva se posiciona como um recurso estratégico para estimular processos cognitivos complexos. 
-    Seus conteúdos são estruturados de maneira a facilitar a ativação de múltiplas regiões cerebrais: a compreensão de conceitos, 
-    a memória de longo prazo e a capacidade de análise crítica. Ao explorar obras cuidadosamente selecionadas, o leitor 
-    fortalece conexões neurais que suportam habilidades de pensamento crítico e resolução de problemas.
-    <br><br>
-    Além disso, o cérebro humano aprende melhor quando encontra informações organizadas em camadas de complexidade crescente. 
-    Por isso, a Livraria Construtiva apresenta seus conteúdos de forma progressiva: conceitos básicos, análises aprofundadas 
-    e aplicações práticas. Essa metodologia não apenas aumenta a retenção, mas também promove insights e síntese de conhecimento.
-    <br><br>
-    Estudos em neuroeducação indicam que a leitura ativa — aquela que envolve questionamento, resumo e reflexão — amplifica 
-    a capacidade de internalizar informações e aplicar conceitos em contextos diversos. A Livraria Construtiva incentiva esse 
-    engajamento, criando uma experiência de leitura que transforma livros em ferramentas cognitivas, em vez de meros textos.
-    <br><br>
-    Assim, ao utilizar a Livraria Construtiva como guia no processo de aprendizagem, o leitor não só acumula informações, 
-    mas também desenvolve habilidades cognitivas de alto nível, preparando-se para desafios acadêmicos, profissionais e pessoais 
-    com uma base sólida de conhecimento e compreensão crítica.
-  </p>
-  <small>Publicado em: 26/11/2025</small>
-</div>
-<div class="post">
-  <h3>📚 A Importância da Leitura Digital no Século XXI</h3>
-  <p>
-    Em um mundo cada vez mais conectado, a leitura digital se tornou uma ferramenta essencial para 
-    o desenvolvimento intelectual e pessoal. A Livraria Construtiva surge como um espaço estratégico 
-    que disponibiliza livros gratuitos, proporcionando acesso democrático ao conhecimento. 
-    A plataforma evidencia que o hábito da leitura não é apenas uma prática cultural, mas um 
-    instrumento de transformação social, capaz de ampliar perspectivas, estimular o pensamento crítico 
-    e fortalecer competências cognitivas essenciais.
-  </p>
-  <p>
-    O acesso a obras digitais permite que leitores de diferentes regiões, contextos e faixas etárias 
-    tenham contato com materiais diversificados sem barreiras físicas. Além disso, o ambiente digital 
-    facilita a organização, pesquisa e interação com o conteúdo, tornando a experiência de leitura mais 
-    dinâmica e adaptável às necessidades individuais. A Livraria Construtiva, ao reunir obras selecionadas 
-    e resumos interpretativos, promove não apenas a leitura, mas a reflexão e o aprendizado ativo.
-  </p>
-  <p>
-    Investir na leitura digital é investir na formação de cidadãos críticos, informados e preparados 
-    para os desafios do século XXI. A Livraria Construtiva reafirma sua missão de democratizar o conhecimento, 
-    tornando-o acessível, organizado e útil para todos que buscam crescer intelectual e pessoalmente.
-  </p>
-</div>
-<div class="post">
-  <h3>🌐 Transformando Educação com Livros Digitais: A Missão da Livraria Construtiva</h3>
-  <p>
-    A educação do século XXI exige novas estratégias para democratizar o acesso ao conhecimento. 
-    A Livraria Construtiva atua como uma ponte entre leitores e obras literárias, disponibilizando livros digitais 
-    que fomentam aprendizado contínuo e reflexões profundas. Em um ambiente onde informação é abundante, a curadoria 
-    criteriosa oferecida pela plataforma garante que cada livro selecionado contribua para a formação crítica e intelectual do leitor.
-  </p>
-  <p>
-    Além de facilitar a leitura, o formato digital promove interatividade, pesquisa rápida e armazenamento eficiente, 
-    permitindo que estudantes, profissionais e pesquisadores explorem conteúdos sem limitações físicas. 
-    A integração de recursos como resumos interpretativos e análises conceituais transforma a experiência de leitura em um processo ativo de aprendizado.
-  </p>
-  <p>
-    A Livraria Construtiva reforça a ideia de que a democratização do conhecimento não é apenas um ideal, 
-    mas uma prática possível por meio da tecnologia. Ao unir acessibilidade, organização de conteúdos e aprofundamento intelectual, 
-    a plataforma se consolida como referência para aqueles que buscam expandir horizontes e transformar informação em sabedoria aplicada.
-  </p>
-</div>
-<div class="post">
-  <h3>📖 A Importância da Curadoria Literária na Era Digital</h3>
-  <p>
-    Na vasta quantidade de obras disponíveis online, selecionar livros que realmente agregam valor ao leitor é um desafio. 
-    A Livraria Construtiva se diferencia ao aplicar uma curadoria literária criteriosa, priorizando obras que estimulam pensamento crítico, análise profunda e compreensão contextualizada de temas essenciais para o desenvolvimento intelectual.
-  </p>
-  <p>
-    Cada livro presente na plataforma é avaliado com base em relevância, qualidade textual e potencial educativo. 
-    Além disso, a Livraria Construtiva oferece recursos complementares, como resumos, comentários analíticos e categorização detalhada, tornando a experiência de leitura mais estruturada e enriquecedora.
-  </p>
-  <p>
-    Essa abordagem fortalece a aprendizagem autônoma, permitindo que leitores de diferentes níveis encontrem materiais alinhados aos seus objetivos, interesses e necessidades. 
-    Ao integrar curadoria literária com tecnologias digitais, a Livraria Construtiva contribui para um ecossistema de conhecimento mais organizado, acessível e estimulante.
-  </p>
-</div>
-<div class="post">
-  <h3>🌐 Democratização do Conhecimento e a Missão da Livraria Construtiva</h3>
-  <p>
-    Em um mundo cada vez mais digital, o acesso à informação e ao conhecimento tornou-se um fator determinante para o desenvolvimento pessoal e social. 
-    A Livraria Construtiva atua como um catalisador desse processo, oferecendo livros e conteúdos cuidadosamente selecionados, permitindo que qualquer pessoa, independentemente de sua localização ou contexto, possa aprender e crescer intelectualmente.
-  </p>
-  <p>
-    O compromisso da Livraria Construtiva vai além da simples disponibilização de livros gratuitos. 
-    Cada obra é escolhida considerando seu impacto educativo, relevância cultural e potencial de transformação individual. Além disso, a plataforma integra recursos adicionais, como resumos, análises e categorização temática, que ajudam o leitor a navegar de forma eficiente pelo universo literário.
-  </p>
-  <p>
-    Essa democratização do conhecimento fortalece o hábito da leitura e incentiva a reflexão crítica, promovendo leitores mais informados, conscientes e capazes de tomar decisões fundamentadas. 
-    Ao combinar tecnologia, curadoria e educação, a Livraria Construtiva reafirma sua missão de construir um espaço digital que conecta pessoas ao saber de maneira acessível, organizada e profundamente significativa.
-  </p>
-</div>
-<div class="post">
-  <h3>📚 Leitura Crítica e Transformação Intelectual na Livraria Construtiva</h3>
-  <p>
-    Em tempos de informação massiva e imediata, a capacidade de interpretar, analisar e questionar conteúdos tornou-se essencial. A Livraria Construtiva não se limita a fornecer livros gratuitos; seu diferencial está na promoção de uma leitura crítica, que estimula a reflexão e desenvolve habilidades de pensamento independente.
-  </p>
-  <p>
-    Cada obra disponível na plataforma é selecionada com critérios que vão além do entretenimento: busca-se potencial educativo, relevância histórica ou filosófica, e a capacidade de provocar questionamentos. Essa curadoria orientada permite que o leitor desenvolva uma visão mais profunda sobre temas diversos, desde literatura clássica até avanços científicos contemporâneos.
-  </p>
-  <p>
-    Ao engajar com a Livraria Construtiva, o usuário é convidado a não apenas consumir informações, mas a compreender contextos, identificar padrões e formar opiniões fundamentadas. Esse processo fortalece o raciocínio crítico, amplia horizontes intelectuais e contribui para a formação de cidadãos mais conscientes e participativos.
-  </p>
-  <p>
-    A plataforma, portanto, atua como um verdadeiro laboratório do conhecimento, onde a leitura deixa de ser um ato passivo e torna-se uma ferramenta ativa de transformação pessoal e social. A Livraria Construtiva reafirma assim sua missão de conectar cada leitor ao potencial transformador da literatura e da educação digital.
-  </p>
-</div>
-<div class="post">
-  <h3>📖 Curadoria Literária e Desenvolvimento Cognitivo na Livraria Construtiva</h3>
-  <p>
-    A Livraria Construtiva se distingue por sua abordagem estratégica na curadoria de obras. Cada livro é analisado considerando não apenas seu conteúdo, mas também seu impacto potencial sobre a construção do conhecimento, pensamento crítico e habilidades cognitivas do leitor.
-  </p>
-  <p>
-    O processo de curadoria envolve critérios como relevância histórica, coerência temática, profundidade conceitual e aplicabilidade prática. Isso garante que cada publicação oferecida seja capaz de fomentar aprendizado significativo e estimular reflexões complexas. Ao acessar a plataforma, o leitor encontra materiais que conectam teoria e prática, proporcionando experiências intelectuais transformadoras.
-  </p>
-  <p>
-    Além disso, a Livraria Construtiva busca integrar diferentes áreas do conhecimento, como ciência, filosofia, história e literatura, permitindo que o leitor desenvolva uma visão multidimensional. Essa integração favorece a construção de raciocínio analítico, capacidade de síntese e habilidade de aplicar conceitos em contextos diversos.
-  </p>
-  <p>
-    A plataforma funciona como um ambiente de desenvolvimento intelectual contínuo. Não se trata apenas de disponibilizar livros, mas de criar uma jornada educativa que fortalece competências cognitivas e prepara o leitor para desafios acadêmicos, profissionais e pessoais. A Livraria Construtiva reafirma, assim, seu compromisso com a promoção de aprendizado profundo, crítico e significativo.
-  </p>
-</div>
-<div class="post">
-  <h3>🌐 Leitura Digital e Acessibilidade na Livraria Construtiva</h3>
-  <p>
-    A Livraria Construtiva adota tecnologias de leitura digital que ampliam o acesso ao conhecimento, garantindo que obras literárias e científicas estejam disponíveis para um público diversificado, independentemente de limitações físicas, geográficas ou econômicas.
-  </p>
-  <p>
-    A plataforma prioriza formatos compatíveis com leitores de tela, dispositivos móveis e recursos de acessibilidade, permitindo que pessoas com deficiência visual ou dificuldades de leitura possam explorar conteúdos de maneira eficiente. Essa abordagem fortalece a inclusão digital e democratiza o aprendizado.
-  </p>
-  <p>
-    Além disso, a Livraria Construtiva oferece conteúdos organizados de forma lógica e intuitiva, combinando metadados detalhados, categorias precisas e mecanismos de busca eficientes. Essa estrutura facilita a navegação e contribui para que cada leitor encontre rapidamente materiais alinhados às suas necessidades e interesses.
-  </p>
-  <p>
-    A integração entre tecnologia, curadoria de conteúdo e acessibilidade posiciona a Livraria Construtiva como referência em inovação educacional digital. Ao proporcionar leitura acessível e de qualidade, a plataforma cumpre seu papel de ampliar horizontes, estimular aprendizado autônomo e incentivar o desenvolvimento intelectual contínuo.
-  </p>
-</div>
+
+<!-- KEYFRAMES -->
+<style>
+@keyframes soft-glow {
+   0%   { left:-150%; opacity:0; }
+   40%  { opacity:1; }
+   50%  { left:130%; opacity:0.9; }
+   100% { left:130%; opacity:0; }
+}
+</style>
 </section>
-
-<section id="politica" style="display:none;">
-  <h2>🛡 Política de Privacidade</h2>
-  <p> A Livraria Construtiva respeita a sua privacidade. As informações que coletamos, como comentários e dados de contato, são usadas apenas para melhorar sua experiência no site e não são compartilhadas com terceiros sem o seu consentimento.  
-    <br><br>
-    Este site pode usar cookies e ferramentas de análise para otimizar a navegação e mostrar anúncios relevantes. Você pode gerenciar suas preferências de cookies no navegador a qualquer momento.  
-    <br><br>
-    Ao utilizar nosso site, você concorda com esta política de privacidade. Em caso de dúvidas ou solicitações relacionadas à privacidade, entre em contato através do e-mail: <a href="mailto:livrariaconstrutiva223@gmail.com">livrariaconstrutiva223@gmail.com</a>. </p>
-</section>
-
-<section id="termos" style="display:none;">
-  <h2>📘 Termos de Uso</h2>
-  <p> Ao utilizar o site Livraria Construtiva, você concorda com os seguintes termos:
-    <br><br>
-
-    <strong>1. Uso do Conteúdo</strong><br>
-    Todo o conteúdo presente neste site, incluindo textos, imagens, artigos, publicações e materiais digitais, é de uso exclusivo da Livraria Construtiva. Não é permitido copiar, redistribuir ou reutilizar qualquer conteúdo sem autorização prévia.
-    <br><br>
-
-    <strong>2. Publicações dos Usuários</strong><br>
-    Comentários e publicações feitos pelos usuários são de responsabilidade dos próprios autores. Conteúdos ofensivos, ilegais ou que violem direitos autorais podem ser removidos sem aviso.
-    <br><br>
-
-    <strong>3. Privacidade e Dados</strong><br>
-    Seus dados são tratados de acordo com nossa Política de Privacidade. Ao usar o site, você concorda com o uso de cookies para melhorar sua experiência.
-    <br><br>
-
-    <strong>4. Modificações no Site</strong><br>
-    Podemos alterar, remover ou atualizar funcionalidades, conteúdos ou seções do site a qualquer momento sem aviso.
-    <br><br>
-
-    <strong>5. Responsabilidades</strong><br>
-    Não garantimos que o site funcionará de forma ininterrupta em todos os dispositivos. O usuário é responsável pela forma como utiliza o conteúdo do site.
-    <br><br>
-
-    <strong>6. Contato</strong><br>
-    Para dúvidas sobre estes termos, envie um e-mail para:
-    <a href="mailto:livrariaconstrutiva223@gmail.com">livrariaconstrutiva223@gmail.com</a>. </p>
-</section>
-
+<div id="homeMessage" style="padding:20px; margin:20px; background:#fff; border-radius:10px; box-shadow:0 3px 10px rgba(0,0,0,0.15); font-size:1.1rem; line-height:1.6;">
+  <!-- conteúdo será carregado pelo supabase -->
+</div>
 <footer>
   <p>© 2025 Livraria Construtiva | Todos os livros são gratuitos e de domínio público</p>
 </footer>
 
-<div id="modal-download">
+<!-- MODAL DOWNLOAD -->
+<div id="modal-download" style="display:none; position:fixed; left:50%; top:40%; transform:translate(-50%,-50%); background:#fff; padding:16px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.2); z-index:9999;">
   <p>O download do livro começará em breve:</p>
-  <button id="btnDownload" onclick="fecharModal()">Fechar</button>
+  <button class="btn-outline" id="btnDownload" onclick="fecharModal()">Fechar</button>
 </div>
 
-<!-- inclui o script principal (externalizado) -->
+</script>
+
 <script src="script.js"></script>
 </body>
 </html>

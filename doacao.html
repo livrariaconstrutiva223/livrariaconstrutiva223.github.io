@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Doações - Livraria Construtiva</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+        100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    @keyframes floatHearts {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-700px) rotate(360deg); opacity: 0; }
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+        color: #fff;
+        overflow-x: hidden;
+        position: relative;
+        height: 100vh;
+    }
+
+    /* Corações flutuantes */
+    .heart-floating {
+        position: absolute;
+        font-size: 20px;
+        color: #ff4757;
+        animation: floatHearts linear infinite;
+        user-select: none;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px 30px;
+        max-width: 520px;
+        margin: auto;
+        border-radius: 22px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+        position: relative;
+        z-index: 1;
+        color: #333;
+    }
+
+    h2 {
+        font-size: 34px;
+        margin-bottom: 18px;
+        color: #2575fc;
+        animation: pulse 2s infinite;
+    }
+
+    p {
+        font-size: 16px;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    h3 {
+        font-size: 24px;
+        margin: 20px 0;
+        color: #ff4757;
+        font-weight: bold;
+        animation: pulse 1.8s infinite;
+    }
+
+    /* IBAN Box */
+    .iban-box {
+        max-width: 400px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.3;
+        color: #000;
+        background: #f8f8f8;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin: 15px auto;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        text-align: left;
+    }
+    .iban-box p {
+        margin: 3px 0;
+    }
+    .iban-box strong {
+        color: #000;
+    }
+
+    button {
+        width: 100%;
+        padding: 16px;
+        margin-top: 12px;
+        border: none;
+        font-size: 16px;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    #copyBtn {
+        background: linear-gradient(135deg, #ff6b6b, #ff4757);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    }
+    #copyBtn:hover { transform: scale(1.05); box-shadow: 0 7px 20px rgba(255,107,107,0.6); }
+
+    #comprovativoBtn {
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: #fff;
+        display: none;
+        box-shadow: 0 4px 15px rgba(40,167,69,0.4);
+    }
+    #comprovativoBtn:hover { transform: scale(1.05); box-shadow: 0 7px 20px rgba(40,167,69,0.6); }
+
+    #jaDoeiBtn {
+        background: linear-gradient(135deg, #003366, #001f4d);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(0,51,102,0.4);
+    }
+    #jaDoeiBtn:hover { transform: scale(1.05); box-shadow: 0 7px 20px rgba(0,51,102,0.6); }
+
+    #alerta {
+        display: none;
+        margin-top: 12px;
+        padding: 14px;
+        background: #d4edda;
+        color: #155724;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: bold;
+        animation: pulse 1.5s infinite;
+    }
+
+    /* ==== MENU LATERAL (TRÊS PONTOS) ==== */
+    #menu-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    #btnMenu {
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+    }
+
+    #menu-lateral {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 240px;
+      height: 100%;
+      background: #ff5722;
+      color: #fff;
+      padding: 20px;
+      padding-top: 70px;
+      transition: 0.3s;
+      z-index: 9999;
+      box-shadow: -3px 0 12px rgba(0,0,0,0.25);
+    }
+
+    #menu-lateral a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      font-size: 1.1rem;
+    }
+
+    #menu-lateral.open {
+      right: 0;
+    }
+
+    #menu-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 9998;
+    }
+    #menu-overlay.show { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Livraria Construtiva</h1>
+
+  <div id="menu-container">
+    <button id="btnMenu">⋮</button>
+  </div>
+</header>
+
+<div id="menu-lateral">
+  <a href="index.html">Home</a>
+  <a href="livros.html">Livros</a>
+  <a href="blog.html">Blog</a>
+  <a href="contato.html">Contato</a>
+  <a href="sobre-livraria.html">Sobre a Livraria</a>
+  <a href="sobre-autor.html">Sobre o Autor</a>
+  <a href="como-baixar.html">Como Baixar</a>
+  <a href="politica.html">Política de Privacidade</a>
+  <a href="termos.html">Termos de Uso</a>
+
+  <!-- Botão WhatsApp -->
+  <a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+     target="_blank"
+     style="
+        position:relative;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:58px;
+        height:58px;
+        background:linear-gradient(135deg, #ffe7c1, #f3d6a0);
+        border-radius:14px;
+        text-decoration:none;
+        border:1px solid rgba(150,120,70,0.35);
+        overflow:hidden;
+        box-shadow:0 3px 10px rgba(0,0,0,0.15);
+        transition:0.25s ease;
+     "
+     onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 5px 14px rgba(0,0,0,0.22)'"
+     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.15)'"
+  >
+     <span style="position:relative; z-index:2; font-size:1.45rem;">📖</span>
+     <span style="
+        position:absolute;
+        top:0;
+        left:-120%;
+        width:100%;
+        height:100%;
+        background:linear-gradient(
+           120deg,
+           transparent 0%,
+           rgba(255,255,255,0.45) 50%,
+           transparent 100%
+        );
+        animation:shine-mini 2.2s infinite ease-in-out;
+        z-index:1;
+     "></span>
+  </a>
+
+  <style>
+  @keyframes shine-mini {
+     0% { left: -120%; }
+     55% { left: 120%; }
+     100% { left: 120%; }
+  }
+  </style>
+</div>
+
+<div id="menu-overlay"></div>
+
+<script>
+const btnMenu = document.getElementById("btnMenu");
+const menuLateral = document.getElementById("menu-lateral");
+const overlay = document.getElementById("menu-overlay");
+
+function abrirMenu() {
+  menuLateral.classList.add("open");
+  overlay.classList.add("show");
+  history.pushState({ menuAberto: true }, "");
+}
+
+function fecharMenu() {
+  menuLateral.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+btnMenu.onclick = () => {
+  if (menuLateral.classList.contains("open")) fecharMenu();
+  else abrirMenu();
+};
+overlay.onclick = fecharMenu;
+window.onpopstate = (event) => { if(event.state && event.state.menuAberto){ fecharMenu(); } };
+window.addEventListener("popstate", () => { if(menuLateral.classList.contains("open")){ fecharMenu(); history.pushState({}, ""); } });
+
+function copiarIBAN() {
+    const iban = "AO06 0006 0000 12766453301 75";
+    navigator.clipboard.writeText(iban);
+    const alerta = document.getElementById("alerta");
+    alerta.style.display = "block";
+    setTimeout(() => { alerta.style.display = "none"; }, 2500);
+}
+
+function mostrarAgradecimento() {
+    document.getElementById("comprovativoBtn").style.display = "block";
+}
+
+function gerarCoracoes() {
+    const heart = document.createElement('div');
+    heart.className = 'heart-floating';
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = 15 + Math.random() * 25 + 'px';
+    heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 10000);
+}
+setInterval(gerarCoracoes, 500);
+</script>
+
+<div class="container">
+    <h2>💙 Apoie a Livraria Construtiva ❤️</h2>
+    <p>Ajude-nos a crescer e continuar trazendo conteúdo incrível para todos os leitores. Cada contribuição faz a diferença!</p>
+
+    <h3>📌 FAÇA SUA DOAÇÃO VIA IBAN</h3>
+    <div class="iban-box">
+        <p><strong>Titular:</strong> João Enoc Sacassole</p>
+        <p><strong>Banco:</strong> BFA</p>
+        <p><strong>IBAN:</strong> AO06 0006 0000 12766453301 75</p>
+    </div>
+
+    <button id="copyBtn" onclick="copiarIBAN()">📋 Copiar IBAN</button>
+    <div id="alerta">IBAN copiado com sucesso! ❤️</div>
+
+    <button id="jaDoeiBtn" onclick="mostrarAgradecimento()">Já fiz minha doação 🙌</button>
+    <button id="comprovativoBtn"
+            onclick="window.location.href='https://wa.me/244959622160?text=Olá,+já+realizei+o+pagamento+e+gostaria+de+enviar+o+comprovativo.'">
+        Enviar Comprovativo via WhatsApp 📱
+    </button>
+</div>
+
+</body>
+</html>

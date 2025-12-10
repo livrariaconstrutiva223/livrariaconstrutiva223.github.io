@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termos de Uso - Livraria Construtiva</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+</head>
+<body>
+<style>
+/* ==== MENU LATERAL (TRÊS PONTOS) ==== */
+#menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#btnMenu {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+#menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 240px;
+  height: 100%;
+  background: #ff5722;
+  color: #fff;
+  padding: 20px;
+  padding-top: 70px;
+  transition: 0.3s;
+  z-index: 9999;
+  box-shadow: -3px 0 12px rgba(0,0,0,0.25);
+}
+
+#menu-lateral a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  font-size: 1.1rem;
+}
+
+#menu-lateral.open {
+  right: 0;
+}
+
+/* Fundo escuro atrás do menu */
+#menu-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 9998;
+}
+#menu-overlay.show {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Livraria Construtiva</h1>
+
+  <!-- MENU PRINCIPAL VISÍVEL -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="livros.html">Livros</a>
+    <a href="blog.html">Blog</a>
+      <a href="doacao.html" class="btn-doacao">
+  ❤️ Apoiar a Livraria Construtiva
+</a>
+
+<style>
+.btn-doacao {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 16px 28px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  transition: 0.3s ease-in-out;
+}
+
+.btn-doacao:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 26px rgba(255, 65, 108, 0.6);
+}
+
+/* Mobile ajuste */
+@media (max-width: 480px) {
+  .btn-doacao {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+</style>
+  </nav>
+
+  <!-- TRÊS PONTOS -->
+  <div id="menu-container">
+    <button id="btnMenu">⋮</button>
+  </div>
+</header>
+
+<!-- MENU LATERAL OCULTO -->
+<div id="menu-lateral">
+  <a href="contato.html">Contato</a>
+  <a href="sobre-livraria.html">Sobre a Livraria</a>
+  <a href="sobre-autor.html">Sobre o Autor</a>
+  <a href="como-baixar.html">Como Baixar</a>
+  <a href="politica.html">Política de Privacidade</a>
+  <a href="termos.html">Termos de Uso</a>
+  <!-- BOTÃO QUADRADO ELEGANTE MENU -->
+<a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+   target="_blank"
+   style="
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:58px;
+      height:58px;
+      background:linear-gradient(135deg, #ffe7c1, #f3d6a0);
+      border-radius:14px;
+      text-decoration:none;
+      border:1px solid rgba(150,120,70,0.35);
+      overflow:hidden;
+      box-shadow:0 3px 10px rgba(0,0,0,0.15);
+      transition:0.25s ease;
+   "
+   onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 5px 14px rgba(0,0,0,0.22)'"
+   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.15)'"
+>
+
+   <!-- ÍCONE DE LIVRO ABERTO -->
+   <span style="position:relative; z-index:2; font-size:1.45rem;">📖</span>
+
+   <!-- ANIMAÇÃO DE BRILHO -->
+   <span style="
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+         120deg,
+         transparent 0%,
+         rgba(255,255,255,0.45) 50%,
+         transparent 100%
+      );
+      animation:shine-mini 2.2s infinite ease-in-out;
+      z-index:1;
+   "></span>
+
+</a>
+
+<style>
+@keyframes shine-mini {
+   0% { left: -120%; }
+   55% { left: 120%; }
+   100% { left: 120%; }
+}
+</style>
+</div>
+
+<!-- Fundo escuro atrás do menu -->
+<div id="menu-overlay"></div>
+
+<script>
+// === CONTROLO DO MENU ===
+const btnMenu = document.getElementById("btnMenu");
+const menuLateral = document.getElementById("menu-lateral");
+const overlay = document.getElementById("menu-overlay");
+
+function abrirMenu() {
+  menuLateral.classList.add("open");
+  overlay.classList.add("show");
+  history.pushState({ menuAberto: true }, ""); // adiciona histórico sem recarregar
+}
+
+function fecharMenu() {
+  menuLateral.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+btnMenu.onclick = () => {
+  if (menuLateral.classList.contains("open")) fecharMenu();
+  else abrirMenu();
+};
+
+// Fecha ao clicar fora
+overlay.onclick = fecharMenu;
+
+// Fecha com botão “voltar”
+window.onpopstate = (event) => {
+  if (event.state && event.state.menuAberto) {
+    fecharMenu();
+  }
+};
+
+// Impede sair da página ao clicar em voltar quando o menu está aberto
+window.addEventListener("popstate", (event) => {
+  if (menuLateral.classList.contains("open")) {
+    fecharMenu();
+    history.pushState({}, ""); // mantém na mesma página
+  }
+});
+</script>
+
+
+<div id="progress-bar"></div>
+<button id="btnTopo" onclick="voltarTopo()" style="display:none">⬆ Topo</button>
+
+<section id="termos-de-uso" class="termos-wrapper">
+  <h1>Termos de Uso — Livraria Construtiva</h1>
+
+  <p>
+    Bem-vindo à <strong>Livraria Construtiva</strong>. Estes Termos de Uso têm como objetivo
+    estabelecer as regras que regulam o acesso, navegação e utilização de todos os
+    serviços, conteúdos e funcionalidades disponibilizados em nosso website. Ao
+    navegar ou utilizar qualquer ferramenta deste site, você confirma que leu,
+    compreendeu e concorda integralmente com as condições estabelecidas aqui.
+  </p>
+
+  <h2>1. Aceitação dos Termos</h2>
+  <p>
+    A utilização deste site implica a aceitação total e irrestrita dos presentes
+    Termos de Uso. Caso o usuário não concorde com algum dos pontos, recomenda-se
+    interromper imediatamente o uso da plataforma. A Livraria Construtiva reserva-se
+    o direito de atualizar estes termos a qualquer momento, sem aviso prévio, sendo a
+    versão atual sempre a publicada nesta página.
+  </p>
+
+  <h2>2. Objetivo do Site</h2>
+  <p>
+    A Livraria Construtiva é uma plataforma digital dedicada à divulgação, análise e
+    recomendação de livros físicos e digitais, conteúdos educativos, materiais
+    literários e recursos de conhecimento. Nosso foco é fornecer informações de
+    qualidade, promover leitura consciente, incentivar educação contínua e conectar
+    autores, leitores e estudantes a conteúdos relevantes.
+  </p>
+
+  <h2>3. Uso Permitido</h2>
+  <p>
+    O usuário compromete-se a utilizar este site somente para finalidades legais e
+    permitidas, incluindo:
+  </p>
+  <ul>
+    <li>Acessar conteúdos informativos disponíveis publicamente;</li>
+    <li>Navegar pelas páginas e categorias oferecidas;</li>
+    <li>Realizar consultas educativas e literárias;</li>
+    <li>Consumir conteúdos exclusivos desenvolvidos pela Livraria Construtiva.</li>
+  </ul>
+  <p>
+    Qualquer uso indevido, ilegal ou que viole leis aplicáveis acarretará sanções,
+    podendo resultar no bloqueio de acesso ou na tomada de medidas jurídicas.
+  </p>
+
+  <h2>4. Propriedade Intelectual</h2>
+  <p>
+    Todo o conteúdo presente no site — textos, artigos, descrições, imagens,
+    gráficos, elementos visuais, identidade visual, estrutura de navegação e demais
+    componentes — é de propriedade exclusiva da Livraria Construtiva ou licenciado
+    por seus respectivos autores. É expressamente proibida:
+  </p>
+  <ul>
+    <li>Reprodução total ou parcial sem autorização;</li>
+    <li>Distribuição, cópia ou exploração comercial do conteúdo;</li>
+    <li>Plágio ou uso indevido com intenção de enganar;</li>
+    <li>Modificar, adaptar ou redistribuir materiais protegidos.</li>
+  </ul>
+
+  <h2>5. Conteúdos de Terceiros</h2>
+  <p>
+    O site pode conter links ou referências a plataformas externas, parceiros,
+    produtores de conteúdo e fornecedores. Embora busquemos manter apenas fontes
+    confiáveis, a Livraria Construtiva não se responsabiliza por:
+  </p>
+  <ul>
+    <li>Materiais publicados fora do nosso domínio;</li>
+    <li>Conteúdos incorretos, ofensivos ou desatualizados de terceiros;</li>
+    <li>Políticas de privacidade de sites externos;</li>
+    <li>Transações, compras ou serviços oferecidos por plataformas alheias.</li>
+  </ul>
+
+  <h2>6. Responsabilidades do Usuário</h2>
+  <p>
+    Ao utilizar o website, o usuário concorda em:
+  </p>
+  <ul>
+    <li>Não tentar violar a segurança ou integridade do sistema;</li>
+    <li>Não realizar atividades que prejudiquem o funcionamento do site;</li>
+    <li>Fornecer informações verdadeiras, quando aplicável;</li>
+    <li>Respeitar direitos autorais e políticas internas.</li>
+  </ul>
+
+  <h2>7. Limitação de Responsabilidade</h2>
+  <p>
+    Embora trabalhemos para garantir conteúdos atualizados e precisos, a Livraria
+    Construtiva não garante:
+  </p>
+  <ul>
+    <li>A precisão absoluta de todas as informações;</li>
+    <li>Funcionamento ininterrupto ou livre de erros;</li>
+    <li>Ausência de falhas técnicas externas ao nosso controle;</li>
+    <li>Disponibilidade total de todo o conteúdo 24 horas por dia.</li>
+  </ul>
+  <p>
+    O usuário aceita que utiliza o site por sua conta e risco, reconhecendo que
+    imprecisões, atrasos, falhas de rede e interrupções podem ocorrer.
+  </p>
+
+  <h2>8. Política de Modificações</h2>
+  <p>
+    A Livraria Construtiva pode, a qualquer momento, alterar, atualizar ou remover
+    conteúdos, funcionalidades, seções e políticas sem aviso prévio. Tais alterações
+    passam a ter validade imediata após a publicação.
+  </p>
+
+  <h2>9. Suspensão ou Encerramento</h2>
+  <p>
+    Podemos suspender ou encerrar o acesso do usuário caso haja violação grave destes
+    termos, prática ilegal, tentativa de fraude ou uso indevido da plataforma.
+  </p>
+
+  <h2>10. Jurisdição e Lei Aplicável</h2>
+  <p>
+    Estes Termos de Uso são regidos pelas leis vigentes em Angola. Qualquer disputa
+    jurídica relacionada ao uso do site será tratada no foro competente da região do
+    usuário ou da sede administrativa da Livraria Construtiva.
+  </p>
+
+  <h2>11. Contato Oficial</h2>
+  <p>
+    Para dúvidas, sugestões, parcerias ou solicitações legais, contacte-nos:
+  </p>
+<p style="max-width: 100%; overflow-wrap: anywhere;">
+  <strong>Email:</strong> 
+  <a href="mailto:livrariaconstrutiva223@gmail.com" style="display: inline-block;">
+    livrariaconstrutiva223@gmail.com
+  </a>
+  <br>
+
+  <strong>Website:</strong> 
+  <a href="https://livrariaconstrutiva223.github.io" target="_blank" style="display: inline-block;">
+    https://livrariaconstrutiva223.github.io
+  </a>
+</p>
+
+  <p>
+    Última atualização: <strong>10 de Dezembro de 2025</strong>
+  </p>
+
+</section>
+<footer>
+  <p>© 2025 Livraria Construtiva</p>
+</footer>
+
+<div id="modal-download" style="display:none; position:fixed; left:50%; top:40%; transform:translate(-50%,-50%); background:#fff; padding:16px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.2); z-index:9999;">
+  <p>O download do livro começará em breve:</p>
+  <button id="btnDownload" onclick="fecharModal()">Fechar</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

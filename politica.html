@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidade - Livraria Construtiva</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+</head>
+<body>
+
+<style>
+/* ==== MENU LATERAL (TRÊS PONTOS) ==== */
+#menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#btnMenu {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+#menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 240px;
+  height: 100%;
+  background: #ff5722;
+  color: #fff;
+  padding: 20px;
+  padding-top: 70px;
+  transition: 0.3s;
+  z-index: 9999;
+  box-shadow: -3px 0 12px rgba(0,0,0,0.25);
+}
+
+#menu-lateral a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  font-size: 1.1rem;
+}
+
+#menu-lateral.open {
+  right: 0;
+}
+
+/* Fundo escuro atrás do menu */
+#menu-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 9998;
+}
+#menu-overlay.show {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Livraria Construtiva</h1>
+
+  <!-- MENU PRINCIPAL VISÍVEL -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="livros.html">Livros</a>
+    <a href="blog.html">Blog</a>
+      <a href="doacao.html" class="btn-doacao">
+  ❤️ Apoiar a Livraria Construtiva
+</a>
+
+<style>
+.btn-doacao {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 16px 28px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  transition: 0.3s ease-in-out;
+}
+
+.btn-doacao:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 26px rgba(255, 65, 108, 0.6);
+}
+
+/* Mobile ajuste */
+@media (max-width: 480px) {
+  .btn-doacao {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 16px;
+  }
+}
+</style>
+  </nav>
+
+  <!-- TRÊS PONTOS -->
+  <div id="menu-container">
+    <button id="btnMenu">⋮</button>
+  </div>
+</header>
+
+<!-- MENU LATERAL OCULTO -->
+<div id="menu-lateral">
+  <a href="contato.html">Contato</a>
+  <a href="sobre-livraria.html">Sobre a Livraria</a>
+  <a href="sobre-autor.html">Sobre o Autor</a>
+  <a href="como-baixar.html">Como Baixar</a>
+  <a href="politica.html">Política de Privacidade</a>
+  <a href="termos.html">Termos de Uso</a>
+  <!-- BOTÃO QUADRADO ELEGANTE MENU -->
+<a href="https://wa.me/934919736?text=Olá!%0APreciso%20dos%20seguintes%20livros%3A"
+   target="_blank"
+   style="
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:58px;
+      height:58px;
+      background:linear-gradient(135deg, #ffe7c1, #f3d6a0);
+      border-radius:14px;
+      text-decoration:none;
+      border:1px solid rgba(150,120,70,0.35);
+      overflow:hidden;
+      box-shadow:0 3px 10px rgba(0,0,0,0.15);
+      transition:0.25s ease;
+   "
+   onmouseover="this.style.transform='scale(1.07)'; this.style.boxShadow='0 5px 14px rgba(0,0,0,0.22)'"
+   onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.15)'"
+>
+
+   <!-- ÍCONE DE LIVRO ABERTO -->
+   <span style="position:relative; z-index:2; font-size:1.45rem;">📖</span>
+
+   <!-- ANIMAÇÃO DE BRILHO -->
+   <span style="
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+         120deg,
+         transparent 0%,
+         rgba(255,255,255,0.45) 50%,
+         transparent 100%
+      );
+      animation:shine-mini 2.2s infinite ease-in-out;
+      z-index:1;
+   "></span>
+
+</a>
+
+<style>
+@keyframes shine-mini {
+   0% { left: -120%; }
+   55% { left: 120%; }
+   100% { left: 120%; }
+}
+</style>
+</div>
+
+<!-- Fundo escuro atrás do menu -->
+<div id="menu-overlay"></div>
+
+<script>
+// === CONTROLO DO MENU ===
+const btnMenu = document.getElementById("btnMenu");
+const menuLateral = document.getElementById("menu-lateral");
+const overlay = document.getElementById("menu-overlay");
+
+function abrirMenu() {
+  menuLateral.classList.add("open");
+  overlay.classList.add("show");
+  history.pushState({ menuAberto: true }, ""); // adiciona histórico sem recarregar
+}
+
+function fecharMenu() {
+  menuLateral.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+btnMenu.onclick = () => {
+  if (menuLateral.classList.contains("open")) fecharMenu();
+  else abrirMenu();
+};
+
+// Fecha ao clicar fora
+overlay.onclick = fecharMenu;
+
+// Fecha com botão “voltar”
+window.onpopstate = (event) => {
+  if (event.state && event.state.menuAberto) {
+    fecharMenu();
+  }
+};
+
+// Impede sair da página ao clicar em voltar quando o menu está aberto
+window.addEventListener("popstate", (event) => {
+  if (menuLateral.classList.contains("open")) {
+    fecharMenu();
+    history.pushState({}, ""); // mantém na mesma página
+  }
+});
+</script>
+
+<div id="progress-bar"></div>
+<button id="btnTopo" onclick="voltarTopo()" style="display:none">⬆ Topo</button>
+
+<section id="politica-de-privacidade" class="politica-privacidade">
+
+  <meta name="description" content="Política de Privacidade da Livraria Construtiva: saiba como coletamos, tratamos, armazenamos e protegemos seus dados pessoais conforme boas práticas internacionais de segurança e LGPD.">
+
+  <h1>Política de Privacidade da Livraria Construtiva</h1>
+
+  <p>
+    A <strong>Livraria Construtiva</strong> valoriza profundamente a privacidade, a segurança e a proteção dos dados
+    pessoais de todos os usuários que acessam nossos conteúdos, utilizam nossos serviços ou interagem com nossas
+    páginas. Esta Política de Privacidade foi desenvolvida de forma clara, abrangente e juridicamente estruturada,
+    seguindo princípios de conformidade com legislações de proteção de dados, boas práticas internacionais e
+    recomendações de plataformas digitais como Google e Google AdSense.
+  </p>
+
+  <p>
+    Ao utilizar nossos serviços, você declara estar ciente das práticas descritas abaixo e concorda com o tratamento de
+    seus dados pessoais de acordo com esta Política. Caso não concorde, recomendamos que interrompa o uso da plataforma.
+  </p>
+
+  <h2>1. Dados Coletados</h2>
+  <p>
+    A Livraria Construtiva coleta diferentes tipos de informações para possibilitar o funcionamento adequado da
+    plataforma, otimizar a experiência do usuário e garantir segurança. Os dados podem ser coletados de forma automática
+    ou fornecidos voluntariamente pelo usuário.
+  </p>
+
+  <h3>1.1 Dados fornecidos voluntariamente</h3>
+  <ul>
+    <li>Nome;</li>
+    <li>E-mail;</li>
+    <li>Mensagem ou conteúdo enviado em formulários de contato;</li>
+    <li>Interações diretas com a plataforma.</li>
+  </ul>
+
+  <h3>1.2 Dados coletados automaticamente</h3>
+  <ul>
+    <li>Endereço IP;</li>
+    <li>Informações do dispositivo e navegador;</li>
+    <li>Sistema operacional;</li>
+    <li>Informações de localização aproximada;</li>
+    <li>Páginas acessadas, tempo de permanência e comportamento de navegação;</li>
+    <li>Cookies, identificadores anônimos e tecnologias similares.</li>
+  </ul>
+
+  <p>
+    Esses dados são coletados com a finalidade de melhorar a performance do site, analisar métricas, personalizar a experiência
+    e garantir segurança durante o uso.
+  </p>
+
+  <h2>2. Finalidade do Tratamento de Dados</h2>
+  <p>A Livraria Construtiva utiliza seus dados exclusivamente para:</p>
+
+  <ul>
+    <li>Responder mensagens enviadas por formulários de contato;</li>
+    <li>Melhorar a navegação e experiência do usuário;</li>
+    <li>Gerar estatísticas e relatórios internos de desempenho;</li>
+    <li>Garantir segurança, evitar fraudes e combater acessos indevidos;</li>
+    <li>Exibir anúncios personalizados ou não personalizados, conforme recomendação do Google AdSense;</li>
+    <li>Otimizar conteúdos, páginas e funcionalidades do site;</li>
+    <li>Cumprir obrigações legais e regulatórias quando necessário.</li>
+  </ul>
+
+  <h2>3. Uso de Cookies e Tecnologias Semelhantes</h2>
+  <p>
+    Utilizamos cookies para melhorar a funcionalidade da plataforma, personalizar a experiência do usuário e analisar
+    métricas de acesso. Ao acessar o site pela primeira vez, você pode aceitar ou recusar os cookies.
+  </p>
+
+  <h3>3.1 Tipos de cookies utilizados</h3>
+  <ul>
+    <li><strong>Cookies essenciais:</strong> necessários para o funcionamento do site.</li>
+    <li><strong>Cookies analíticos:</strong> analisam tráfego e comportamento (ex.: Google Analytics).</li>
+    <li><strong>Cookies de publicidade:</strong> utilizados pelo Google AdSense para exibir anúncios relevantes.</li>
+    <li><strong>Cookies de personalização:</strong> aprimoram a experiência do usuário.</li>
+  </ul>
+
+  <p>
+    O usuário pode gerenciar ou desativar cookies diretamente no navegador, sabendo que algumas funcionalidades podem ser
+    afetadas.
+  </p>
+
+  <h2>4. Compartilhamento de Dados</h2>
+  <p>A Livraria Construtiva NÃO vende, aluga ou comercializa dados pessoais.</p>
+
+  <p>Os dados podem ser compartilhados apenas com:</p>
+
+  <ul>
+    <li>Serviços de análise de tráfego (como Google Analytics);</li>
+    <li>Ferramentas de publicidade (como Google AdSense);</li>
+    <li>Autoridades legais, mediante obrigação judicial ou regulatória;</li>
+    <li>Serviços de hospedagem e segurança do site.</li>
+  </ul>
+
+  <p>
+    Todo compartilhamento é realizado de forma segura, seguindo boas práticas de privacidade e proteção de dados.
+  </p>
+
+  <h2>5. Segurança e Armazenamento dos Dados</h2>
+  <p>
+    Implementamos medidas técnicas e organizacionais para proteger seus dados contra acesso não autorizado, perda,
+    roubo ou alteração.
+  </p>
+
+  <p>Entre as medidas utilizadas estão:</p>
+
+  <ul>
+    <li>Criptografia SSL;</li>
+    <li>Servidores seguros;</li>
+    <li>Monitoramento de tráfego e detecção de ameaças;</li>
+    <li>Backup e proteção contra invasões.</li>
+  </ul>
+
+  <p>
+    No entanto, nenhum sistema digital é totalmente infalível, e apesar de todos os esforços, não podemos garantir 100%
+    de segurança contra ataques externos.
+  </p>
+
+  <h2>6. Direitos do Usuário</h2>
+  <p>Você tem direito a solicitar, a qualquer momento:</p>
+
+  <ul>
+    <li>Acesso aos dados pessoais armazenados;</li>
+    <li>Correção de dados incompletos ou desatualizados;</li>
+    <li>Solicitação de exclusão de dados pessoais;</li>
+    <li>Revogação do consentimento de uso de dados;</li>
+    <li>Informações sobre a origem e finalidade dos dados;</li>
+    <li>Portabilidade, quando aplicável.</li>
+  </ul>
+
+  <p>
+    Para exercer qualquer direito, basta entrar em contato pelos canais disponíveis ao final desta política.
+  </p>
+
+  <h2>7. Dados de Crianças e Adolescentes</h2>
+  <p>
+    A Livraria Construtiva não realiza coleta proposital de dados pessoais de crianças menores de 13 anos.
+    Caso identifiquemos qualquer informação coletada sem autorização, ela será removida imediatamente.
+  </p>
+
+  <h2>8. Base Legal do Tratamento de Dados</h2>
+  <p>
+    O tratamento de dados da Livraria Construtiva se fundamenta nas seguintes bases legais:
+  </p>
+
+  <ul>
+    <li>Consentimento do usuário;</li>
+    <li>Execução de funcionalidades essenciais do site;</li>
+    <li>Interesse legítimo da plataforma para melhoria de serviços;</li>
+    <li>Cumprimento de obrigações legais;</li>
+    <li>Proteção do usuário e prevenção a fraudes.</li>
+  </ul>
+
+  <h2>9. Retenção e Exclusão de Dados</h2>
+  <p>
+    Os dados são mantidos apenas pelo período necessário para cumprir finalidades descritas nesta política.
+    Após o prazo, eles podem ser anonimizados ou excluídos permanentemente.
+  </p>
+
+  <h2>10. Alterações na Política de Privacidade</h2>
+  <p>
+    Esta Política pode ser atualizada a qualquer momento para refletir mudanças legais, tecnológicas ou estruturais.
+    Sempre que houver alteração relevante, atualizaremos a data no final da página.
+  </p>
+
+  <p><strong>Última atualização:</strong> Janeiro de 2025</p>
+
+  <h2>11. Contato</h2>
+  <p>
+    Para dúvidas, solicitações de direitos, sugestões ou qualquer demanda relacionada à privacidade e proteção de dados,
+    entre em contato pela nossa página de contato ou pelo e-mail:
+  </p>
+
+<p style="max-width: 100%; overflow-wrap: anywhere;">
+  <strong>Email:</strong> 
+  <a href="mailto:livrariaconstrutiva223@gmail.com" style="display: inline-block;">
+    livrariaconstrutiva223@gmail.com
+  </a>
+  <br>
+
+  <strong>Website:</strong> 
+  <a href="https://livrariaconstrutiva223.github.io" target="_blank" style="display: inline-block;">
+    https://livrariaconstrutiva223.github.io
+  </a>
+</p>
+
+</section>
+
+<footer>
+  <p>© 2025 Livraria Construtiva</p>
+</footer>
+
+<div id="modal-download" style="display:none; position:fixed; left:50%; top:40%; transform:translate(-50%,-50%); background:#fff; padding:16px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.2); z-index:9999;">
+  <p>O download do livro começará em breve:</p>
+  <button id="btnDownload" onclick="fecharModal()">Fechar</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
