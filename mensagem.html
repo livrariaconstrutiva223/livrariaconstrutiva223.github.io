@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pedido de Livro | Livraria Construtiva</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bege:#f6f2eb;
+  --vinho:#6b2f3a;
+  --ouro:#c7a14a;
+  --grafite:#2b2b2b;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top left,#fff 0%,var(--bege) 45%),
+    radial-gradient(circle at bottom right,#f0e6d8 0%,#fff 60%);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 15px;
+}
+
+.card{
+  background:#fff;
+  max-width:820px;
+  width:100%;
+  border-radius:26px;
+  box-shadow:0 25px 80px rgba(0,0,0,.12);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+}
+
+@media(max-width:820px){
+  .card{grid-template-columns:1fr}
+}
+
+.left{
+  padding:50px 40px;
+  background:linear-gradient(160deg,var(--vinho),#4b1f28);
+  color:#fff;
+}
+
+.left h1{
+  font-family:'Playfair Display',serif;
+  font-size:32px;
+  margin:0 0 15px;
+}
+
+.left p{
+  font-size:15px;
+  line-height:1.6;
+  opacity:.95;
+}
+
+.badge{
+  margin-top:30px;
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:50px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  font-size:13px;
+  letter-spacing:.4px;
+}
+
+.right{
+  padding:50px 45px;
+}
+
+label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--grafite);
+  display:block;
+  margin-bottom:6px;
+  letter-spacing:.3px;
+}
+
+input,textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1.6px solid #e2ded7;
+  background:#faf9f7;
+  font-size:14px;
+  outline:none;
+  transition:.25s;
+  margin-bottom:18px;
+}
+
+input:focus,textarea:focus{
+  border-color:var(--ouro);
+  background:#fff;
+}
+
+textarea{min-height:110px;resize:vertical}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+}
+
+button{
+  width:100%;
+  margin-top:10px;
+  padding:16px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--ouro),#e4c36b);
+  color:#2b2b2b;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  letter-spacing:.6px;
+  transition:.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(199,161,74,.45);
+}
+
+.status{
+  margin-top:18px;
+  font-size:14px;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="left">
+    <h1>Pedido de Livro</h1>
+    <p>
+      Encontre a obra que transforma, inspira e constrói.
+      Preencha os dados e a <strong>Livraria Construtiva</strong>
+      entrará em contacto consigo.
+    </p>
+
+    <div class="badge">
+      Cultura • Conhecimento • Propósito
+    </div>
+  </div>
+
+  <div class="right">
+  <form id="pedidoForm">
+
+    <label>Nome *</label>
+    <input type="text" name="from_name" required placeholder="Ex: João Enoc">
+
+    <label>Número do WhatsApp *</label>
+    <input type="text" name="reply_to" required placeholder="Ex: +244 959 622 160">
+
+    <label>Email (opcional)</label>
+    <input type="email" name="email" placeholder="Ex: livrariaconstrutiva223@gmil.com">
+
+    <div class="grid">
+      <div>
+        <label>Título do Livro *</label>
+        <input type="text" name="subject" required placeholder="Ex: 365 dias de inteligência">
+      </div>
+      <div>
+        <label>Nome do Autor (opcional)</label>
+        <input type="text" name="autor" placeholder="Ex: Augusto Cury">
+      </div>
+    </div>
+
+    <label>Mensagem adicional (opcional)</label>
+    <textarea name="message" placeholder="Ex: Gostria tanto de ler este livro.../ algo de sua preferência."></textarea>
+
+    <button type="submit">ENVIAR PEDIDO</button>
+
+    <div class="status" id="status"></div>
+  </form>
+</div>
+</div>
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  emailjs.init("99pJZX6aYkvT5brld"); // PUBLIC KEY
+
+  document.getElementById("pedidoForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const status = document.getElementById("status");
+    status.innerText = "Enviando pedido...";
+
+    emailjs.sendForm(
+      "service_blpzqnl",   // SERVICE ID
+      "template_9yvsfak",  // TEMPLATE ID
+      this
+    ).then(function(){
+      status.style.color = "#2e7d32";
+      status.innerText = "Pedido enviado com sucesso!";
+      document.getElementById("pedidoForm").reset();
+    }, function(error){
+      status.style.color = "#b71c1c";
+      status.innerText = "Erro ao enviar. Tente novamente.";
+      console.error(error);
+    });
+  });
+
+});
+</script>
+</body>
+</html>
